@@ -35,7 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string  :telp
 
       t.string  :role, :default=>"User"
-      t.boolean :status, :default=>true
+      t.boolean :status, :default=>false
 
       t.timestamps null: false
     end

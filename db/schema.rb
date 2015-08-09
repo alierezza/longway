@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(version: 20150809094013) do
   end
 
   create_table "detailreports", force: :cascade do |t|
+    t.integer  "report_id"
+    t.integer  "opr"
+    t.integer  "target"
+    t.integer  "target_sum"
+    t.integer  "act"
+    t.integer  "sum"
+    t.integer  "act_sum"
+    t.integer  "percent"
+    t.integer  "pph"
+    t.integer  "defect_int"
+    t.integer  "defect_ext"
+    t.integer  "rft"
+    t.text     "remark"
+    t.time     "waktu"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -34,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150809094013) do
   create_table "lines", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "nama"
+    t.integer  "no"
     t.boolean  "status",     default: true
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -45,8 +60,10 @@ ActiveRecord::Schema.define(version: 20150809094013) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "line_id"
+    t.date     "tanggal",    default: '2015-08-09'
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,7 +81,7 @@ ActiveRecord::Schema.define(version: 20150809094013) do
     t.text     "alamat"
     t.string   "telp"
     t.string   "role",                   default: "User"
-    t.boolean  "status",                 default: true
+    t.boolean  "status",                 default: false
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
   end

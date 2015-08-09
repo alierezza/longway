@@ -1,0 +1,160 @@
+<div id="status">
+</div>
+
+<div id="actual">
+	<%= form_for(@target_and_opr, :remote=>true) do |f| %>
+		<%= f.fields_for :detailreports do |detailreport| %>
+			Actual: <%= detailreport.number_field :act, :disabled=>true %>
+			<%= hidden_field_tag :status, "actual" %>
+			<%= f.button "+" %>
+		<% end %>
+	<% end %>
+</div>
+
+<div id="int_defect">
+
+</div>
+
+<div id="ext_defect">
+
+</div>
+
+
+<div id="machine_problem">
+	Machine Problem ?
+	<a class="btn btn-xs btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
+	<a class="btn btn-xs btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
+    <button id="disconnect">Disconnect</button>
+</div>
+
+
+<div id="target_and_opr">
+	<%= form_for(@target_and_opr, :remote=>true) do |f| %>
+		<%= f.fields_for :detailreports do |detailreport| %>
+			TARGET: <%= detailreport.number_field :target %><br>
+			OPR: <%= detailreport.number_field :opr %>
+			<%= f.button :enter %>
+		<% end %>
+	<% end %>
+</div>
+
+<div id="reset">
+
+</div>
+
+<div id="line_and_clock">
+STITCHING LINE <%= current_user.line.no %>
+	<script type="text/javascript">
+	function GetClock(){
+	var d=new Date();
+	var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
+	if(nmin<=9) nmin="0"+nmin
+	if(nsec<=9) nsec="0"+nsec;
+
+	document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
+	}
+
+	window.onload=function(){
+	GetClock();
+	setInterval(GetClock,1000);
+	}
+	</script>
+	<div id="clockbox"></div>
+</div>
+
+
+<div id="remark">
+<%= form_for(@target_and_opr, :remote=>true) do |f| %>
+	<%= f.fields_for :detailreports do |detailreport| %>
+		REMARK: <%= detailreport.text_area :remark %>
+		<%= f.button :enter %>
+	<% end %>
+<% end %>
+</div>
+
+
+
+
+ 
+		
+     
+
+
+
+<script>
+      // where our WebSockets logic will go later
+      var socket, host;
+      host = "ws://localhost:3005";
+
+      function connect() {
+        try {
+          socket = new WebSocket(host);
+
+          //addMessage("Socket State: " + socket.readyState);
+
+          socket.onopen = function() {
+            status("Run");
+          }
+
+          socket.onclose = function() {
+            status("Disconnected");
+          }
+
+          socket.onmessage = function(msg) {
+            //status( msg.data);
+          }
+        } catch(exception) {
+          status(exception);
+        }
+      }
+
+      function status(msg){
+      	$("#status").html("status: "+msg);
+      }
+
+      function proses(msg) {
+	       msg = msg.split("_")[0];
+        if(msg == "on"){
+        	$("#on").show();
+        	$("#off").show();
+        }else if(msg == "off"){
+        	$("#on").show();
+        	$("#off").show();
+        }
+      }
+
+      function send(status) {
+      
+        try {
+          socket.send(status);
+          proses(status);
+          $.get("/reports", {message: status}, null, "script");
+        } catch(exception) {
+          status("Failed To Send")
+        }
+
+      }
+
+      $(function() {
+        connect();
+      });
+
+
+      $("#disconnect").click(function() {
+        socket.close()
+      });
+
+//       function tick()
+// {
+//     //get the mins of the current time
+//     var mins = new Date().getMinutes();
+//     var secs = new Date().getSeconds();
+//     if(mins == "24" && secs == "0"){
+//         addMessage("Received: 10_send1");
+//      }
+    
+// }
+
+//setInterval(tick, 1000);
+
+    </script>

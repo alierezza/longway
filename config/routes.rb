@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  root "home#index"
+  root "homes#index"
 
-  resources :homes,:reports,:detailreports,:lines,:users,:boards,:problems
+  resources :homes ,:reports ,:detailreports ,:lines ,:users ,:boards ,:problems
 
 end

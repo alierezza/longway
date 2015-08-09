@@ -1,0 +1,45 @@
+<br>
+MSB STITCHING VISUAL BOARD<br>
+PT. GLOBAL WAY INDONESIA
+
+<table class="table table-bordered table-stripped">
+	<thead>
+		<tr>
+			<th rowspan=2>LINE</th>
+			<th rowspan=2>OPR</th>
+			<th rowspan=2>TARGET</th>
+			<th rowspan=2>SUM</th>
+			<th rowspan=2>ACT</th>
+			<th rowspan=2>SUM</th>
+			<th rowspan=2>%</th>
+			<th rowspan=2>PPH</th>
+			<th colspan=2>DEFECT</th>
+			<th rowspan=2>RFT</th>
+			<th rowspan=2>REMARK</th>
+		</tr>
+		<tr>
+			<th>INT</th>
+			<th>EXT</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @boards.all.each_with_index do |line,index| %>
+			<tr>
+				<th>L. <%= line.no %></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		<% end %>
+	</tbody>
+
+
+</table>

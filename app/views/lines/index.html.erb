@@ -1,0 +1,24 @@
+<br>
+<%= link_to "New Line",new_line_path %>
+<table class="table table-stripped table-bordered">
+	<thead>
+		<th>Nama Mesin / Line</th>
+		<th>Operator</th>
+		<th>Status</th>
+		<th>Action</th>
+	</thead>
+	<tbody>
+		<% @lines.all.each_with_index do |line, index| %>
+			<tr>
+				<td><%= line.nama %></td>
+				<td><%= line.user == nil ? "-" : line.user.nama %></td>
+				<td><%= line.status == true ? "Normal" : "<font color=red>Problem</font>".html_safe %></td>
+				<td>
+					<%= link_to "Update", edit_line_path(line), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+					<%= link_to "Delete", line_path(line), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this line ?", :class=>
+				"btn btn-xs btn-danger" %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

@@ -20,14 +20,22 @@ class Ability
     elsif user.role == "User"
         can :manage, Home
         can :manage, Line #master 
+
         can :manage, Report do |report|
-            report.line.user.id == user.id
+            if report.line != nil
+                report.line.user.id == user.id
+            else
+                :all
+            end
+        end
+
+        can :manage, Detailreport do |detailreport|
+            detailreport.line.user.id == user.id
         end
 
         #menu
 
 
     end
-
   end
 end

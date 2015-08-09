@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Globalway</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -16,8 +16,9 @@
 	    <% end %>
     </script>
 
-    
-    <%= render 'layouts/menu' %>
+    <% if user_signed_in? %>
+    	<%= render 'layouts/menu' %>
+    <% end %>
 <%= yield %>
 
 </body>

@@ -1,4 +1,5 @@
-
+nama: <%= current_user.nama %><br>
+role: <%= current_user.role %><br>
 
 <% if can? :home, current_user  %>
 	<%= link_to "Home", homes_path %>
@@ -8,8 +9,8 @@
 	<%= link_to "User", users_path %>
 <% end %>
 
-<%= if can? :line, current_user %>
-	<%= link_to "Machine", lines_path %>
+<% if can? :line, current_user %>
+	<%= link_to "Line", lines_path %>
 <% end %>
 
 <% if can? :visual_board, current_user %>
@@ -21,4 +22,4 @@
 <% end %>
 
 
-<%= link_to "Sign Out".html_safe,destroy_user_session_path, :method => "DELETE"  %>
+<%= link_to "Sign Out",destroy_user_session_path, :method => "DELETE"  %>
