@@ -14,6 +14,7 @@ class Ability
         can :home, User
         can :visual_board, User
         can :visual_problem, User
+        can :line, User
 
 
     elsif user.role == "User"

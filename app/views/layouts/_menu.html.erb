@@ -1,9 +1,15 @@
+
+
+<% if can? :home, current_user  %>
+	<%= link_to "Home", homes_path %>
+<% end %>
+
 <% if can? :manage, current_user  %>
 	<%= link_to "User", users_path %>
 <% end %>
 
-<% if can? :home, current_user  %>
-	<%= link_to "Home", homes_path %>
+<%= if can? :line, current_user %>
+	<%= link_to "Machine", lines_path %>
 <% end %>
 
 <% if can? :visual_board, current_user %>
