@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Globalway</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<script>
+	    <% if notice %>
+	    global_notif('<%= notice %>', "success")
+	    <% end %>
+	    <% if alert %>
+	    global_notif('<%= alert %>', "danger")
+	    <% end %>
+    </script>
+
+    
+    <%= render 'layouts/menu' %>
+<%= yield %>
+
+</body>
+</html>

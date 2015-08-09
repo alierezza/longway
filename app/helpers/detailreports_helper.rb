@@ -1,0 +1,2 @@
+module DetailreportsHelper
+end

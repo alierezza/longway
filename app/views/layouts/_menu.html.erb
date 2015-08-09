@@ -1,0 +1,18 @@
+<% if can? :manage, current_user  %>
+	<%= link_to "User", users_path %>
+<% end %>
+
+<% if can? :home, current_user  %>
+	<%= link_to "Home", homes_path %>
+<% end %>
+
+<% if can? :visual_board, current_user %>
+	<%= link_to "Visual Board (Screen 1)", boards_path %>
+<% end %>
+
+<% if can? :visual_problem, current_user %>
+	<%= link_to "Machine Problem (Screen 2)", problems_path %>
+<% end %>
+
+
+<%= link_to "Sign Out".html_safe,destroy_user_session_path, :method => "DELETE"  %>
