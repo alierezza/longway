@@ -29,12 +29,17 @@ class ReportsController < ApplicationController
 	end
 
 	def new
-
+		if params[:record]
+			opr = current_user.line.reports.last.detailreports.last.opr
+			remark = current_user.line.reports.last.detailreports.last.remark
+			current_user.line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr, :remark=>remark)
+		end
 	end
 
 	def create
 		params[:report][:tanggal] = Date.today
-		params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target]
+		#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target]
+		params[:report][:detailreports_attributes]["0"][:jam] = Time.now.strftime("%H")
 		@report = current_user.line.reports.new(my_sanitizer)
 	    @report.save!
 	end
@@ -47,10 +52,10 @@ class ReportsController < ApplicationController
 		@report = Report.find(params[:id])
 		if params[:status]
 			params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.last.act.to_i + 1
-			params[:report][:detailreports_attributes]["0"][:act_sum] = @report.detailreports.last.sum.to_i + 1
+			#params[:report][:detailreports_attributes]["0"][:act_sum] = @report.detailreports.last.sum.to_i + 1
 		end
 		
-		params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target].to_i + @report.detailreports.last.target_sum.to_i
+		#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target].to_i + @report.detailreports.last.target_sum.to_i
 	    @report.update!(my_sanitizer)
 	end
 

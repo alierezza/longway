@@ -3,7 +3,7 @@
 
 
 <%= form_for(@target_and_opr, :remote=>true,:method=>"PUT") do |f| %>
-	<%= f.fields_for :detailreports do |detailreport| %>
+	<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
 		TARGET: <%= detailreport.number_field :target %><br>
 		OPR: <%= detailreport.number_field :opr %>
 		<%= f.button :enter %>

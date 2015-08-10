@@ -23,21 +23,21 @@ ActiveRecord::Schema.define(version: 20150809094013) do
 
   create_table "detailreports", force: :cascade do |t|
     t.integer  "report_id"
-    t.integer  "opr"
-    t.integer  "target"
-    t.integer  "target_sum"
-    t.integer  "act"
-    t.integer  "sum"
-    t.integer  "act_sum"
-    t.integer  "percent"
-    t.integer  "pph"
-    t.integer  "defect_int"
-    t.integer  "defect_ext"
-    t.integer  "rft"
+    t.integer  "opr",        default: 0
+    t.integer  "target",     default: 0
+    t.integer  "target_sum", default: 0
+    t.integer  "act",        default: 0
+    t.integer  "sum",        default: 0
+    t.integer  "act_sum",    default: 0
+    t.integer  "percent",    default: 0
+    t.integer  "pph",        default: 0
+    t.integer  "defect_int", default: 0
+    t.integer  "defect_ext", default: 0
+    t.integer  "rft",        default: 0
     t.text     "remark"
-    t.time     "waktu"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "jam"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "homes", force: :cascade do |t|
@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 20150809094013) do
 
   create_table "reports", force: :cascade do |t|
     t.integer  "line_id"
-    t.date     "tanggal",    default: '2015-08-09'
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.date     "tanggal"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

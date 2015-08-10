@@ -3,7 +3,7 @@
 
 <div id="actual">
 	<%= form_for(@target_and_opr, :remote=>true) do |f| %>
-		<%= f.fields_for :detailreports do |detailreport| %>
+		<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
 			Actual: <%= detailreport.number_field :act, :disabled=>true %>
 			<%= hidden_field_tag :status, "actual" %>
 			<%= f.button "+" %>
@@ -30,7 +30,7 @@
 
 <div id="target_and_opr">
 	<%= form_for(@target_and_opr, :remote=>true) do |f| %>
-		<%= f.fields_for :detailreports do |detailreport| %>
+		<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
 			TARGET: <%= detailreport.number_field :target %><br>
 			OPR: <%= detailreport.number_field :opr %>
 			<%= f.button :enter %>
@@ -65,7 +65,7 @@ STITCHING LINE <%= current_user.line.no %>
 
 <div id="remark">
 <%= form_for(@target_and_opr, :remote=>true) do |f| %>
-	<%= f.fields_for :detailreports do |detailreport| %>
+	<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
 		REMARK: <%= detailreport.text_area :remark %>
 		<%= f.button :enter %>
 	<% end %>
@@ -144,17 +144,20 @@ STITCHING LINE <%= current_user.line.no %>
         socket.close()
       });
 
-//       function tick()
-// {
-//     //get the mins of the current time
-//     var mins = new Date().getMinutes();
-//     var secs = new Date().getSeconds();
-//     if(mins == "24" && secs == "0"){
-//         addMessage("Received: 10_send1");
-//      }
-    
-// }
-
-//setInterval(tick, 1000);
+      function tick()
+      {
+          //get the mins of the current time
+          var hours = new Date().getHours();
+          var mins = new Date().getMinutes();
+          var secs = new Date().getSeconds();
+          // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" )){
+          if(secs == "0"){
+              $("#report_detailreports_attributes_0_act").val(0);
+              $("#report_detailreports_attributes_0_target").val(0);
+              $.get("/reports/new", {record: hours}, null, "script");
+           }
+          
+      }
+      setInterval(tick, 1000);
 
     </script>
