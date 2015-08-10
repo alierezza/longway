@@ -1,0 +1,9 @@
+<% @target_and_opr = current_user.line.reports.where("tanggal = ?",Date.today).first %>
+<% @target_and_opr.detailreports.last %>
+
+<%= form_for(@target_and_opr, :remote=>true) do |f| %>
+	<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+		REMARK: <%= detailreport.text_area :remark %>
+		<%= f.button :enter %>
+	<% end %>
+<% end %>

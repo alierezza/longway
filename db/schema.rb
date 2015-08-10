@@ -25,10 +25,7 @@ ActiveRecord::Schema.define(version: 20150809094013) do
     t.integer  "report_id"
     t.integer  "opr",        default: 0
     t.integer  "target",     default: 0
-    t.integer  "target_sum", default: 0
     t.integer  "act",        default: 0
-    t.integer  "sum",        default: 0
-    t.integer  "act_sum",    default: 0
     t.integer  "percent",    default: 0
     t.integer  "pph",        default: 0
     t.integer  "defect_int", default: 0
