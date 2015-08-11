@@ -1,84 +1,165 @@
-<div id="status">
-</div>
+  <div id="status"></div>
+  <div class='col-md-6'>
+    <div class="form-group">
+    <div class="row">
+    <div class="col-md-4">
+      <div id="actual">
+        <%= form_for(@target_and_opr, :remote=>true) do |f| %>
+          <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+          <div class="counter_box">
+            <div class="counter_header act">ACTUAL</div>
+            <div class="counter_number">
+              <%= detailreport.hidden_field :act %>
+              <%= detailreport.object.act %>
+              <%= hidden_field_tag :status, "actual" %>
+            </div>
+          </div> <!-- end counter box -->
+          <div class="counter_title">
+            <div>OUTPUT</div>
+            <div>"OK"</div>
+          </div>
+          <div class="counter_button">
+            <%= f.button "", class: "actual"  %>
+          </div>
+          <% end %>
+        <% end %>
+      </div> <!-- end id="actual" -->
+    </div>
 
-<div id="actual">
-	<%= form_for(@target_and_opr, :remote=>true) do |f| %>
-		<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-			Actual: <%= detailreport.number_field :act, :disabled=>true %>
-			<%= hidden_field_tag :status, "actual" %>
-			<%= f.button "+" %>
-		<% end %>
-	<% end %>
-</div>
+    <div class="col-md-4">
+      <div id="int_defect">
+        <%= form_for(@target_and_opr, :remote=>true) do |f| %>
+          <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+          <div class="counter_box">
+            <div class="counter_header def">INT DEFECT</div>
+            <div class="counter_number">
+              <%= detailreport.hidden_field :defect_int %>
+              <%= detailreport.object.defect_int %>
+              <%= hidden_field_tag :status, "int_defect" %>
+            </div>
+          </div> <!-- end counter box -->
+          <div class="counter_title">
+            <div>DEFECT</div>
+            <div>INTERNAL</div>
+          </div>
+          <div class="counter_button">
+            <%= f.button "", class: "defect"  %>
+          </div>
+          <% end %>
+        <% end %>
+      </div> <!-- end id="int" -->
+    </div>
 
-<div id="int_defect">
+    <div class="col-md-4">
+      <div id="ext_defect">
+        <%= form_for(@target_and_opr, :remote=>true) do |f| %>
+          <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+          <div class="counter_box">
+            <div class="counter_header def">EXT DEFECT</div>
+            <div class="counter_number">
+              <%= detailreport.hidden_field :defect_ext %>
+              <%= detailreport.object.defect_ext %>
+              <%= hidden_field_tag :status, "ext_defect" %>
+            </div>
+          </div> <!-- end counter box -->
+          <div class="counter_title">
+            <div>DEFECT</div>
+            <div>EXTERNAL</div>
+          </div>
+          <div class="counter_button">
+            <%= f.button "", class: "defect"  %>
+          </div>
+          <% end %>
+        <% end %>
+      </div> <!-- end id="ext" -->
+    </div>
+  </div>
+  </div>
+    <div id="line_and_clock">
+      STITCHING LINE <%= current_user.line.no %>
 
-</div>
+        <script type="text/javascript">
+        function GetClock(){
+        var d=new Date();
+        var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
+        if(nmin<=9) nmin="0"+nmin
+        if(nsec<=9) nsec="0"+nsec;
 
-<div id="ext_defect">
+        document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
+        }
 
-</div>
+        window.onload=function(){
+        GetClock();
+        setInterval(GetClock,1000);
+        }
+        </script>
+        <div id="clockbox"></div>
+      </div>
+
+  </div>
+
+ <div class='col-md-6'>
+    <div id="machine_problem" class="form-group">
+      <div class="machine_title">Machine Problem</div>
+        <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
+        <a class="btn btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
+        <button id="disconnect">Disconnect</button>
+    </div>
 
 
-<div id="machine_problem">
-	Machine Problem ?
-	<a class="btn btn-xs btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
-	<a class="btn btn-xs btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
-    <button id="disconnect">Disconnect</button>
-</div>
+    <div id="target_and_opr">
+      <%= form_for(@target_and_opr, :remote=>true) do |f| %>
+      <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+      <div class='form-group'>
+        <div class="row">
+          <div class='col-md-2'>
+            <label>Target</label>
+          </div>
+          <div class='col-md-10'>
+            <%= detailreport.number_field :target, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class='form-group'>
+        <div class="row">
+          <div class='col-md-2'>
+            <label>OPR</label>
+          </div>
+          <div class='col-md-10'>
+            <%= detailreport.number_field :opr, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+           <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
+      </div>
+        </div>
 
+      <% end %>
+      <% end %>
+    </div>
 
-<div id="target_and_opr">
-	<%= form_for(@target_and_opr, :remote=>true) do |f| %>
-		<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-			TARGET: <%= detailreport.number_field :target %><br>
-			OPR: <%= detailreport.number_field :opr %>
-			<%= f.button :enter %>
-		<% end %>
-	<% end %>
-</div>
+    <div id="remark">
+      <%= form_for(@target_and_opr, :remote=>true) do |f| %>
+      <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+        <div class='form-group'>
+          <label>Remark</label>
+          <%= detailreport.text_area :remark, class: "form-control", rows: 8 %>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+             <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
+        </div>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+
 
 <div id="reset">
 
 </div>
-
-<div id="line_and_clock">
-STITCHING LINE <%= current_user.line.no %>
-	<script type="text/javascript">
-	function GetClock(){
-	var d=new Date();
-	var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
-	if(nmin<=9) nmin="0"+nmin
-	if(nsec<=9) nsec="0"+nsec;
-
-	document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
-	}
-
-	window.onload=function(){
-	GetClock();
-	setInterval(GetClock,1000);
-	}
-	</script>
-	<div id="clockbox"></div>
-</div>
-
-
-<div id="remark">
-<%= form_for(@target_and_opr, :remote=>true) do |f| %>
-	<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-		REMARK: <%= detailreport.text_area :remark %>
-		<%= f.button :enter %>
-	<% end %>
-<% end %>
-</div>
-
-
-
-
- 
-		
-     
-
 
 
 <script>
@@ -124,7 +205,7 @@ STITCHING LINE <%= current_user.line.no %>
       }
 
       function send(status) {
-      
+
         try {
           socket.send(status);
           proses(status);

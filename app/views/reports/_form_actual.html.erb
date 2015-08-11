@@ -1,11 +1,23 @@
 <% @target_and_opr = current_user.line.reports.where("tanggal = ?",Date.today).first %>
 <% @target_and_opr.detailreports.last %>
 
-
 <%= form_for(@target_and_opr, :remote=>true, :method=>"PUT") do |f| %>
-	<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-		Actual: <%= detailreport.number_field :act, :disabled=>true %>
-		<%= hidden_field_tag :status, "actual" %>
-		<%= f.button "+" %>
-	<% end %>
-<% end %>
+  <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+    <div class="counter_box">
+      <div class="counter_header act">ACTUAL</div>
+      <div class="counter_number">
+        <%= detailreport.hidden_field :act %>
+        <%= detailreport.object.act %>
+        <%= hidden_field_tag :status, "actual" %>
+      </div>
+    </div> <!-- end counter box -->
+    <div class="counter_title">
+      <div>OUTPUT</div>
+      <div>"OK"</div>
+    </div>
+    <div class="counter_button">
+      <%= f.button "", class: "actual"  %>
+    </div>
+    <% end %>
+  <% end %>
+</div> <!-- end id="actual" -->

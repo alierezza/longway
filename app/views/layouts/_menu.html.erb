@@ -1,5 +1,9 @@
-nama: <%= current_user.nama %><br>
-role: <%= current_user.role %><br>
+<div class="pull-right login_status">
+	<span>nama: <%= current_user.nama %></span>
+	<span>role: <%= current_user.role %></span>
+	<span><%= link_to "Sign Out",destroy_user_session_path, :method => "DELETE"  %></span>
+</div>
+
 
 <% if can? :home, current_user  %>
 	<%= link_to "Home", homes_path %>
@@ -21,5 +25,3 @@ role: <%= current_user.role %><br>
 	<%= link_to "Machine Problem (Screen 2)", problems_path %>
 <% end %>
 
-
-<%= link_to "Sign Out",destroy_user_session_path, :method => "DELETE"  %>

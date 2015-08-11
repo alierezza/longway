@@ -2,10 +2,33 @@
 <% @target_and_opr.detailreports.last %>
 
 
-<%= form_for(@target_and_opr, :remote=>true,:method=>"PUT") do |f| %>
-	<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-		TARGET: <%= detailreport.number_field :target %><br>
-		OPR: <%= detailreport.number_field :opr %>
-		<%= f.button :enter %>
-	<% end %>
+<%= form_for(@target_and_opr, :remote=>true) do |f| %>
+<%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+<div class='form-group'>
+  <div class="row">
+    <div class='col-md-2'>
+      <label>Target</label>
+    </div>
+    <div class='col-md-10'>
+      <%= detailreport.number_field :target, class: 'form-control' %>
+    </div>
+  </div>
+</div>
+<div class='form-group'>
+  <div class="row">
+    <div class='col-md-2'>
+      <label>OPR</label>
+    </div>
+    <div class='col-md-10'>
+      <%= detailreport.number_field :opr, class: 'form-control' %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+     <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
+</div>
+  </div>
+
+<% end %>
 <% end %>
