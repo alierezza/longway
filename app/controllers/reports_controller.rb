@@ -27,7 +27,11 @@ class ReportsController < ApplicationController
 	def data
 
 		if params[:search]
+			begin
 			@data = Line.where("no=?",params[:no].to_i).first.reports.where("tanggal = ?",params[:tanggal].to_date)
+			rescue
+				@data = []
+			end
 		end
 
 		authorize! :data, current_user
