@@ -1,4 +1,10 @@
   <div id="status"></div>
+  <button id="connect">Connect</button>
+
+
+  <%= link_to "reset", edit_user_path(current_user,:reset_password=>true) %>
+
+
   <div class='col-md-6'>
     <div class="form-group">
     <div class="row">
@@ -103,7 +109,6 @@
       <div class="machine_title">Machine Problem</div>
         <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
         <a class="btn btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
-        <button id="disconnect">Disconnect</button>
     </div>
 
 
@@ -241,5 +246,8 @@
       }
       setInterval(tick, 1000);
 
+      $( "#connect" ).click(function() {
+               location.reload(true);
+      });
 
     </script>

@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
 
 			Line.find(id).update!(:status=>status)
 		end
-
+		
 		if current_user.line.reports == []
 			@target_and_opr = Report.new
 			@target_and_opr.detailreports.build
@@ -22,6 +22,15 @@ class ReportsController < ApplicationController
 			@target_and_opr.detailreports.last
 		end
 
+	end
+
+	def data
+
+		if params[:search]
+			@data = Line.where("no=?",params[:no].to_i).first.reports.where("tanggal = ?",params[:tanggal].to_date)
+		end
+
+		authorize! :data, current_user
 	end
 
 	def show
@@ -55,7 +64,7 @@ class ReportsController < ApplicationController
 	end
 
 	def edit
-
+		#@report = Report.find(params[:id])
 	end
 
 	def update

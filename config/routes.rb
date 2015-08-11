@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   resources :homes ,:reports ,:detailreports ,:lines ,:users ,:boards ,:problems
 
+  get "data/" => "reports#data", :as => :data
+
 end

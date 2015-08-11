@@ -1,0 +1,13 @@
+<br>History Data tiap JAM
+
+<%= form_tag data_path, :method=>"GET", :remote=>true do %>
+	<%= text_field_tag :no, nil, :required=>true %>
+	<%= date_field_tag :tanggal, nil, :required=>true %>
+	<%= hidden_field_tag :search, "true", :required=>true %>
+	<%= submit_tag "search" %>
+<% end %>
+
+
+<div id="data">
+	<%= render "data" %>
+</div>

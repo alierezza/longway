@@ -1,0 +1,40 @@
+<% if params[:search] %>
+	Line No : <%= @data.first.line.no %>
+	Tanggal : <%= @data.first.tanggal.strftime("%d %B %Y") %>
+	<table class="table table-bordered table-stripped">
+		<thead>
+			<tr>
+				<th rowspan=2>JAM</th>
+				<th rowspan=2>OPR</th>
+				<th rowspan=2>TARGET</th>
+				<th rowspan=2>ACT</th>
+				<th rowspan=2>%</th>
+				<th rowspan=2>PPH</th>
+				<th colspan=2>DEFECT</th>
+				<th rowspan=2>RFT</th>
+				<th rowspan=2>REMARK</th>
+			</tr>
+			<tr>
+				<th>INT</th>
+				<th>EXT</th>
+			</tr>
+		</thead>
+		<tbody>
+				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
+					<tr>
+						<td><%= detailreport.jam %></td>
+						<td><%= detailreport.opr %></td>
+						<td><%= detailreport.target %></td>
+						<td><%= detailreport.act %></td>
+						<td><%= detailreport.percent %></td>
+						<td><%= detailreport.pph %></td>
+						<td><%= detailreport.defect_int %></td>
+						<td><%= detailreport.defect_ext %></td>
+						<td><%= detailreport.rft %></td>
+						<td><%= detailreport.remark %></td>
+					</tr>
+				<% end %>
+			
+		</tbody>
+	</table>
+<% end %>

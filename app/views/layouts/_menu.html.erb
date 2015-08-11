@@ -25,3 +25,7 @@
 	<%= link_to "Machine Problem (Screen 2)", problems_path %>
 <% end %>
 
+<% if can? :data, current_user %>
+	<%= link_to "Data", data_path %>
+<% end %>
+

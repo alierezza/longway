@@ -9,6 +9,9 @@ class Ability
         can :manage, User #master User/ pegawai
         can :manage, Board 
         can :manage, Problem
+        can :data, Report do |report|
+            report.line.user.role == "Admin"
+        end
 
         #menu
         can :home, User
@@ -34,7 +37,7 @@ class Ability
         end
 
         #menu
-
+        can :update, User, :id => user.id
 
     end
   end
