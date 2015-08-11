@@ -40,6 +40,16 @@ class ReportsController < ApplicationController
 		params[:report][:tanggal] = Date.today
 		#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target]
 		params[:report][:detailreports_attributes]["0"][:jam] = Time.now.strftime("%H")
+
+		if params[:status] == "actual"
+			params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.last.act.to_i + 1
+			#params[:report][:detailreports_attributes]["0"][:act_sum] = @report.detailreports.last.sum.to_i + 1
+		elsif params[:status] == "int_defect"
+			params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.last.defect_int.to_i + 1
+		elsif params[:status] == "ext_defect"
+			params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.last.defect_ext.to_i + 1
+		end
+
 		@report = current_user.line.reports.new(my_sanitizer)
 	    @report.save!
 	end
@@ -50,11 +60,16 @@ class ReportsController < ApplicationController
 
 	def update
 		@report = Report.find(params[:id])
-		if params[:status]
+
+		if params[:status] == "actual"
 			params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.last.act.to_i + 1
 			#params[:report][:detailreports_attributes]["0"][:act_sum] = @report.detailreports.last.sum.to_i + 1
+		elsif params[:status] == "int_defect"
+			params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.last.defect_int.to_i + 1
+		elsif params[:status] == "ext_defect"
+			params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.last.defect_ext.to_i + 1
 		end
-		
+
 		#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target].to_i + @report.detailreports.last.target_sum.to_i
 	    @report.update!(my_sanitizer)
 	end

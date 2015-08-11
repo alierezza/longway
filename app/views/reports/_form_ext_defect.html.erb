@@ -1,0 +1,22 @@
+<% @target_and_opr = current_user.line.reports.where("tanggal = ?",Date.today).first %>
+<% @target_and_opr.detailreports.last %>
+
+<%= form_for(@target_and_opr, :remote=>true, :method=>"PUT") do |f| %>
+  <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
+  <div class="counter_box">
+    <div class="counter_header def">EXT DEFECT</div>
+    <div class="counter_number">
+      <%= detailreport.hidden_field :defect_ext %>
+      <%= detailreport.object.defect_ext %>
+      <%= hidden_field_tag :status, "ext_defect" %>
+    </div>
+  </div> <!-- end counter box -->
+  <div class="counter_title">
+    <div>DEFECT</div>
+    <div>EXTERNAL</div>
+  </div>
+  <div class="counter_button">
+    <%= f.button "", class: "defect"  %>
+  </div>
+  <% end %>
+<% end %>
