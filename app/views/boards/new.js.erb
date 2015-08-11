@@ -1,0 +1,4 @@
+<% if params[:refresh] == "true" %>
+	<% @boards = Line.all %>
+	$("#board").html("<%= escape_javascript(render 'table') %>");
+<% end %>

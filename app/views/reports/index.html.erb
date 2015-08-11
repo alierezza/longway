@@ -19,7 +19,7 @@
             <div>"OK"</div>
           </div>
           <div class="counter_button">
-            <%= f.button "", class: "actual", :onclick=>"produksi('<%= current_user.line.id %>','actual','<%= detailreport.object.act.to_i %>');"  %>
+            <%= f.button "", class: "actual"  %>
           </div>
           <% end %>
         <% end %>
@@ -241,16 +241,5 @@
       }
       setInterval(tick, 1000);
 
-
-      function produksi(line_id,status,value){
-        var text = "";
-        if(status == "actual"){
-          text = '{"status":"'+status+'","line_id":"'+line_id+'","value":"'+value+'"}'
-
-          socket.send(text);
-        }else if(){
-
-        }
-      }
 
     </script>

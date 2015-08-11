@@ -2,95 +2,24 @@
 MSB STITCHING VISUAL BOARD<br>
 PT. GLOBAL WAY INDONESIA
 
-<table class="table table-bordered table-stripped">
-	<thead>
-		<tr>
-			<th rowspan=2>LINE</th>
-			<th rowspan=2>OPR</th>
-			<th rowspan=2>TARGET</th>
-			<th rowspan=2>SUM</th>
-			<th rowspan=2>ACT</th>
-			<th rowspan=2>SUM</th>
-			<th rowspan=2>%</th>
-			<th rowspan=2>PPH</th>
-			<th colspan=2>DEFECT</th>
-			<th rowspan=2>RFT</th>
-			<th rowspan=2>REMARK</th>
-		</tr>
-		<tr>
-			<th>INT</th>
-			<th>EXT</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @boards.all.each_with_index do |board,line| %>
-			<% board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
-				<tr>
-					<td>L. <%= report.line.no %></td>
-					<td><%= report.detailreports.last.opr %></td>
-					<td><%= report.detailreports.last.target %></td>
-					<td><%= report.detailreports.sum("target") %></td>
-					<td><%= report.detailreports.last.act %></td>
-					<td><%= report.detailreports.sum("act") %></td>
-					<td><%= report.detailreports.last.percent %></td>
-					<td><%= report.detailreports.last.pph %></td>
-					<td><%= report.detailreports.last.defect_int %></td>
-					<td><%= report.detailreports.last.defect_ext %></td>
-					<td><%= report.detailreports.last.rft %></td>
-					<td><%= report.detailreports.last.remark %></td>
-				</tr>
-			<% end %>
-		<% end %>
-	</tbody>
-
-
-</table>
-
+<div id="board">
+	<%= render "table" %>
+</div>
 
 
 <script>
-      // where our WebSockets logic will go later
-      var socket, host;
-      host = "ws://localhost:3005";
-
-      function connect() {
-        try {
-          socket = new WebSocket(host);
-
-          //addMessage("Socket State: " + socket.readyState);
-
-          socket.onopen = function() {
-            status("Run");
-          }
-
-          socket.onclose = function() {
-            status("Disconnected");
-          }
-
-          socket.onmessage = function(msg) {
-            //status( msg.data);
-            
-            obj = JSON.parse(msg);
-            if(obj.status == "actual"){
-            	alert("sss")
-            }
-          }
-        } catch(exception) {
-          status(exception);
-        }
+      function refresh()
+      {
+          //get the mins of the current time
+          var hours = new Date().getHours();
+          var mins = new Date().getMinutes();
+          var secs = new Date().getSeconds();
+          // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" )){
+          if(secs % 1 == "0"){
+              $.get("/boards/new", {refresh: true}, null, "script");
+           }
+          
       }
+      setInterval(refresh, 1000);
 
-      function status(msg){
-      	$("#status").html("status: "+msg);
-      }
-
-      $(function() {
-        connect();
-      });
-
-
-      $("#disconnect").click(function() {
-        socket.close()
-      });
-
-    </script>
+</script>
