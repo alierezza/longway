@@ -40,6 +40,9 @@ load_and_authorize_resource param_method: :my_sanitizer
 	        format.json { render action: 'new', status: :created, location: @user }
 	      else
 	        flash.now.alert = @user.errors.full_messages.to_sentence
+	        if params[:status] == "reset"
+	        	params[:reset_password] = "true"
+	        end
 	        format.html { render action: "new" }
 	        format.json { render json: @user.errors, status: :unprocessable_entity }
 	      end

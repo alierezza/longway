@@ -23,23 +23,74 @@ PT. GLOBAL WAY INDONESIA
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.all.each_with_index do |line,index| %>
-			<tr>
-				<th>L. <%= line.no %></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
+		<% @boards.all.each_with_index do |board,line| %>
+			<% board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
+				<tr>
+					<td>L. <%= report.line.no %></td>
+					<td><%= report.detailreports.last.opr %></td>
+					<td><%= report.detailreports.last.target %></td>
+					<td><%= report.detailreports.sum("target") %></td>
+					<td><%= report.detailreports.last.act %></td>
+					<td><%= report.detailreports.sum("act") %></td>
+					<td><%= report.detailreports.last.percent %></td>
+					<td><%= report.detailreports.last.pph %></td>
+					<td><%= report.detailreports.last.defect_int %></td>
+					<td><%= report.detailreports.last.defect_ext %></td>
+					<td><%= report.detailreports.last.rft %></td>
+					<td><%= report.detailreports.last.remark %></td>
+				</tr>
+			<% end %>
 		<% end %>
 	</tbody>
 
 
 </table>
+
+
+
+<script>
+      // where our WebSockets logic will go later
+      var socket, host;
+      host = "ws://localhost:3005";
+
+      function connect() {
+        try {
+          socket = new WebSocket(host);
+
+          //addMessage("Socket State: " + socket.readyState);
+
+          socket.onopen = function() {
+            status("Run");
+          }
+
+          socket.onclose = function() {
+            status("Disconnected");
+          }
+
+          socket.onmessage = function(msg) {
+            //status( msg.data);
+            
+            obj = JSON.parse(msg);
+            if(obj.status == "actual"){
+            	alert("sss")
+            }
+          }
+        } catch(exception) {
+          status(exception);
+        }
+      }
+
+      function status(msg){
+      	$("#status").html("status: "+msg);
+      }
+
+      $(function() {
+        connect();
+      });
+
+
+      $("#disconnect").click(function() {
+        socket.close()
+      });
+
+    </script>
