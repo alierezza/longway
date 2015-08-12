@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
 
   	def report
 	    
-	    mail(to: CONFIG["email_kirim_ke"],
+	    mail(to: CONFIG["kirim_email_ke"],
 	         subject: "[Global Way Indonesia] Laporan Harian")
   	end
 
