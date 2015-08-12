@@ -1,4 +1,6 @@
 require 'em-websocket'
+require 'date'
+
 
   EM.run do
     @clients = []
@@ -14,7 +16,7 @@ require 'em-websocket'
       end
 
       ws.onmessage do |msg|
-        puts "Received Message: #{msg}"
+        puts "Received Message: #{msg} #{Time.now.strftime('%d %B %Y  %H:%M:%S')}"
         @clients.each do |socket|
           socket.send msg
         end

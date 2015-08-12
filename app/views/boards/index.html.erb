@@ -37,7 +37,7 @@ function refresh(){
     var hours = new Date().getHours();
     var mins = new Date().getMinutes();
     var secs = new Date().getSeconds();
-    // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" )){
+    
     if(secs % 1 == "0"){
         $.get("/boards/new", {refresh: true}, null, "script");
      }

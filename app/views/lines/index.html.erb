@@ -8,15 +8,17 @@
 	  </div>
 		<table class="table table-stripped table-bordered">
 			<thead>
-				<th>Nama Mesin / Line</th>
+				<th>Nama Mesin</th>
+				<th>No Line</th>
 				<th>Operator</th>
 				<th>Status</th>
 				<th>Action</th>
 			</thead>
 			<tbody>
-				<% @lines.all.each_with_index do |line, index| %>
+				<% @lines.order('no asc').each_with_index do |line, index| %>
 					<tr>
 						<td><%= line.nama %></td>
+						<td><%= line.no %></td>
 						<td><%= line.user == nil ? "-" : line.user.nama %></td>
 						<td><%= line.status == true ? "Normal" : "<font color=red>Problem</font>".html_safe %></td>
 						<td>
