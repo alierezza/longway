@@ -1,0 +1,24 @@
+Berikut detail hasil produksi pada tanggal <%= Date.today.strftime("%d %B %Y") %>
+<br><br>
+
+<table class="table table-stripped table-bordered">
+	<% Line.all.each_with_index do |board,line| %>
+			<% board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
+				<tr>
+					<td>L. <%= report.line.no %></td>
+					<td><%= report.detailreports.last.opr %></td>
+					<td><%= report.detailreports.last.target %></td>
+					<td><%= report.detailreports.sum("target") %></td>
+					<td><%= report.detailreports.last.act %></td>
+					<td><%= report.detailreports.sum("act") %></td>
+					<td><%= report.detailreports.last.percent %></td>
+					<td><%= report.detailreports.last.pph %></td>
+					<td><%= report.detailreports.sum("defect_int") %></td>
+					<td><%= report.detailreports.sum("defect_ext") %></td>
+					<td><%= report.detailreports.last.rft %></td>
+					<td><%= report.detailreports.last.remark %></td>
+				</tr>
+			<% end %>
+		<% end %>
+</table>
+

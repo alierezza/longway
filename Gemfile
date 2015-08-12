@@ -43,7 +43,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem "prawn-table"
   gem "select2-rails"
   gem 'em-websocket'
-  gem 'delayed_job_active_record'
+  gem 'whenever', :require => false
 
   
 
