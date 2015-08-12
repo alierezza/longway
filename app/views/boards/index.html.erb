@@ -1,25 +1,48 @@
-<br>
-MSB STITCHING VISUAL BOARD<br>
-PT. GLOBAL WAY INDONESIA
+
+<div class="row">
+  <div class="col-md-7 header_board">MSB STITCHING VISUAL BOARD</div>
+  <div class="col-md-3 header_board">
+    <div id="clockbox"></div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+
+<h3>PT. GLOBAL WAY INDONESIA</h3>
 
 <div id="board">
 	<%= render "table" %>
 </div>
 
 
+
+
+
 <script>
-      function refresh()
-      {
-          //get the mins of the current time
-          var hours = new Date().getHours();
-          var mins = new Date().getMinutes();
-          var secs = new Date().getSeconds();
-          // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" )){
-          if(secs % 1 == "0"){
-              $.get("/boards/new", {refresh: true}, null, "script");
-           }
-          
-      }
-      setInterval(refresh, 1000);
+function GetClock(){
+  var d=new Date();
+  var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
+  if(nmin<=9) nmin="0"+nmin
+  if(nsec<=9) nsec="0"+nsec;
+
+  document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
+}
+
+window.onload=function(){
+GetClock();
+setInterval(GetClock,1000);
+}
+
+function refresh(){
+    //get the mins of the current time
+    var hours = new Date().getHours();
+    var mins = new Date().getMinutes();
+    var secs = new Date().getSeconds();
+    // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" )){
+    if(secs % 1 == "0"){
+        $.get("/boards/new", {refresh: true}, null, "script");
+     }
+
+}
+setInterval(refresh, 1000);
 
 </script>

@@ -1,10 +1,66 @@
 .inner_body {
 	padding: 30px;
+  padding-top: 55px;
+}
+.bring_to_back {
+  position: relative;
+  z-index: -1;
 }
 #actual, #int_defect, #ext_defect, #line_and_clock, #machine_problem  {
   text-align: center;
 }
+hr {
+  border-top: 1px solid #A2A0A0;
+}
+legend {
+  width: auto;
+  border-bottom: none;
+  margin-bottom: 0;
+  padding: 0px 8px;
+}
+fieldset {
+  margin-bottom: 10px;
+  border: solid 2px #ccc;
+  margin: 25px 10px;
+  padding-top: 5px;
+}
+.login_status {
+  background-color: #ccc;
+    padding: 10px;
+    margin: 0px;
+    span {
+      margin: 0px 6px;
+    }
+}
+#status {
+  margin-top: -35px;
 
+  span {
+        float: left;
+    font-size: 20px;
+    margin-left: 10px;
+
+  }
+}
+button#connect {
+  position: absolute;
+    top: 7px;
+   right: 30px;
+}
+.status_signal {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: solid 2px #9E9E9E;
+  margin-left: 75px;
+
+  &.connect {
+    background-color: #18B518;
+  }
+  &.disconnect {
+    background-color: #EA1919;
+  }
+}
 .counter_box {
 	border: solid 1px;
 	text-align: center;
@@ -61,6 +117,156 @@
 }
 
 
-.machine_status {
-	text-align: center;
+//////////// home menu
+
+
+.big_icon {
+  text-align: center;
+    a {
+      font-size: 50px;
+      padding: 98px 0px;
+      margin-top: 50px;
+    }
 }
+
+
+///////// board
+
+.header_board {
+  font-size: 45px;
+  margin-bottom: -18px;
+}
+
+#board {
+  thead {
+    background-color: #0E0E73;
+  }
+  th {
+    color: white;
+    text-align: center;
+  }
+}
+
+
+//////// sliding menu
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.hide {
+  display: none;
+}
+
+
+.app header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 40px;
+}
+.app header .main_menu {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 40px;
+  background: #f5f5f5;
+  box-shadow: 0 0 4px #999;
+}
+.app header .main_menu.open_left {
+  left: 240px;
+  right: -240px;
+}
+.app header .main_menu.open_right {
+  left: -240px;
+  right: 240px;
+}
+.app header .main_menu a {
+  font-size: 1.4em;
+  display: block;
+  padding: 5px 10px;
+}
+.app header .main_menu a:hover {
+  text-decoration: none;
+}
+.app header .side_menu, .app header .left_menu, .app header .right_menu {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -moz-overflow-scrolling: touch;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  width: 240px;
+  height: 100%;
+  padding: 20px;
+  background: #f5f5f5;
+  box-shadow: 0 0 4px #999;
+  // font-size: 0.7em;
+}
+.app header .left_menu {
+  left: -240px;
+}
+.app header .left_menu.open {
+  left: 0;
+}
+.app header .right_menu {
+  right: -240px;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+
+    li {
+          margin: 5px 0px;
+    }
+  }
+}
+.app header .right_menu.open {
+  right: 0;
+}
+.app .content {
+  margin: 60px 20px 20px 20px;
+}
+
+
+
+///////// problems
+
+.table_problems {
+  th {
+    height: 180px;
+    text-align: center;
+    width: 20%;
+    font-size: 80px;
+  }
+}
+
+
+
+

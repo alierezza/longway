@@ -1,27 +1,28 @@
 <div class='panel-body'>
-    <%= form_for(@line) do |f| %>
-        <div class='form-group'>
-            <label class='control-label'>Nomor mesin</label>
-            <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", required: true %>
-        </div>
+  <%= form_for(@line) do |f| %>
+    <div class='form-group'>
+        <label class='control-label'>Nomor mesin</label>
+        <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", required: true %>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Nama Mesin</label>
-            <%= f.text_field :nama, "data-rule-required"=>true, :Class=>"form-control", required: true %>
-        </div>
+    <div class='form-group'>
+        <label class='control-label'>Nama Mesin</label>
+        <%= f.text_field :nama, "data-rule-required"=>true, :Class=>"form-control", required: true %>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Operator</label>
-            <%= f.select :user_id, options_from_collection_for_select(User.where("role != ?","Admin").all, 'id', 'nama', :selected=>@line.user_id),{:include_blank => '-- Select One --'}, class: 'form-control', required: true %>
-        </div>
-        
-        <div class='form-actions' style='margin-bottom:0'>
-            <button class='btn btn-primary' type='submit' data-disable-with= "Wait..">
-                <i class='icon-save'></i>
-                Save
-            </button>
-        </div>
-    <% end %>
+    <div class='form-group'>
+        <label class='control-label'>Operator</label>
+        <%= f.select :user_id, options_from_collection_for_select(User.where("role != ?","Admin").all, 'id', 'nama', :selected=>@line.user_id),{:include_blank => '-- Select One --'}, class: 'form-control', required: true %>
+    </div>
+
+    <hr>
+
+    <div class='form-actions pull-right' style='margin-bottom:0'>
+      <%= link_to lines_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+      <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
+    </div>
+
+  <% end %>
 </div>
 
 <script>

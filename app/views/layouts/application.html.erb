@@ -19,7 +19,10 @@
     <% if user_signed_in? %>
     	<%= render 'layouts/menu' %>
     <% end %>
-<%= yield %>
+    <div class="inner_body">
+      <%= yield %>
+    </div>
+
 
 </body>
 </html>

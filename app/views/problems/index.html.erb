@@ -1,4 +1,4 @@
-<table class="table table-bordered table-stripped">
+<table class="table table-bordered table-stripped table_problems">
 <thead>
 	<tr>
 		<%= begin Line.find(1).status == true ? "<th id=1>1</th>".html_safe : "<th id=1 style='background-color:yellow'>1</th>".html_safe rescue "<th id=1>1</th>".html_safe end %>
@@ -68,7 +68,7 @@
       }
 
       function proses(msg) {
-	       
+
         if(msg == "on"){
         	$("#on").hide();
         	$("#off").show();

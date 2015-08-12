@@ -1,31 +1,82 @@
-<div class="pull-right login_status">
-	<span>nama: <%= current_user.nama %></span>
-	<span>role: <%= current_user.role %></span>
-	<span><%= link_to "Sign Out",destroy_user_session_path, :method => "DELETE"  %></span>
-</div>
+<section class="app">
+<header>
+	<nav class="main_menu">
+	<a href="#" class="toggle right">☰</a>
+	</nav>
+
+	<nav class="right_menu">
+		<ul>
+			<li>
+				<% if params[:controller] == "reports" %>
+				<div class="engine_status">
+				  <div id="status"></div>
+				  <button id="connect">Connect</button>
+				</div>
+				<% end %>
+			</li>
+			<li>nama: <%= current_user.nama %></li>
+			<li>role: <%= current_user.role %></li>
+			<li><%= link_to "Reset Password", edit_user_path(current_user,:reset_password=>true) %></li>
+			<li><%= link_to "Sign Out",destroy_user_session_path, :method => "DELETE"  %></li>
+
+			<hr>
+
+			<% if can? :home, current_user  %>
+				<li> <%= link_to "Home", homes_path %></li>
+			<% end %>
+
+			<% if can? :manage, current_user  %>
+				<li> <%= link_to "User", users_path %></li>
+			<% end %>
+
+			<% if can? :line, current_user %>
+				<li> <%= link_to "Line", lines_path %></li>
+			<% end %>
+
+			<% if can? :visual_board, current_user %>
+				<li> <%= link_to "Visual Board", boards_path %></li>
+			<% end %>
+
+			<% if can? :visual_problem, current_user %>
+				<li> <%= link_to "Machine Problem", problems_path %></li>
+			<% end %>
+
+			<% if can? :data, current_user %>
+				<li> <%= link_to "Data", data_path %></li>
+			<% end %>
 
 
-<% if can? :home, current_user  %>
-	<%= link_to "Home", homes_path %>
-<% end %>
+		</ul>
+	</nav>
+</header>
 
-<% if can? :manage, current_user  %>
-	<%= link_to "User", users_path %>
-<% end %>
+</section>
+<script>
+	$('.toggle.left').on('click', function(){
+  $('nav.right_menu').removeClass('open')
+  $('nav.left_menu').toggleClass('open')
+  $('nav.main_menu').removeClass('open_right')
+  $('nav.main_menu').toggleClass('open_left')
+  return false
+})
 
-<% if can? :line, current_user %>
-	<%= link_to "Line", lines_path %>
-<% end %>
+$('.toggle.right').on('click', function(){
+  $('nav.right_menu').toggleClass('open')
+  $('nav.left_menu').removeClass('open')
+  $('nav.main_menu').removeClass('open_left')
+  $('nav.main_menu').toggleClass('open_right')
 
-<% if can? :visual_board, current_user %>
-	<%= link_to "Visual Board (Screen 1)", boards_path %>
-<% end %>
+  $('.inner_body').toggleClass('bring_to_back')
+  return false
+})
 
-<% if can? :visual_problem, current_user %>
-	<%= link_to "Machine Problem (Screen 2)", problems_path %>
-<% end %>
 
-<% if can? :data, current_user %>
-	<%= link_to "Data", data_path %>
-<% end %>
+$('body').on('click', function(){
+	$('.inner_body').removeClass('bring_to_back')
+  $('nav.right_menu').removeClass('open')
+  $('nav.left_menu').removeClass('open')
+  $('nav.main_menu').removeClass('open_left')
+  $('nav.main_menu').removeClass('open_right')
+})
 
+</script>
