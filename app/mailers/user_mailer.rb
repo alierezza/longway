@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
   	def report
 	    
 	    mail(to: CONFIG["kirim_email_ke"],
-	         subject: "[Global Way Indonesia] Laporan Harian")
+	         subject: "[Global Way Indonesia] Laporan Hasil Produksi Harian (#{Date.today.strftime('%d %B %Y')})")
   	end
 
 end
