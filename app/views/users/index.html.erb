@@ -1,34 +1,42 @@
-<br>
-<%= link_to "New User",new_user_path %>
-<table class="table table-stripped table-bordered">
-	<thead>
-		<th>Nama</th>
-		<th>Email</th>
-		<th>Role</th>
-		<th>Alamat</th>
-		<th>Telp</th>
-		<th>Line</th>
-		<th>Status</th>
-		<th>Action</th>
-	</thead>
-	<tbody>
-		<% @users.all.each_with_index do |user, index| %>
-			<tr>
-				<td><%= user.nama %></td>
-				<td><%= user.email %></td>
-				<td><%= user.role %></td>
-				<td><%= user.alamat %></td>
-				<td><%= user.telp %></td>
-				<td><%= user.line == nil ? "-" : user.line.no %></td>
-				<td><%= user.status == true ? "Enable" : "<font color=red>Disable</font>".html_safe %></td>
-				<td>
-					<%= link_to "Reset", edit_user_path(user,:reset_password=>true), :method=>"GET", :class=>"btn btn-xs btn-warning" %>
-					<%= link_to "Update", edit_user_path(user), :method=>"GET",:class=>"btn btn-xs btn-default" %>
-					<% if user.role != "Admin" %>
-						<%= link_to "Delete", user_path(user), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this user ?", :class=>"btn btn-xs btn-danger" %>
-					<% end %>
-				</td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">User List</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="form-group">
+	  	<%= link_to new_user_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New User <% end %>
+	  </div>
+    <table class="table table-stripped table-bordered">
+			<thead>
+				<th>Nama</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Alamat</th>
+				<th>Telp</th>
+				<th>Line</th>
+				<th>Status</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<% @users.all.each_with_index do |user, index| %>
+					<tr>
+						<td><%= user.nama %></td>
+						<td><%= user.email %></td>
+						<td><%= user.role %></td>
+						<td><%= user.alamat %></td>
+						<td><%= user.telp %></td>
+						<td><%= user.line == nil ? "-" : user.line.no %></td>
+						<td><%= user.status == true ? "Enable" : "<font color=red>Disable</font>".html_safe %></td>
+						<td>
+							<%= link_to "Reset Password", edit_user_path(user,:reset_password=>true), :method=>"GET", :class=>"btn btn-xs btn-warning" %>
+							<%= link_to "Update", edit_user_path(user), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+							<% if user.role != "Admin" %>
+								<%= link_to "Delete", user_path(user), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this user ?", :class=>"btn btn-xs btn-danger" %>
+							<% end %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+  </div>
+</div>

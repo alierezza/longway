@@ -42,13 +42,11 @@
                 <%= f.text_field :telp, :Class=>"form-control", required: true %>
             </div>
         <% end %>
-        
-        
-        <div class='form-actions' style='margin-bottom:0'>
-            <button class='btn btn-primary' type='submit' data-disable-with= "Wait..">
-                <i class='icon-save'></i>
-                Save
-            </button>
+        <hr>
+
+        <div class='form-actions pull-right' style='margin-bottom:0'>
+        <%= link_to users_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+        <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
         </div>
     <% end %>
 </div>
