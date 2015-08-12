@@ -1,4 +1,4 @@
-<% if params[:search] %>
+<% if params[:search] and @data != [] %>
 	Line No : <%= @data.first.line.no %>
 	Tanggal : <%= @data.first.tanggal.strftime("%d %B %Y") %>
 	<table class="table table-bordered table-stripped">
@@ -7,34 +7,52 @@
 				<th rowspan=2>JAM</th>
 				<th rowspan=2>OPR</th>
 				<th rowspan=2>TARGET</th>
+				<th rowspan=2>TARGET (SUM)</th>
 				<th rowspan=2>ACT</th>
+				<th rowspan=2>ACT (SUM)</th>
 				<th rowspan=2>%</th>
 				<th rowspan=2>PPH</th>
-				<th colspan=2>DEFECT</th>
+				<th colspan=4>DEFECT</th>
 				<th rowspan=2>RFT</th>
 				<th rowspan=2>REMARK</th>
 			</tr>
 			<tr>
 				<th>INT</th>
+				<th>INT (SUM)</th>
 				<th>EXT</th>
+				<th>EXT (SUM)</th>
 			</tr>
 		</thead>
-		<tbody>
-				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
+		<tbody><% sum_target = 0 %><% sum_act = 0 %><% sum_defect_int = 0 %><% sum_defect_ext = 0 %>
+				<% @data.first.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index| %>
+					<% sum_target += detailreport.target.to_i  %>
+					<% sum_act += detailreport.act.to_i  %>
+					<% sum_defect_int += detailreport.defect_int.to_i  %>
+					<% sum_defect_ext += detailreport.defect_ext.to_i  %>
 					<tr>
 						<td><%= detailreport.jam %></td>
 						<td><%= detailreport.opr %></td>
 						<td><%= detailreport.target %></td>
+						<td><%= sum_target %></td>
 						<td><%= detailreport.act %></td>
+						<td><%= sum_act %></td>
 						<td><%= detailreport.percent %></td>
 						<td><%= detailreport.pph %></td>
 						<td><%= detailreport.defect_int %></td>
+						<td><%= sum_defect_int %></td>
 						<td><%= detailreport.defect_ext %></td>
+						<td><%= sum_defect_ext %></td>
 						<td><%= detailreport.rft %></td>
 						<td><%= detailreport.remark %></td>
 					</tr>
 				<% end %>
+					<tr>
+						<td colspan=14>Total <%= @data.first.detailreports.count %> Jam</td>
+					</tr>
 			
 		</tbody>
 	</table>
+
+<% else %>
+Data Empty
 <% end %>

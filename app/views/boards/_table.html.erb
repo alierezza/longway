@@ -30,8 +30,8 @@
 					<td><%= report.detailreports.sum("act") %></td>
 					<td><%= report.detailreports.last.percent %></td>
 					<td><%= report.detailreports.last.pph %></td>
-					<td><%= report.detailreports.last.defect_int %></td>
-					<td><%= report.detailreports.last.defect_ext %></td>
+					<td><%= report.detailreports.sum("defect_int") %></td>
+					<td><%= report.detailreports.sum("defect_ext") %></td>
 					<td><%= report.detailreports.last.rft %></td>
 					<td><%= report.detailreports.last.remark %></td>
 				</tr>

@@ -9,11 +9,11 @@ class CreateDetailreports < ActiveRecord::Migration
     	#t.integer	:target_sum,:default=>0
     	t.integer	:act ,:default=>0
     	#t.integer	:act_sum,:default=>0
-    	t.integer	:percent,:default=>0
-    	t.integer	:pph,:default=>0
+    	t.float	:percent,:default=>0
+    	t.float	:pph,:default=>0
     	t.integer	:defect_int,:default=>0
     	t.integer	:defect_ext,:default=>0
-    	t.integer	:rft,:default=>0
+    	t.float	:rft,:default=>0
     	t.text	:remark
 
         t.integer    :jam
