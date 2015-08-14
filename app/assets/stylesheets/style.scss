@@ -123,7 +123,7 @@ button#connect {
 .big_icon {
   text-align: center;
     a {
-      font-size: 50px;
+      font-size: 40px;
       padding: 98px 0px;
       margin-top: 50px;
     }
@@ -261,10 +261,10 @@ button#connect {
 
 .table_problems {
   th {
-    height: 180px;
+    // height: 180px;
     text-align: center;
     width: 20%;
-    font-size: 80px;
+    font-size: 75px;
   }
 }
 
@@ -331,9 +331,9 @@ div.carousel .fill {
 
 //////// login
 
-/* Reset CSS */
-
-
+#content {
+  height: 330px;
+}
 
 
 .container { margin: 25px auto; position: relative; width: 900px; }
@@ -357,7 +357,6 @@ div.carousel .fill {
   text-align: center;
   text-shadow: 0 1px 0 #fff;
   width: 400px;
-  height: 280px;
 }
 #content h1 {
   color: #7E7E7E;
@@ -445,6 +444,7 @@ div.carousel .fill {
   -ms-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  // background: #eae7e7 url(http://cssdeck.com/uploads/media/items/8/8bcLQqF.png) no-repeat;
   border: 1px solid #c8c8c8;
   color: #777;
   font: 13px Helvetica, Arial, sans-serif;
