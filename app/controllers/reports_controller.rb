@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
 
 			Line.find(id).update!(:status=>status)
 		end
-		
+
 		if current_user.line.reports == []
 			@target_and_opr = Report.new
 			@target_and_opr.detailreports.build
@@ -25,7 +25,6 @@ class ReportsController < ApplicationController
 	end
 
 	def data
-
 		if params[:search]
 			begin
 			@data = Line.where("no=?",params[:no].to_i).first.reports.where("tanggal = ?",params[:tanggal].to_date)
@@ -67,7 +66,7 @@ class ReportsController < ApplicationController
 			params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.last.defect_ext.to_i + 1
 		end
 
-		params[:report][:detailreports_attributes]["0"][:percent] = params[:report][:detailreports_attributes]["0"][:target].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:target].to_i .to_f ).round(2) 
+		params[:report][:detailreports_attributes]["0"][:percent] = params[:report][:detailreports_attributes]["0"][:target].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:target].to_i .to_f ).round(2)
 		params[:report][:detailreports_attributes]["0"][:pph] = params[:report][:detailreports_attributes]["0"][:opr].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:opr].to_i .to_f).round(2)
 		defact = params[:report][:detailreports_attributes]["0"][:defect_int].to_i+params[:report][:detailreports_attributes]["0"][:defect_ext].to_i .to_f
 		temp = params[:report][:detailreports_attributes]["0"][:act].to_i == 0 ? 0 :  params[:report][:detailreports_attributes]["0"][:act].to_i / ( params[:report][:detailreports_attributes]["0"][:act].to_i  + defact ) .to_f
@@ -94,15 +93,15 @@ class ReportsController < ApplicationController
 		end
 
 		params[:report][:detailreports_attributes]["0"][:opr] != nil ? opr = params[:report][:detailreports_attributes]["0"][:opr].to_i : opr = @report.detailreports.last.opr.to_i
-		
+
 		params[:report][:detailreports_attributes]["0"][:act] != nil ? act = params[:report][:detailreports_attributes]["0"][:act].to_i : act = @report.detailreports.last.act.to_i
-		
+
 		params[:report][:detailreports_attributes]["0"][:target] != nil ? target = params[:report][:detailreports_attributes]["0"][:target].to_i : target = @report.detailreports.last.target.to_i
-		
+
 		params[:report][:detailreports_attributes]["0"][:defect_int] != nil ? defect_int = params[:report][:detailreports_attributes]["0"][:defect_int].to_i + @report.detailreports.sum("defect_int").to_i : defect_int = @report.detailreports.sum("defect_int").to_i
-		
+
 		params[:report][:detailreports_attributes]["0"][:defect_ext] != nil ? defect_ext = params[:report][:detailreports_attributes]["0"][:defect_ext].to_i + @report.detailreports.sum("defect_ext").to_i : defect_ext = @report.detailreports.sum("defect_ext").to_i
-		
+
 
 		act_sum = act + @report.detailreports.sum("act").to_i - @report.detailreports.last.act.to_i
 		#if @report.detailreports.count == 1

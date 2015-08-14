@@ -1,13 +1,29 @@
-<br>History Data tiap JAM
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">History data</h3>
+  </div>
+  <div class="panel-body">
+		<div class="form-group">
+			<%= form_tag data_path, :method=>"GET", :remote=>true do %>
+			<div class="form-group">
+				<%= label_tag :no_line, "No. Line" , class: "control-label" %>
+				<%= text_field_tag :no, nil, :required=>true, class: "form-control" %>
+			</div>
 
-<%= form_tag data_path, :method=>"GET", :remote=>true do %>
-	<%= text_field_tag :no, nil, :required=>true %>
-	<%= date_field_tag :tanggal, nil, :required=>true %>
-	<%= hidden_field_tag :search, "true", :required=>true %>
-	<%= submit_tag "search" %>
-<% end %>
+			<div class="form-group">
+				<%= label_tag :date, "Date", class: "control-label" %>
+				<%= date_field_tag :tanggal, nil, :required=>true, class: "form-control" %>
+			</div>
 
 
-<div id="data">
-	<%= render "data" %>
+				<%= hidden_field_tag :search, "true", :required=>true %>
+				<%= submit_tag "search", class: "btn btn-default" %>
+			<% end %>
+		</div>
+
+	<div id="data">
+		<%= render "data" %>
+	</div>
+
+	</div>
 </div>
