@@ -4,20 +4,50 @@
   <div class="col-md-3 header_board">
     <div id="clockbox"></div>
   </div>
-  <div class="col-md-2"></div>
+  <div class="col-md-2" style="font-size: 28px; margin-top: 8px;">
+    <%= Date.today.strftime("%d %B %Y") %>
+  </div>
 </div>
 
 <h3>PT. GLOBAL WAY INDONESIA</h3>
 
-<div id="board">
-	<%= render "table" %>
+<div id="myCarousel" class="carousel slide">
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item">
+      <div id="board">
+        <%= render "table" %>
+      </div>
+    </div>
+    <div class="item  active">
+      <% @big_data.each do |big| %>
+      <div class="col-md-2">
+        <strong>Line <%= big.first %></strong>
+            <div>
+              <canvas id="canvas_<%= big.first.to_s %>" height="450" width="600"></canvas>
+              <span id="legendDiv_<%= big.first.to_s %>"></span>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev" style="left: -20px;">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next" style="right: -20px;">
+    <span class="icon-next"></span>
+  </a>
 </div>
 
 
-
-
-
 <script>
+// $('.carousel').carousel({
+//    interval: 6000 //changes the speed
+//   })
+
 function GetClock(){
   var d=new Date();
   var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
@@ -27,22 +57,73 @@ function GetClock(){
   document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
 }
 
-window.onload=function(){
+
+$(function(){
 GetClock();
 setInterval(GetClock,1000);
-}
+
+})
 
 function refresh(){
     //get the mins of the current time
     var hours = new Date().getHours();
     var mins = new Date().getMinutes();
     var secs = new Date().getSeconds();
-    
+
     if(secs % 1 == "0"){
         $.get("/boards/new", {refresh: true}, null, "script");
      }
 
 }
-setInterval(refresh, 1000);
+// setInterval(refresh, 1000);
+
+
+var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+  <% @big_data.each do |big| %>
+
+  var <%= "graph_" + big.first.to_s %> = {
+      labels : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00", "15:00", "16:00", "17:00", "18:00"],
+      datasets : [
+        {
+          label: "Target",
+          fillColor : "rgba(71,225,57,0.2)",
+          strokeColor : "rgb(71,225,57)",
+          pointColor : "rgba(71,225,57,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= big.last.first %>
+        },
+        {
+          label: "Actual",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(151,187,205,1)",
+          data : <%= big.last.last %>
+        }
+      ]
+
+    }
+
+    var ctx = document.getElementById("canvas_<%= big.first.to_s %>").getContext("2d");
+    window.myLine = new Chart(ctx).Line(<%= "graph_" + big.first.to_s %>, {
+      responsive: true,
+      legendTemplate : '<ul class="graph-legend">'
+                    +'<li class="target">'
+                    +'<span style="background-color: red"></span> Target'
+                    +'</li>'
+                    +'<li class="actual">'
+                    +'<span style="background-color: red"></span> Actual'
+                    +'</li>'
+
+              +'</ul>'
+    });
+    document.getElementById("legendDiv_<%= big.first.to_s %>").innerHTML = myLine.generateLegend();
+     <% end %> // end big
+
 
 </script>
