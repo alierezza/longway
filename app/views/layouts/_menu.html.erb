@@ -21,7 +21,7 @@
 
 			<hr>
 
-			<% if can? :home, current_user  %>
+			<% if can? :home, current_user %>
 				<li> <%= link_to "Home", homes_path %></li>
 			<% end %>
 
@@ -78,5 +78,7 @@ $('body').on('click', function(){
   $('nav.main_menu').removeClass('open_left')
   $('nav.main_menu').removeClass('open_right')
 })
+
+
 
 </script>

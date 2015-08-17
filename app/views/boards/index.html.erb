@@ -21,15 +21,9 @@
       </div>
     </div>
     <div class="item  active">
-      <% @big_data.each do |big| %>
-      <div class="col-md-2">
-        <strong>Line <%= big.first %></strong>
-            <div>
-              <canvas id="canvas_<%= big.first.to_s %>" height="450" width="600"></canvas>
-              <span id="legendDiv_<%= big.first.to_s %>"></span>
-            </div>
-          </div>
-      <% end %>
+      <div id="board_graph">
+        <%= render "graph" %>
+      </div>
     </div>
   </div>
 
@@ -44,9 +38,9 @@
 
 
 <script>
-// $('.carousel').carousel({
-//    interval: 6000 //changes the speed
-//   })
+$('.carousel').carousel({
+   interval: 15000 //changes the speed
+  })
 
 function GetClock(){
   var d=new Date();
@@ -70,60 +64,17 @@ function refresh(){
     var mins = new Date().getMinutes();
     var secs = new Date().getSeconds();
 
-    if(secs % 1 == "0"){
-        $.get("/boards/new", {refresh: true}, null, "script");
-     }
+    $.get("/boards", {refresh: true}, null, "script");
+    
 
 }
-// setInterval(refresh, 1000);
+ id = setInterval(refresh, 2000);
 
 
-var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
-  <% @big_data.each do |big| %>
-
-  var <%= "graph_" + big.first.to_s %> = {
-      labels : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00", "15:00", "16:00", "17:00", "18:00"],
-      datasets : [
-        {
-          label: "Target",
-          fillColor : "rgba(71,225,57,0.2)",
-          strokeColor : "rgb(71,225,57)",
-          pointColor : "rgba(71,225,57,1)",
-          pointStrokeColor : "#fff",
-          pointHighlightFill : "#fff",
-          pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= big.last.first %>
-        },
-        {
-          label: "Actual",
-          fillColor : "rgba(151,187,205,0.2)",
-          strokeColor : "rgba(151,187,205,1)",
-          pointColor : "rgba(151,187,205,1)",
-          pointStrokeColor : "#fff",
-          pointHighlightFill : "#fff",
-          pointHighlightStroke : "rgba(151,187,205,1)",
-          data : <%= big.last.last %>
-        }
-      ]
-
-    }
-
-    var ctx = document.getElementById("canvas_<%= big.first.to_s %>").getContext("2d");
-    window.myLine = new Chart(ctx).Line(<%= "graph_" + big.first.to_s %>, {
-      responsive: true,
-      legendTemplate : '<ul class="graph-legend">'
-                    +'<li class="target">'
-                    +'<span style="background-color: red"></span> Target'
-                    +'</li>'
-                    +'<li class="actual">'
-                    +'<span style="background-color: red"></span> Actual'
-                    +'</li>'
-
-              +'</ul>'
-    });
-    document.getElementById("legendDiv_<%= big.first.to_s %>").innerHTML = myLine.generateLegend();
-     <% end %> // end big
+function clear_interval(id){
+  window.clearInterval(id);
+}
 
 
 </script>

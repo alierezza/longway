@@ -44,7 +44,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem "select2-rails"
   gem 'em-websocket'
   gem 'whenever', :require => false
-
+  gem 'devise_security_extension'
 
 
 group :development, :test do

@@ -36,13 +36,13 @@ class LinesController < ApplicationController
 
 	def update
 		@line = Line.find(params[:id])
-		@temp = @line.user.id
+		#@temp = @line.user.id
 	    respond_to do |format|
 	      if @line.update(my_sanitizer)
-	      	user = User.find(params[:line][:user_id])
+	      	user = @line.user
 	        user.status = true
 	        user.save
-	        User.find(@temp).update!(:status=>false)
+	        #User.find(@temp).update!(:status=>false)
 	        format.html { redirect_to lines_path, notice: 'Line has been updated'}
 	        format.json { render action: 'new', status: :created, location: @line }
 	      else

@@ -12,7 +12,7 @@
 
     <div class='form-group'>
         <label class='control-label'>Operator</label>
-        <%= f.select :user_id, options_from_collection_for_select(User.where("role != ?","Admin").all, 'id', 'nama', :selected=>@line.user_id),{:include_blank => '-- Select One --'}, class: 'form-control', required: true %>
+        <%= f.select :user_id, options_from_collection_for_select(User.where("role != ?","Admin").all, 'id', 'nama', :selected=>@line.user_id),{:include_blank => '-- Select One --'}, class: 'form-control' %>
     </div>
 
     <hr>

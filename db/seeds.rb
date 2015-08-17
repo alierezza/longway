@@ -8,4 +8,9 @@
 
 
 
-User.create!(:email=>"hendranatas@yahoo.com", :password=>"q1w2e3r4", :nama=>"Global Way International", :alamat=>"Sidoarjo", :telp=>"1324124", :role=>"Admin", :status=>true )
+User.create!(:email=>"admin@globalwayindonesia.com", :password=>"q1w2e3r4", :nama=>"Global Way International", :alamat=>"Sidoarjo", :telp=>"1324124", :role=>"Admin", :status=>true )
+
+
+User.create!(:email=>"visualboard@globalwayindonesia.com", :password=>"q1w2e3r4", :nama=>"Global Way International", :alamat=>"Sidoarjo", :telp=>"1324124", :role=>"Admin", :status=>true )
+
+User.create!(:email=>"machineproblem@globalwayindonesia.com", :password=>"q1w2e3r4", :nama=>"Global Way International", :alamat=>"Sidoarjo", :telp=>"1324124", :role=>"Admin", :status=>true )
