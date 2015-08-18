@@ -1,0 +1,17 @@
+<div class='panel-body'>
+    <%= form_for(@masteremail) do |f| %>
+        
+        <div class='form-group'>
+            <label class='control-label'>Email Address</label>
+            <%= f.email_field :name, :Class=>"form-control", required: true %>
+        </div>
+        
+
+        <hr>
+
+        <div class='form-actions pull-right' style='margin-bottom:0'>
+        <%= link_to masteremails_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+        <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
+        </div>
+    <% end %>
+</div>

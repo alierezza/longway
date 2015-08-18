@@ -9,6 +9,7 @@ class Ability
         can :manage, User #master User/ pegawai
         can :manage, Board 
         can :manage, Problem
+        can :manage, Masteremail
         can :data, Report do |report|
             report.line.user.role == "Admin"
         end
@@ -18,7 +19,7 @@ class Ability
         can :visual_board, User
         can :visual_problem, User
         can :line, User
-
+        can :masteremail, User
 
     elsif user.role == "User"
         can :manage, Home

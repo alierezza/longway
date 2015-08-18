@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Email List</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="form-group">
+	  	<%= link_to new_masteremail_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Email <% end %>
+	  </div>
+    <table class="table table-stripped table-bordered">
+			<thead>
+				<th>Email</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<% @emails.all.each_with_index do |email, index| %>
+					<tr>
+						<td><%= email.name %></td>
+						<td>
+							<%= link_to "Update", edit_masteremail_path(email), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+							<%= link_to "Delete", masteremail_path(email), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this email ?", :class=>"btn btn-xs btn-danger" %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+  </div>
+</div>

@@ -45,6 +45,10 @@
 				<li> <%= link_to "Data", data_path %></li>
 			<% end %>
 
+			<% if can? :master_email, current_user %>
+				<li> <%= link_to "Email", masteremails_path %></li>
+			<% end %>
+
 
 		</ul>
 	</nav>

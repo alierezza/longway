@@ -5,9 +5,13 @@ class UserMailer < ApplicationMailer
   	default from: CONFIG["email_dari"]
 
   	def report
-	    
-	    mail(to: CONFIG["kirim_email_ke"],
-	         subject: "[Global Way Indonesia] Laporan Hasil Produksi Harian (#{Date.today.strftime('%d %B %Y')})")
+  		@temp = Array.new
+	    Masteremail.all.each_with_index do |email,index|
+	    	@temp.push(email.name)
+	    end
+	    @temp.join(",")
+
+	    mail(to: @temp, subject: "[Global Way Indonesia] Laporan Hasil Produksi Harian (#{Date.today.strftime('%d %B %Y')})")
   	end
 
 end
