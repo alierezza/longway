@@ -44,7 +44,7 @@ class BoardsController < ApplicationController
 				arr_line << arr_target
 				arr_line << arr_act
 
-				@big_data[reports.line_id] = arr_line
+				@big_data[reports.line.no] = arr_line
 				#binding.pry
 			end
 
