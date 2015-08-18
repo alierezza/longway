@@ -7,7 +7,7 @@
 	<nav class="right_menu">
 		<ul>
 			<li>
-				<% if params[:controller] == "reports" %>
+				<% if params[:controller] == "reports" and params[:action] != "data" %>
 				<div class="engine_status">
 				  <div id="status"></div>
 				  <button id="connect">Connect</button>
