@@ -4,7 +4,7 @@
   <div class="col-md-3 header_board">
     <div id="clockbox"></div>
   </div>
-  <div class="col-md-2" style="font-size: 28px; margin-top: 8px;">
+  <div class="col-md-2" style="font-size: 38px; ">
     <%= Date.today.strftime("%d %B %Y") %>
   </div>
 </div>
@@ -14,18 +14,11 @@
 <div id="myCarousel" class="carousel slide">
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item">
-      <div id="board">
-        <%= render "table" %>
-      </div>
-    </div>
-    <div class="item  active">
+
       <div id="board_graph">
         <%= render "graph" %>
       </div>
-    </div>
-  </div>
+
 
   <!-- Controls -->
   <a class="left carousel-control" href="#myCarousel" data-slide="prev" style="left: -20px;">
@@ -38,9 +31,10 @@
 
 
 <script>
-$('.carousel').carousel({
-   interval: 60000 //changes the speed
-  })
+// $('.carousel').carousel({
+//    interval: 60000 //changes the speed
+//   })
+
 
 function GetClock(){
   var d=new Date();
@@ -65,10 +59,10 @@ function refresh(){
     var secs = new Date().getSeconds();
 
     $.get("/boards", {refresh: true}, null, "script");
-    
+
 
 }
- id = setInterval(refresh, 2000);
+ // id = setInterval(refresh, 2000);
 
 
 
