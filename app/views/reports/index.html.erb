@@ -1,9 +1,9 @@
 <fieldset>
   <legend>Stitching</legend>
-  <div class='col-md-6'>
+  <div class='col-xs-7'>
     <div class="form-group">
     <div class="row">
-    <div class="col-md-4">
+    <div class="col-xs-4">
       <div id="actual">
         <%= form_for(@target_and_opr, :remote=>true) do |f| %>
           <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
@@ -27,7 +27,7 @@
       </div> <!-- end id="actual" -->
     </div>
 
-    <div class="col-md-4">
+    <div class="col-xs-4">
       <div id="int_defect">
         <%= form_for(@target_and_opr, :remote=>true) do |f| %>
           <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
@@ -51,7 +51,7 @@
       </div> <!-- end id="int" -->
     </div>
 
-    <div class="col-md-4">
+    <div class="col-xs-4">
       <div id="ext_defect">
         <%= form_for(@target_and_opr, :remote=>true) do |f| %>
           <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
@@ -99,7 +99,7 @@
 
   </div>
 
- <div class='col-md-6'>
+ <div class='col-xs-5'>
     <div id="machine_problem" class="form-group">
       <div class="machine_title">Machine Problem</div>
         <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
@@ -112,26 +112,26 @@
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
       <div class='form-group'>
         <div class="row">
-          <div class='col-md-2'>
+          <div class='col-xs-2'>
             <label>Target</label>
           </div>
-          <div class='col-md-10'>
+          <div class='col-xs-10'>
             <%= detailreport.number_field :target, min: 1 ,class: 'form-control' %>
           </div>
         </div>
       </div>
       <div class='form-group'>
         <div class="row">
-          <div class='col-md-2'>
+          <div class='col-xs-2'>
             <label>OPR</label>
           </div>
-          <div class='col-md-10'>
+          <div class='col-xs-10'>
             <%= detailreport.number_field :opr, min: 1, class: 'form-control' %>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
            <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
       </div>
         </div>
@@ -145,10 +145,10 @@
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
         <div class='form-group'>
           <label>Remark</label>
-          <%= detailreport.text_area :remark, class: "form-control", rows: 8 %>
+          <%= detailreport.text_area :remark, class: "form-control", rows: 4 %>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-xs-12">
              <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
         </div>
       <% end %>
