@@ -19,7 +19,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.first(9).each_with_index do |board,line| %>
+		<% @boards.last(8).each_with_index do |board,line| %>
 			<% board.reports.where("tanggal = ?","2015-08-13".to_date).each_with_index do |report,index| %>
 				<tr>
 					<td>L. <%= report.line.no %></td>
