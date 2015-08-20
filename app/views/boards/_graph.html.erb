@@ -10,9 +10,14 @@
       <%= render "table2" %>
     </div>
   </div>
-  <div class="item">
-    <div id="detail_graph">
-      <%= render "detail_graph" %>
+
+
+  <% @big_data.each_with_index do |big_dat, index| %>
+    <div class="item">
+      <div id="detail_graph_<%= index %>">
+        <%= render "detail_graph", :big => big_dat %>
+      </div>
     </div>
-  </div>
+  <% end %>
+
 </div>

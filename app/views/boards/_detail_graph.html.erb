@@ -1,5 +1,6 @@
 <%# binding.pry %>
-  <% @big_data.each_with_index do |big, index| %>
+  
+  <%# binding.pry %>
   <%# binding.pry %>
     <div class="item">
     <div class="col-md-6">
@@ -21,8 +22,8 @@
 
     </div>
   </div>
-  <% end %>
-
+  
+  
 <script>
 
 $(function(){
@@ -31,6 +32,7 @@ $(function(){
   $('#myCarousel').on('slid.bs.carousel', function() {
     $("canvas").attr("width", "900").attr("height", "675")
     $("canvas").css("width", "900").css("height", "675")
+
     draw_graph()
     
   })
@@ -39,8 +41,8 @@ $(function(){
 
 function draw_graph(){
 
-  <% @big_data.each do |big| %>
-
+  <%# @big_data.each_with_index do |big,index| %>
+  
       var <%= "graph_" + big.first.to_s %> = {
           labels : ["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00", "15:00", "16:00", "17:00", "18:00"],
           datasets : [
@@ -133,7 +135,7 @@ function draw_graph(){
 
 
 
-         <% end %> // end big
+         <%# end %> // end big
 
 }
 
