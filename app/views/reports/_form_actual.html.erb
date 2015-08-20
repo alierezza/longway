@@ -7,7 +7,9 @@
       <div class="counter_header act">ACTUAL</div>
       <div class="counter_number">
         <%= detailreport.hidden_field :act %>
-        <%= detailreport.object.act %>
+        <div id="act">
+          <%= detailreport.object.act %>
+        </div>
         <%= hidden_field_tag :status, "actual" %>
       </div>
     </div> <!-- end counter box -->

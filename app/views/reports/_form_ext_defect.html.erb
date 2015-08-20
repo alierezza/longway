@@ -7,7 +7,9 @@
     <div class="counter_header def">EXT DEFECT</div>
     <div class="counter_number">
       <%= detailreport.hidden_field :defect_ext %>
-      <%= detailreport.object.defect_ext %>
+      <div id="defect_ext">
+        <%= detailreport.object.defect_ext %>
+      </div>
       <%= hidden_field_tag :status, "ext_defect" %>
     </div>
   </div> <!-- end counter box -->

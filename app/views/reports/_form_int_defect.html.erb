@@ -7,7 +7,9 @@
     <div class="counter_header def">INT DEFECT</div>
     <div class="counter_number">
       <%= detailreport.hidden_field :defect_int %>
-      <%= detailreport.object.defect_int %>
+      <div id="defect_int">
+        <%= detailreport.object.defect_int %>
+      </div>
       <%= hidden_field_tag :status, "int_defect" %>
     </div>
   </div> <!-- end counter box -->
@@ -16,7 +18,7 @@
     <div>INTERNAL</div>
   </div>
   <div class="counter_button">
-    <%= f.button "", class: "defect"  %>
+    <%= f.button "", class: "defect" %>
   </div>
   <% end %>
 <% end %>

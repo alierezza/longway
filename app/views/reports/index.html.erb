@@ -11,7 +11,9 @@
             <div class="counter_header act">ACTUAL</div>
             <div class="counter_number">
               <%= detailreport.hidden_field :act %>
-              <%= detailreport.object.act %>
+              <div id="act">
+                <%= detailreport.object.act %>
+              </div>
               <%= hidden_field_tag :status, "actual" %>
             </div>
           </div> <!-- end counter box -->
@@ -20,7 +22,7 @@
             <div>"OK"</div>
           </div>
           <div class="counter_button">
-            <%= f.button "", class: "actual"  %>
+            <%= f.button "", class: "actual", :id=>"btn_act"  %>
           </div>
           <% end %>
         <% end %>
@@ -35,7 +37,9 @@
             <div class="counter_header def">INT DEFECT</div>
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_int %>
-              <%= detailreport.object.defect_int %>
+              <div id="defect_int">
+                <%= detailreport.object.defect_int %>
+              </div>
               <%= hidden_field_tag :status, "int_defect" %>
             </div>
           </div> <!-- end counter box -->
@@ -59,7 +63,9 @@
             <div class="counter_header def">EXT DEFECT</div>
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_ext %>
-              <%= detailreport.object.defect_ext %>
+              <div id="defect_ext">
+                <%= detailreport.object.defect_ext %>
+              </div>
               <%= hidden_field_tag :status, "ext_defect" %>
             </div>
           </div> <!-- end counter box -->
@@ -68,7 +74,7 @@
             <div>EXTERNAL</div>
           </div>
           <div class="counter_button">
-            <%= f.button "", class: "defect"  %>
+            <%= f.button "", class: "defect" %>
           </div>
           <% end %>
         <% end %>
@@ -238,11 +244,16 @@
           var hours = new Date().getHours();
           var mins = new Date().getMinutes();
           var secs = new Date().getSeconds();
+     
           if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18" )){
           //if(secs == "0"){
               $("#report_detailreports_attributes_0_act").val(0);
               $("#report_detailreports_attributes_0_target").val(0);
-              //$.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>"}, null, "script");
+              //$("#act").html(0);
+              //$("#defect_int").html(0);
+              //$("#defect_ext").html(0);
+
+              $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>"}, null, "script");
            }
 
       }

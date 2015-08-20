@@ -5,7 +5,7 @@
 
 # Example:
 #
-set :output, "/log/cron_log.log"
+set :output, "log/cron_log.log"
 
 every 1.day, :at => "6 pm" do
   runner "Board.send_email"
