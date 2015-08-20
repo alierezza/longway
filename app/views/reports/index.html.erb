@@ -242,7 +242,7 @@
           //if(secs == "0"){
               $("#report_detailreports_attributes_0_act").val(0);
               $("#report_detailreports_attributes_0_target").val(0);
-              $.get("/reports/new", {record: hours}, null, "script");
+              //$.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>"}, null, "script");
            }
 
       }

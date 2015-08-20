@@ -42,13 +42,13 @@ class ReportsController < ApplicationController
 
 	def new
 		if params[:record] #refresh tiap jam
-			opr = current_user.line.reports.last.detailreports.last.opr
-			remark = current_user.line.reports.last.detailreports.last.remark
-			percent = current_user.line.reports.last.detailreports.last.percent
-			act_sum = current_user.line.reports.last.detailreports.sum("act").to_i
-			pph = opr == 0 ? 0 : (act_sum / opr  .to_f * (current_user.line.reports.last.detailreports.count+1) ).round(2)
-			rft = current_user.line.reports.last.detailreports.last.rft
-			current_user.line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark)
+			opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
+			remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
+			percent = User.find(params[:user_id]).line.reports.last.detailreports.last.percent
+			act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
+			pph = opr == 0 ? 0 : (act_sum / opr  .to_f * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ).round(2)
+			rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
+			User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark)
 		end
 	end
 
