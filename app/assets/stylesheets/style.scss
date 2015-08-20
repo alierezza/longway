@@ -134,7 +134,7 @@ button#connect {
 ///////// board
 
 .header_board {
-  font-size: 45px;
+  font-size: 50px;
   margin-bottom: -18px;
 }
 
@@ -296,6 +296,13 @@ button#connect {
     }
     li.target:before {
       background-color: rgb(71,225,57);
+    }
+
+    li.def-int:before {
+      background-color: rgb(231,30,19);
+    }
+    li.def-ext:before {
+      background-color: black;
     }
   }
 
