@@ -1,5 +1,9 @@
 <% if params[:refresh] == "true" %>
-	<%# @boards = Line.all %>
-	$("#board").html("<%= escape_javascript(render 'table') %>");
-	$("#board_graph").html("<%= escape_javascript(render 'graph') %>");
+	
+	$("#board1").html("<%= escape_javascript(render 'table') %>");
+	$("#board2").html("<%= escape_javascript(render 'table2') %>");
+	$("#detail_graph").html("<%= escape_javascript(render 'detail_graph') %>");
+
+
+
 <% end %>

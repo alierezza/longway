@@ -19,8 +19,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.first(9).each_with_index do |board,line| %>
-			<% board.reports.where("tanggal = ?","2015-08-13".to_date).each_with_index do |report,index| %>
+		<% @boards.where("no >= 1 and no <= 8").each_with_index do |board,line| %>
+			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
 				<tr>
 					<td>L. <%= report.line.no %></td>
 					<td><%= report.detailreports.last.opr %></td>

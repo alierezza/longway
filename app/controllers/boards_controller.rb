@@ -25,16 +25,16 @@ class BoardsController < ApplicationController
 			arr_def_ext = []
 
 
-			# reports = lines.reports.find_by("tanggal = ?",DateTime.now.to_date) # <--------------------- uncomment
-			reports = lines.reports.find_by("tanggal = ?","2015-08-13".to_date)
+			reports = lines.reports.find_by("tanggal = ?",DateTime.now.to_date) # <--------------------- uncomment
+			#reports = lines.reports.find_by("tanggal = ?","2015-08-13".to_date)
 
 			if reports.present?
-				# 12.times do |jam|
-					# @temp = false # <--------------------- uncomment
-					# @jam = jam + 6 # <--------------------- uncomment
+				12.times do |jam|
+					@temp = false # <--------------------- uncomment
+					@jam = jam + 6 # <--------------------- uncomment
 					reports.detailreports.order("created_at ASC").each_with_index do |report,index|
 
-						# if report.jam.to_i == @jam # <--------------------- uncomment
+						if report.jam.to_i == @jam # <--------------------- uncomment
 
 							sum_target += report.target.to_i
 							sum_act += report.act.to_i
@@ -48,7 +48,7 @@ class BoardsController < ApplicationController
 							arr_def_ext << sum_def_ext
 
 							@temp = true
-						# end # <--------------------- uncomment
+						end # <--------------------- uncomment
 
 					end
 					if @temp == false and Time.now.strftime("%H").to_i >= @jam
@@ -58,7 +58,7 @@ class BoardsController < ApplicationController
 						arr_def_ext << 0
 					end
 
-				# end # <--------------------- uncomment
+				end # <--------------------- uncomment
 				arr_line << arr_target
 				arr_line << arr_act
 				arr_line << arr_def_int
