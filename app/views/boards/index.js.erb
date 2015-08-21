@@ -3,7 +3,7 @@
 	$("#board1").html("<%= escape_javascript(render 'table') %>");
 	$("#board2").html("<%= escape_javascript(render 'table2') %>");
 	<%# @big_data = @big_data.first %>
-
+	
 	<% @big_data.each_with_index do |big_dat, index| %>
 		$("#detail_graph_<%= index %>").html("<%= escape_javascript(render 'detail_graph',:big => big_dat) %>");
     <% end %>
