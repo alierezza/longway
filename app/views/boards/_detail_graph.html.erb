@@ -25,21 +25,21 @@
           datasets : [
             {
               label: "Target",
-              fillColor : "rgba(71,225,57,0.2)",
-              strokeColor : "rgb(71,225,57)",
-              pointColor : "rgba(71,225,57,1)",
-              pointStrokeColor : "#fff",
-              pointHighlightFill : "#fff",
+              fillColor : "rgba(19,104,133,0.5)",
+              strokeColor : "darkblue",
+              pointColor : "darkblue",
+              pointStrokeColor : "darkblue",
+              pointHighlightFill : "darkblue",
               pointHighlightStroke : "rgba(220,220,220,1)",
               data : <%= big[1][0] %>
             },
             {
               label: "Actual",
-              fillColor : "rgba(151,187,205,0.2)",
-              strokeColor : "rgb(39,162,255)",
-              pointColor : "rgba(151,187,205,1)",
-              pointStrokeColor : "#fff",
-              pointHighlightFill : "#fff",
+              fillColor : "rgba(212,78,209,0.5)",
+              strokeColor : "magenta",
+              pointColor : "magenta",
+              pointStrokeColor : "magenta",
+              pointHighlightFill : "magenta",
               pointHighlightStroke : "rgba(151,187,205,1)",
               data : <%= big[1][1] %>
             }
@@ -51,14 +51,15 @@
         window.myLine = new Chart(ctx).Line(<%= "graph_" + big.first.to_s %>, {
           responsive: true,
           animation : false,
-          scaleFontSize: 17,
           scaleShowHorizontalLines: true,
+          scaleFontSize: 20,
+          scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="target">'
-                        +' Target'
+                        +' <font size=6>Target</font>'
                         +'</li>'
                         +'<li class="actual">'
-                        +' Actual'
+                        +' <font size=6>Actual</font>'
                         +'</li>'
 
                   +'</ul>'
@@ -72,21 +73,21 @@
           datasets : [
             {
               label: "Defect Internal",
-              fillColor : "rgba(231,30,19,0.2)",
+              fillColor : "rgba(231,30,19,0.5)",
               strokeColor : "rgb(231,30,19)",
-              pointColor : "rgba(231,30,19,1)",
-              pointStrokeColor : "#fff",
-              pointHighlightFill : "#fff",
+              pointColor : "rgb(231,30,19)",
+              pointStrokeColor : "rgb(231,30,19)",
+              pointHighlightFill : "rgb(231,30,19)",
               pointHighlightStroke : "rgba(220,220,220,1)",
               data : <%= big[1][2] %>
             },
             {
               label: "Defect External",
-              fillColor : "rgba(192,192,192,0.4)",
-              strokeColor : "rgb(64,64,64)",
-              pointColor : "rgb(92,92,92)",
-              pointStrokeColor : "#fff",
-              pointHighlightFill : "#fff",
+              fillColor : "rgba(87,87,87,0.5)",
+              strokeColor : "black",
+              pointColor : "black",
+              pointStrokeColor : "black",
+              pointHighlightFill : "black",
               pointHighlightStroke : "rgba(151,187,205,1)",
               data : <%= big[1][3] %>
             }
@@ -98,14 +99,15 @@
         window.myLine = new Chart(ctx).Line(<%= "graph_def_" + big.first.to_s %>, {
           responsive: true,
           animation : false,
-          scaleFontSize: 17,
           scaleShowHorizontalLines: true,
+          scaleFontSize: 20,
+          scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="def-int">'
-                        +' Defect Int'
+                        +' <font size=6>Defect Int</font>'
                         +'</li>'
                         +'<li class="def-ext">'
-                        +' Defect Ext'
+                        +' <font size=6>Defect Ext</font>'
                         +'</li>'
 
                   +'</ul>'
@@ -117,3 +119,4 @@
          <%# end %> // end big
 
 </script>
+

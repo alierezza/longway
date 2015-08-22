@@ -52,17 +52,17 @@ setInterval(GetClock,1000);
 
 })
 
-function refresh(){
-    //get the mins of the current time
-    var hours = new Date().getHours();
-    var mins = new Date().getMinutes();
-    var secs = new Date().getSeconds();
+// function refresh(){
+//     //get the mins of the current time
+//     var hours = new Date().getHours();
+//     var mins = new Date().getMinutes();
+//     var secs = new Date().getSeconds();
 
-    $.get("/boards", {refresh: true}, null, "script");
+//     $.get("/boards", {refresh: true}, null, "script");
 
 
-}
-  id = setInterval(refresh, 5000);
+// }
+  //id = setInterval(refresh, 2000);
 
 
 

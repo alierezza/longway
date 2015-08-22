@@ -271,39 +271,47 @@ button#connect {
 
 .table_problems {
   th {
-    // height: 220px;
+    height: 150px;
     text-align: center;
     width: 20%;
-    font-size: 85px;
-    vertical-align: middle;
+    font-size: 100px;
   }
 }
 
 
 .graph-legend{
   list-style: none;
-
+    li {
+      float: left;
+    }
     li:before {
       margin-right: 10px;
       content: " ";
-      height: 15px;
-      width: 15px;
+      height: 35px;
+      width: 35px;
       display: block;
       float: left;
     }
 
-    li.actual:before {
-      background-color: rgb(151,187,205);
+    li.actual{
+      margin-left: 80px;
+      &:before {
+        background-color: magenta;
+      }
     }
+
     li.target:before {
-      background-color: rgb(71,225,57);
+      background-color: darkblue;
     }
 
     li.def-int:before {
       background-color: rgb(231,30,19);
     }
-    li.def-ext:before {
-      background-color: black;
+    li.def-ext{
+      margin-left: 80px;
+      &:before {
+        background-color: black;
+      }
     }
   }
 
