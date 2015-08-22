@@ -22,21 +22,3 @@
   <% end %>
 
 </div>
-
-<script>
-$(function(){
-
-  //draw_graph()
-  $('#myCarousel').on('slid.bs.carousel', function() {
-
-    $("canvas").attr("width", "900").attr("height", "675")
-    $("canvas").css("width", "900").css("height", "675")
-
-    <%# @big_data.each_with_index do |big_dat, index| %>
-      //$("#detail_graph_<%#= index %>").html("<%#= escape_javascript(render 'detail_graph',:big => big_dat) %>");
-    <%# end %>
-    //draw_graph()
-    
-  })
-})
-</script>

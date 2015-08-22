@@ -1,40 +1,25 @@
-
-<%# binding.pry %>
-  
-  <%# binding.pry %>
-  <%# binding.pry %>
-    <div class="item">
-    <div class="col-md-6">
-      <h3>Production</h3>
-      <strong>Line <%= big.first %></strong>
-      <div>
-        <canvas id="canvas_<%= big.first.to_s %>" height="450" width="600"></canvas>
-        <span id="legendDiv_<%= big.first.to_s %>"></span>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <h3>Defect</h3>
-      <strong>Line <%= big.first %></strong>
-      <div>
-        <canvas id="canvas_def_<%= big.first.to_s %>" height="450" width="600"></canvas>
-        <span id="legendDiv_def_<%= big.first.to_s %>"></span>
-      </div>
-
-    </div>
+<div class="col-md-6">
+  <h3>Production</h3>
+  <strong>Line <%= big.first %></strong>
+  <div>
+    <canvas id="canvas_<%= big.first.to_s %>" height="450" width="600"></canvas>
+    <span id="legendDiv_<%= big.first.to_s %>"></span>
   </div>
-  
+</div>
 
-  
+<div class="col-md-6">
+  <h3>Defect</h3>
+  <strong>Line <%= big.first %></strong>
+  <div>
+    <canvas id="canvas_def_<%= big.first.to_s %>" height="450" width="600"></canvas>
+    <span id="legendDiv_def_<%= big.first.to_s %>"></span>
+  </div>
+</div>
+
 <script>
 
-
-
-
-//function draw_graph(){
-
   <%# @big_data.each_with_index do |big,index| %>
-  
+
       var <%= "graph_" + big.first.to_s %> = {
           labels : ["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00", "15:00", "16:00", "17:00", "18:00"],
           datasets : [
@@ -51,7 +36,7 @@
             {
               label: "Actual",
               fillColor : "rgba(151,187,205,0.2)",
-              strokeColor : "rgba(151,187,205,1)",
+              strokeColor : "rgb(39,162,255)",
               pointColor : "rgba(151,187,205,1)",
               pointStrokeColor : "#fff",
               pointHighlightFill : "#fff",
@@ -66,6 +51,7 @@
         window.myLine = new Chart(ctx).Line(<%= "graph_" + big.first.to_s %>, {
           responsive: true,
           animation : false,
+          scaleFontSize: 17,
           scaleShowHorizontalLines: true,
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="target">'
@@ -96,9 +82,9 @@
             },
             {
               label: "Defect External",
-              fillColor : "silver",
-              strokeColor : "black",
-              pointColor : "black",
+              fillColor : "rgba(192,192,192,0.4)",
+              strokeColor : "rgb(64,64,64)",
+              pointColor : "rgb(92,92,92)",
               pointStrokeColor : "#fff",
               pointHighlightFill : "#fff",
               pointHighlightStroke : "rgba(151,187,205,1)",
@@ -112,6 +98,7 @@
         window.myLine = new Chart(ctx).Line(<%= "graph_def_" + big.first.to_s %>, {
           responsive: true,
           animation : false,
+          scaleFontSize: 17,
           scaleShowHorizontalLines: true,
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="def-int">'
@@ -128,8 +115,5 @@
 
 
          <%# end %> // end big
-
-//}
-
 
 </script>

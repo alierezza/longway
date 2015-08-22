@@ -26,7 +26,7 @@ class BoardsController < ApplicationController
 
 			arr_empty = []
 
-			
+
 			reports = line.reports.find_by("tanggal = ?",DateTime.now.to_date) # <--------------------- uncomment
 			#reports = lines.reports.find_by("tanggal = ?","2015-08-13".to_date)
 
@@ -70,8 +70,8 @@ class BoardsController < ApplicationController
 
 				else
 
-			
-					
+
+
 					arr_empty << [0]
 					arr_empty << [0]
 					arr_empty << [0]
@@ -94,7 +94,7 @@ class BoardsController < ApplicationController
 
 		end
 
-		
+
 
 	end
 
