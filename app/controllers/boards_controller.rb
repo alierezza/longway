@@ -7,6 +7,8 @@ class BoardsController < ApplicationController
 		# # GC.start()
 		# GC::Profiler.clear
 
+		
+
 		@boards = Line.all.order("no")
 		today = DateTime.now.to_date.strftime("%Y-%m-%d")
 
@@ -93,7 +95,7 @@ class BoardsController < ApplicationController
 
 
 		end
-
+#binding.pry
 		
 
 	end

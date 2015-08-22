@@ -271,10 +271,10 @@ button#connect {
 
 .table_problems {
   th {
-    height: 220px;
+    height: 150px;
     text-align: center;
     width: 20%;
-    font-size: 125px;
+    font-size: 100px;
   }
 }
 
@@ -285,17 +285,17 @@ button#connect {
     li:before {
       margin-right: 10px;
       content: " ";
-      height: 15px;
-      width: 15px;
+      height: 35px;
+      width: 35px;
       display: block;
       float: left;
     }
 
     li.actual:before {
-      background-color: rgb(151,187,205);
+      background-color: magenta;
     }
     li.target:before {
-      background-color: rgb(71,225,57);
+      background-color: darkblue;
     }
 
     li.def-int:before {

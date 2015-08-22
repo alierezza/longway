@@ -15,7 +15,8 @@
   <% @big_data.each_with_index do |big_dat, index| %>
 
     <div class="item ">
-      <div id="detail_graph_<%= index %>">
+      <div id="detail_graph_<%= big_dat.first %>">
+        <input type="hidden" value="<%= big_dat.first %>" class="hidden" />
         <%= render "detail_graph", :big => big_dat %>
       </div>
     </div>
@@ -23,18 +24,23 @@
 
 </div>
 
+
 <script>
 $(function(){
 
   //draw_graph()
   $('#myCarousel').on('slid.bs.carousel', function() {
 
-    $("canvas").attr("width", "900").attr("height", "675")
-    $("canvas").css("width", "900").css("height", "675")
+    //$("canvas").attr("width", "900").attr("height", "675")
+    //$("canvas").css("width", "900").css("height", "675")
+//var a = carouselData.$element.find('.item.active')
 
-    <%# @big_data.each_with_index do |big_dat, index| %>
-      //$("#detail_graph_<%#= index %>").html("<%#= escape_javascript(render 'detail_graph',:big => big_dat) %>");
-    <%# end %>
+ // var carouselData = $(this).data('bs.carousel');
+ //  var line_no = carouselData.$element.find('.active .hidden').val();
+
+    $.get("/boards", {refresh: true}, null, "script");
+
+    
     //draw_graph()
     
   })

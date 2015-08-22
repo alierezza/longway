@@ -5,7 +5,7 @@
 	<%# @big_data = @big_data.first %>
 	
 	<% @big_data.each_with_index do |big_dat, index| %>
-		$("#detail_graph_<%= index %>").html("<%= escape_javascript(render 'detail_graph',:big => big_dat) %>");
+		$("#detail_graph_<%= big_dat.first %>").html("<%= escape_javascript(render 'detail_graph',:big => big_dat) %>");
     <% end %>
 
 

@@ -42,13 +42,21 @@ class ReportsController < ApplicationController
 
 	def new
 		if params[:record] #refresh tiap jam
-			opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
-			remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
-			percent = User.find(params[:user_id]).line.reports.last.detailreports.last.percent
-			act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
-			pph = opr == 0 ? 0 : (act_sum / opr  .to_f * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ).round(2)
-			rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
-			User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark)
+			begin
+				if current_user.line.reports.last.detailreports.last.jam.to_i == Time.now.strftime("%H").to_i
+
+				else
+					opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
+					remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
+					percent = User.find(params[:user_id]).line.reports.last.detailreports.last.percent
+					act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
+					pph = opr == 0 ? 0 : (act_sum / opr  .to_f * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ).round(2)
+					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
+					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark)
+				end
+			rescue
+
+			end
 		end
 	end
 

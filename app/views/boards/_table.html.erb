@@ -22,18 +22,18 @@
 		<% @boards.where("no >= 1 and no <= 8").order("no").each_with_index do |board,line| %>
 			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
 				<tr>
-					<td>L. <%= report.line.no %></td>
-					<td><%= report.detailreports.last.opr %></td>
-					<td><%= report.detailreports.last.target %></td>
-					<td><%= report.detailreports.sum("target") %></td>
-					<td><%= report.detailreports.last.act %></td>
-					<td><%= report.detailreports.sum("act") %></td>
-					<td><%= report.detailreports.last.percent %></td>
-					<td><%= report.detailreports.last.pph %></td>
-					<td><%= report.detailreports.sum("defect_int") %></td>
-					<td><%= report.detailreports.sum("defect_ext") %></td>
-					<td><%= report.detailreports.last.rft %></td>
-					<td><%= report.detailreports.last.remark %></td>
+					<td><b><font size="13">L. <%= report.line.no %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.opr %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.target %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.sum("target") %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.act %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.sum("act") %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.percent %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.pph %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.sum("defect_int") %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.sum("defect_ext") %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.rft %></font></b></td>
+					<td><b><font size="13"><%= report.detailreports.last.remark %></font></b></td>
 				</tr>
 			<% end %>
 		<% end %>
