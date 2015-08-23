@@ -1,13 +1,15 @@
 
 <div class="carousel-inner">
   <div class="item active">
+    <input type="hidden" value="table1" class="hidden" />
     <div id="board1">
       <%= render "table" %>
     </div>
   </div>
   <div class="item ">
+    <input type="hidden" value="table2" class="hidden" />
     <div id="board2">
-      <%= render "table2" %>
+      <%#= render "table2" %>
     </div>
   </div>
 
@@ -15,15 +17,14 @@
   <% @big_data.each_with_index do |big_dat, index| %>
 
     <div class="item ">
+      <input type="hidden" value="<%= big_dat.first.to_s %>" class="hidden" />
       <div id="detail_graph_<%= big_dat.first %>">
-        <input type="hidden" value="<%= big_dat.first %>" class="hidden" />
-        <%= render "detail_graph", :big => big_dat %>
+        <%#= render "detail_graph", :big => big_dat %>
       </div>
     </div>
   <% end %>
 
 </div>
-
 
 <script>
 $(function(){
@@ -35,14 +36,22 @@ $(function(){
     //$("canvas").css("width", "900").css("height", "675")
 //var a = carouselData.$element.find('.item.active')
 
- // var carouselData = $(this).data('bs.carousel');
- //  var line_no = carouselData.$element.find('.active .hidden').val();
+    line_no = $(this).data('bs.carousel').$element.find('.active .hidden').val();
 
-    $.get("/boards", {refresh: true}, null, "script");
+    if(line_no=="table1")
+    {
+      location.reload();
+    }
 
+    $.get("/boards", {refresh: true, line_no: line_no}, null, "script");
+
+    //delete(line_no)
+//alert(line_no)
 
     //draw_graph()
 
   })
-})
+
+});
 </script>
+

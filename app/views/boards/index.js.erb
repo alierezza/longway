@@ -1,12 +1,25 @@
 <% if params[:refresh] == "true" %>
 	
-	$("#board1").html("<%= escape_javascript(render 'table') %>");
-	$("#board2").html("<%= escape_javascript(render 'table2') %>");
+	<% if params[:line_no] == "table1" %>
+
+		$("#board1").html("<%= escape_javascript(render 'table') %>");
+
+	<% elsif params[:line_no] == "table2" %>
+
+		$("#board2").html("<%= escape_javascript(render 'table2') %>");
+
+	<% elsif params[:line_no].to_i != 0 %>
+<%# binding.pry %>
+		<%# key = @big_data.keys[params[:line_no].to_i-1] %>
+		<%# value = @big_data.values[params[:line_no].to_i-1] %>
+		<%# new_value = {key => value} %>
+		$("#detail_graph_<%= params[:line_no] %>").html("<%= escape_javascript(render 'detail_graph',:big => @big_data.first) %>");
+	<% end %>
 	<%# @big_data = @big_data.first %>
 	
-	<% @big_data.each_with_index do |big_dat, index| %>
-		$("#detail_graph_<%= big_dat.first %>").html("<%= escape_javascript(render 'detail_graph',:big => big_dat) %>");
-    <% end %>
+	<%# @big_data.each_with_index do |big_dat, index| %>
+		//$("#detail_graph_<%#= big_dat.first %>").html("<%#= escape_javascript(render 'detail_graph',:big => big_dat) %>");
+    <%# end %>
 
 
 <% end %>

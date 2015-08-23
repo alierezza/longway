@@ -4,7 +4,7 @@ require 'date'
 
   EM.run do
     @clients = []
-    EM::WebSocket.start(:host => 'localhost', :port => '3005') do |ws|
+    EM::WebSocket.start(:host => '192.168.100.254', :port => '3005') do |ws|
       ws.onopen do |handshake|
         @clients << ws
         ws.send "Conecting.."

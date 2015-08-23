@@ -30,9 +30,13 @@
 </div>
 
 
+
+
 <script>
+$(function(){
+
 $('.carousel').carousel({
-   interval: 40000 //changes the speed
+   interval: 3000 //changes the speed
   })
 
 
@@ -45,31 +49,12 @@ function GetClock(){
   document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
 }
 
-
-$(function(){
 GetClock();
 setInterval(GetClock,1000);
 
-})
-
-// function refresh(){
-//     //get the mins of the current time
-//     var hours = new Date().getHours();
-//     var mins = new Date().getMinutes();
-//     var secs = new Date().getSeconds();
-
-//     $.get("/boards", {refresh: true}, null, "script");
-
-
-// }
-  //id = setInterval(refresh, 2000);
-
-
-
-function clear_interval(id){
-  window.clearInterval(id);
-}
+});
 
 
 </script>
+
 

@@ -7,14 +7,24 @@ class BoardsController < ApplicationController
 		# # GC.start()
 		# GC::Profiler.clear
 
+		if params[:line_no] == "table1"
+			@data = Line.where("no >= 1 and no <= 8")
+		elsif params[:line_no] == "table2"
+			@data = Line.where("no >= 8 and no <= 17")
+		elsif params[:line_no].to_i != 0
+			#binding.pry
+			@data = Line.where("no = ?",params[:line_no].to_i)
+			
+		else
+			@data = Line.all
+		end
 
-
-		@boards = Line.all.order("no")
+		@boards = @data
 		today = DateTime.now.to_date.strftime("%Y-%m-%d")
 
 		@big_data = {}
 
-		@boards.each do |line|
+		@boards.order("no").each do |line|
 			sum_target = 0
 			sum_act = 0
 			sum_def_int = 0
