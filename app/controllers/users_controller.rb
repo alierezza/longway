@@ -3,7 +3,7 @@ load_and_authorize_resource param_method: :my_sanitizer
 
 	
 	def index
-		@users = User.all
+		@users = User.all.order("created_at ASC")
 	end
 
 	def show
