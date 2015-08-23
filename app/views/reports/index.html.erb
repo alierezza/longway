@@ -172,7 +172,7 @@
 
       // where our WebSockets logic will go later
       var socket, host;
-      host = "<%= Socket.ip_address_list[1].ip_address %>";
+      host = "ws://<%= Socket.ip_address_list[1].ip_address.to_s %>:3005";
 
       function connect() {
         try {
