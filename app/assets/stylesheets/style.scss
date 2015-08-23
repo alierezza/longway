@@ -150,8 +150,8 @@ button#connect {
     vertical-align: middle;
   }
   tbody {
-    font-size: 25px;
-
+    font-size: 30px;
+    font-weight: bold;
     td {
       padding: 15px;
     }
@@ -281,7 +281,9 @@ button#connect {
 
 .graph-legend{
   list-style: none;
-
+    li {
+      float: left;
+    }
     li:before {
       margin-right: 10px;
       content: " ";
@@ -291,9 +293,13 @@ button#connect {
       float: left;
     }
 
-    li.actual:before {
-      background-color: magenta;
+    li.actual{
+      margin-left: 80px;
+      &:before {
+        background-color: magenta;
+      }
     }
+
     li.target:before {
       background-color: darkblue;
     }
@@ -301,8 +307,11 @@ button#connect {
     li.def-int:before {
       background-color: rgb(231,30,19);
     }
-    li.def-ext:before {
-      background-color: black;
+    li.def-ext{
+      margin-left: 80px;
+      &:before {
+        background-color: black;
+      }
     }
   }
 
