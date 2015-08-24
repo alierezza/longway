@@ -2,6 +2,7 @@
 <div class="carousel-inner">
 
   <% if @boards.where("no >= 1 and no <= 8") != [] and @boards.where("no >= 9 and no <= 17") == [] %>
+
     <div class="item active">
       <input type="hidden" value="table1" class="hidden" />
       <div id="board1">
@@ -9,12 +10,15 @@
       </div>
     </div>
   <% elsif @boards.where("no >= 1 and no <= 8") == [] and @boards.where("no >= 9 and no <= 17") != [] %>
-    <div class="item hidden">
+  <% @refresh = true %>
+    <div class="item active">
       <input type="hidden" value="table2" class="hidden" />
       <div id="board2">
         <%= render "table2" %>
       </div>
     </div>
+  <% elsif @boards.where("no >= 1 and no <= 8") == [] and @boards.where("no >= 9 and no <= 17") == [] %>
+    <font color=red size=8>Please turn on at least one line</font>
   <% else %>
     <div class="item active">
       <input type="hidden" value="table1" class="hidden" />
@@ -54,7 +58,13 @@ $(function(){
 
     line_no = $(this).data('bs.carousel').$element.find('.active .hidden').val();
 
-    if(line_no=="table1")
+    <% if @refresh == true %>
+      refresh = "table2"
+    <% else %>
+      refresh = "table1"
+    <% end %>
+
+    if(line_no == refresh)
     {
       location.reload();
     }
