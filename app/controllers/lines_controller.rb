@@ -2,7 +2,11 @@ class LinesController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
 
 	def index
-		@lines = Line.all
+		if params[:visible]
+			Line.find(params[:line_no]).update!(:visible=>params[:visible])
+		else
+			@lines = Line.all
+		end
 	end
 
 	def show

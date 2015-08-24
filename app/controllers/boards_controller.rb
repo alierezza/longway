@@ -19,7 +19,7 @@ class BoardsController < ApplicationController
 			@data = Line.all
 		end
 
-		@boards = @data
+		@boards = @data.where("visible=?",true)
 		today = DateTime.now.to_date.strftime("%Y-%m-%d")
 
 		@big_data = {}

@@ -12,6 +12,7 @@
 				<th>No Line</th>
 				<th>Operator</th>
 				<th>Status</th>
+				<th width="5%">Show</th>
 				<th>Action</th>
 			</thead>
 			<tbody>
@@ -21,6 +22,13 @@
 						<td><%= line.no %></td>
 						<td><%= line.user == nil ? "-" : line.user.nama %></td>
 						<td><%= line.status == true ? "Normal" : "<font color=red>Problem</font>".html_safe %></td>
+						<td>
+							<% if line.visible == true %>
+								<input type="checkbox" name="show_<%= index.to_s %>" id="<%= line.no.to_s %>" data-size="mini" checked >
+							<% else %>
+								<input type="checkbox" name="show_<%= index.to_s %>" id="<%= line.no.to_s %>" data-size="mini" >
+							<% end %>
+						</td>
 						<td>
 							<%= link_to "Update", edit_line_path(line), :method=>"GET",:class=>"btn btn-xs btn-default" %>
 							<%= link_to "Delete", line_path(line), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this line ?", :class=>
@@ -32,3 +40,14 @@
 		</table>
   </div>
 </div>
+
+<script>
+$("[name^='show']").bootstrapSwitch();
+
+$('input[name^="show"]').on('switchChange.bootstrapSwitch', function(event, state) {
+  line_no = this.id
+  $.get("/lines", {visible: state, line_no: line_no}, null, "script");
+});
+
+
+</script>
