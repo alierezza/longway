@@ -3,7 +3,7 @@ class LinesController < ApplicationController
 
 	def index
 		if params[:visible]
-			Line.find(params[:line_no]).update!(:visible=>params[:visible])
+			Line.find_by(:no=>params[:line_no].to_i).update!(:visible=>params[:visible])
 		else
 			@lines = Line.all
 		end
