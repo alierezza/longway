@@ -50,10 +50,10 @@ class BoardsController < ApplicationController
 
 							if report.jam.to_i == @jam # <--------------------- uncomment
 
-								sum_target += report.target.to_i
-								sum_act += report.act.to_i
-								sum_def_int += report.defect_int.to_i
-								sum_def_ext += report.defect_ext.to_i
+								sum_target = report.target.to_i
+								sum_act = report.act.to_i
+								sum_def_int = report.defect_int.to_i
+								sum_def_ext = report.defect_ext.to_i
 								# arr_target << report.id.to_s+"-"+sum_target.to_s
 								# arr_act << report.id.to_s+"-"+sum_act.to_s
 								arr_target << sum_target
@@ -105,7 +105,7 @@ class BoardsController < ApplicationController
 
 
 		end
-
+		
 	end
 
 	def show

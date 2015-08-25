@@ -18,7 +18,7 @@ class Report < ActiveRecord::Base
 					remark = user.line.reports.last.detailreports.last.remark
 					percent = user.line.reports.last.detailreports.last.percent
 					act_sum = user.line.reports.last.detailreports.sum("act").to_i
-					pph = opr == 0 ? 0 : (act_sum / opr  .to_f * (user.line.reports.last.detailreports.count+1) ).round(2)
+					pph = opr == 0 ? 0 : (act_sum / ( opr * (user.line.reports.last.detailreports.count+1) ) .to_f ).round(2)
 					rft = user.line.reports.last.detailreports.last.rft
 					target = user.line.reports.last.detailreports.last.target
 					user.line.reports.last.detailreports.create!(:jam=>Time.now.strftime("%H").to_i, :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)

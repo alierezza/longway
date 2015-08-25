@@ -50,7 +50,7 @@ class ReportsController < ApplicationController
 					remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
 					percent = User.find(params[:user_id]).line.reports.last.detailreports.last.percent
 					act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
-					pph = opr == 0 ? 0 : (act_sum / opr  .to_f * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ).round(2)
+					pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ) .to_f ).round(2)
 					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
 					target = User.find(params[:user_id]).line.reports.last.detailreports.last.target
 					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
