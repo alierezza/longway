@@ -121,7 +121,7 @@ class ReportsController < ApplicationController
 		defact = defect_int + defect_ext
 
 		params[:report][:detailreports_attributes]["0"][:percent] = target_sum == 0 ? 0 : (act_sum / target_sum	 .to_f	).round(2)
-		params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / opr  .to_f * (current_user.line.reports.last.detailreports.count) ).round(2)
+		params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.last.detailreports.count) ) .to_f ).round(2)
 		params[:report][:detailreports_attributes]["0"][:rft] = act_sum + defact == 0 ? 0 : ( ( act_sum / ( act_sum + defact )  .to_f )  .to_f).round(2)
 
 
