@@ -43,16 +43,19 @@ class ReportsController < ApplicationController
 	def new
 		if params[:record] #refresh tiap jam
 			begin
+				
 				if current_user.line.reports.last.detailreports.last.jam.to_i == Time.now.strftime("%H").to_i
 
 				else
 					opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
 					remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
-					percent = User.find(params[:user_id]).line.reports.last.detailreports.last.percent
 					act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
 					pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ) .to_f ).round(2)
 					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
+					
 					target = User.find(params[:user_id]).line.reports.last.detailreports.last.target
+					target_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("target").to_i + target.to_i
+					percent = (act_sum / target_sum .to_f) *100
 					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
 				end
 			rescue
