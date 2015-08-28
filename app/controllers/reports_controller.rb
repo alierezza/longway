@@ -53,7 +53,7 @@ class ReportsController < ApplicationController
 					pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ) .to_f ).round(2)
 					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
 					target = User.find(params[:user_id]).line.reports.last.detailreports.last.target
-					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>(percent*100),:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
+					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
 				end
 			rescue
 
