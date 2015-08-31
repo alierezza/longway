@@ -12,7 +12,7 @@
 			<th rowspan=2>PPH</th>
 			<th colspan=2>DEFECT</th>
 			<th rowspan=2>RFT</th>
-			<th rowspan=2 width="10%">REMARK</th>
+			<th rowspan=2 width="15%">REMARK</th>
 		</tr>
 		<tr>
 			<th>INT</th>
@@ -34,7 +34,7 @@
 					<td><b><font size="13"><%= report.detailreports.sum("defect_int") %></font></b></td>
 					<td><b><font size="13"><%= report.detailreports.sum("defect_ext") %></font></b></td>
 					<td><b><font size="13"><%= report.detailreports.last.rft.to_i %> %</font></b></td>
-					<td><b><font size="10"><%= report.detailreports.last.remark %></font></b></td>
+					<td><b><font size="5"><%= report.detailreports.last.remark %></font></b></td>
 				</tr>
 			<% end %>
 		<% end %>
