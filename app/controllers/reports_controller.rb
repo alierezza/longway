@@ -50,7 +50,7 @@ class ReportsController < ApplicationController
 					opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
 					remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
 					act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
-					pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ) .to_f ).round(2)
+					pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count+1) ) .to_f ).round(0)
 					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
 					
 					target = User.find(params[:user_id]).line.reports.last.detailreports.last.target
@@ -78,11 +78,11 @@ class ReportsController < ApplicationController
 			params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.last.defect_ext.to_i + 1
 		end
 
-		params[:report][:detailreports_attributes]["0"][:percent] = params[:report][:detailreports_attributes]["0"][:target].to_i == 0 ? 0 : ((params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:target].to_i .to_f )* 100 ).round(2)
-		params[:report][:detailreports_attributes]["0"][:pph] = params[:report][:detailreports_attributes]["0"][:opr].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:opr].to_i .to_f).round(2)
+		params[:report][:detailreports_attributes]["0"][:percent] = params[:report][:detailreports_attributes]["0"][:target].to_i == 0 ? 0 : ((params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:target].to_i .to_f )* 100 ).round(0)
+		params[:report][:detailreports_attributes]["0"][:pph] = params[:report][:detailreports_attributes]["0"][:opr].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:opr].to_i .to_f).round(0)
 		defact = params[:report][:detailreports_attributes]["0"][:defect_int].to_i+params[:report][:detailreports_attributes]["0"][:defect_ext].to_i .to_f
 		temp = params[:report][:detailreports_attributes]["0"][:act].to_i == 0 ? 0 :  params[:report][:detailreports_attributes]["0"][:act].to_i / ( params[:report][:detailreports_attributes]["0"][:act].to_i  + defact ) .to_f
-		params[:report][:detailreports_attributes]["0"][:rft] = temp == 0 ? 0 : ( temp  .to_f).round(2)
+		params[:report][:detailreports_attributes]["0"][:rft] = temp == 0 ? 0 : ( temp * 100 .to_f).round(0)
 
 		@report = current_user.line.reports.new(my_sanitizer)
 	    @report.save!
@@ -123,9 +123,9 @@ class ReportsController < ApplicationController
 		#end
 		defact = defect_int + defect_ext
 
-		params[:report][:detailreports_attributes]["0"][:percent] = target_sum == 0 ? 0 : ((act_sum / target_sum	 .to_f	) * 100).round(2)
-		params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.last.detailreports.count) ) .to_f ).round(2)
-		params[:report][:detailreports_attributes]["0"][:rft] = act_sum + defact == 0 ? 0 : ( ( act_sum / ( act_sum + defact )  .to_f )  .to_f).round(2)
+		params[:report][:detailreports_attributes]["0"][:percent] = target_sum == 0 ? 0 : ((act_sum / target_sum	 .to_f	) * 100).round(0)
+		params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.last.detailreports.count) ) .to_f ).round(0)
+		params[:report][:detailreports_attributes]["0"][:rft] = act_sum + defact == 0 ? 0 : ( ( act_sum / ( act_sum + defact )  .to_f )  .to_f) * 100 .round(0)
 
 
 		#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target].to_i + @report.detailreports.last.target_sum.to_i

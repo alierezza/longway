@@ -18,7 +18,7 @@ class Report < ActiveRecord::Base
 					opr = user.line.reports.last.detailreports.last.opr
 					remark = user.line.reports.last.detailreports.last.remark
 					act_sum = user.line.reports.last.detailreports.sum("act").to_i
-					pph = opr == 0 ? 0 : (act_sum / ( opr * (user.line.reports.last.detailreports.count+1) ) .to_f ).round(2)
+					pph = opr == 0 ? 0 : (act_sum / ( opr * (user.line.reports.last.detailreports.count+1) ) .to_f ).round(0)
 					rft = user.line.reports.last.detailreports.last.rft
 					target = user.line.reports.last.detailreports.last.target
 					target_sum = user.line.reports.last.detailreports.sum("target").to_i  + target.to_i

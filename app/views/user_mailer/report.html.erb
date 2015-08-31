@@ -64,22 +64,22 @@ th {
 				</tr>
 			</thead>
 			<tbody>
-				<% Line.all.order("no").each_with_index do |board,line| %>
-					<% board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
+				<%# Line.all.order("no").each_with_index do |board,line| %>
+					<%# board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
 						<tr>
-							<td>L. <%= report.line.no %></td>
-							<td><%= report.detailreports.last.opr %></td>
-							<td><%= report.detailreports.sum("target") %></td>
-							<td><%= report.detailreports.sum("act") %></td>
-							<td><%= report.detailreports.last.percent %></td>
-							<td><%= report.detailreports.last.pph %></td>
-							<td><%= report.detailreports.sum("defect_int") %></td>
-							<td><%= report.detailreports.sum("defect_ext") %></td>
-							<td><%= report.detailreports.last.rft %></td>
-							<td><%= report.detailreports.last.remark %></td>
+							<td>L. <%#= report.line.no %></td>
+							<td><%#= report.detailreports.last.opr %></td>
+							<td><%#= report.detailreports.sum("target") %></td>
+							<td><%#= report.detailreports.sum("act") %></td>
+							<td><%#= report.detailreports.last.percent %></td>
+							<td><%#= report.detailreports.last.pph %></td>
+							<td><%#= report.detailreports.sum("defect_int") %></td>
+							<td><%#= report.detailreports.sum("defect_ext") %></td>
+							<td><%#= report.detailreports.last.rft %></td>
+							<td><%#= report.detailreports.last.remark %></td>
 						</tr>
-					<% end %>
-				<% end %>
+					<%# end %>
+				<%# end %>
 			</tbody>
 		</table>
 	</div>
@@ -850,11 +850,11 @@ button.list-group-item-danger.active:hover { color: #fff !important; background-
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.opr %></td>
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.sum("target") %></td>
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.sum("act") %></td>
-					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.percent %></td>
+					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.percent %> %</td>
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.pph %></td>
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.sum("defect_int") %></td>
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.sum("defect_ext") %></td>
-					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.rft %></td>
+					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.rft %> %</td>
 					<td style="color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; background-color: #fff !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; line-height: 1.42857143; vertical-align: top; padding: 8px; border: 1px solid #ddd;" bgcolor="#fff !important" valign="top"><%= report.detailreports.last.remark %></td>
 				</tr>
 			<% end %>
