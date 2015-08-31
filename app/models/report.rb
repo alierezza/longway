@@ -22,7 +22,7 @@ class Report < ActiveRecord::Base
 					rft = user.line.reports.last.detailreports.last.rft
 					target = user.line.reports.last.detailreports.last.target
 					target_sum = user.line.reports.last.detailreports.sum("target").to_i  + target.to_i
-					percent = (act_sum / target_sum .to_f) *100
+					percent = (act_sum / target_sum .to_f) *100 .round(0)
 					user.line.reports.last.detailreports.create!(:jam=>Time.now.strftime("%H").to_i, :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
 					puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				end
