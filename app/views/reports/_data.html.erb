@@ -1,7 +1,7 @@
 <% if params[:search] and @data != [] %>
-	Line No : <%= @data.first.line.no %>
-	Tanggal : <%= @data.first.tanggal.strftime("%d %B %Y") %>
-	<table class="table table-bordered table-stripped">
+	<b>Line No :</b> <%= @data.first.line.no %><br>
+	<b>Tanggal :</b> <%= @data.first.tanggal.strftime("%d %B %Y") %><br><br>
+	<table class="table table-bordered table-stripped" id="data">
 		<thead>
 			<tr>
 				<th rowspan=2>JAM</th>
@@ -10,11 +10,11 @@
 				<th rowspan=2>TARGET (SUM)</th>
 				<th rowspan=2>ACT</th>
 				<th rowspan=2>ACT (SUM)</th>
-				<th rowspan=2>%</th>
+				<th rowspan=2  width="7%">%</th>
 				<th rowspan=2>PPH</th>
 				<th colspan=4>DEFECT</th>
 				<th rowspan=2>RFT</th>
-				<th rowspan=2>REMARK</th>
+				<th rowspan=2  width="25%">REMARK</th>
 			</tr>
 			<tr>
 				<th>INT</th>
@@ -36,13 +36,13 @@
 						<td><%= sum_target %></td>
 						<td><%= detailreport.act %></td>
 						<td><%= sum_act %></td>
-						<td><%= detailreport.percent %></td>
+						<td><%= detailreport.percent.to_i %> %</td>
 						<td><%= detailreport.pph %></td>
 						<td><%= detailreport.defect_int %></td>
 						<td><%= sum_defect_int %></td>
 						<td><%= detailreport.defect_ext %></td>
 						<td><%= sum_defect_ext %></td>
-						<td><%= detailreport.rft %></td>
+						<td><%= detailreport.rft.to_i %> %</td>
 						<td><%= detailreport.remark %></td>
 					</tr>
 				<% end %>

@@ -158,6 +158,26 @@ button#connect {
   }
 }
 
+#data {
+  text-align: center;
+  thead {
+    background-color: #0E0E73;
+  }
+  th {
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    vertical-align: middle;
+  }
+  tbody {
+    font-size: 14px;
+    font-weight: bold;
+    td {
+      padding: 15px;
+    }
+  }
+}
+
 
 //////// sliding menu
 
