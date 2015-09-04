@@ -5,7 +5,7 @@
 <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
   <div class='form-group'>
     <label>Remark</label>
-    <%= detailreport.text_area :remark, class: "form-control", rows: 8 %>
+    <%= detailreport.text_area :remark, class: "form-control", rows: 4 %>
   </div>
   <div class="row">
     <div class="col-md-12">
