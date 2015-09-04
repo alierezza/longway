@@ -73,10 +73,10 @@ class ReportsController < ApplicationController
 						end
 						target_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("target").to_i + target.to_i
 					end
-					percent = ((act_sum / target_sum .to_f) *100 ).round(0)
+					percent = target_sum == 0 ? 0 : ((act_sum / target_sum .to_f) *100 ).round(0)
 					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
 				end
-			rescue
+			rescue Exception => e
 
 			end
 		end
