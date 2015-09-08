@@ -1,21 +1,30 @@
 
 <div class="col-md-6">
-  <h2><b>Production</b></h2>
-  <strong><h2><b>Line <%= big.first %></b></h2></strong>
+  <div class="col-md-4">
+    <h2><b>Production</b></h2>
+    <strong><h2><b>Line <%= big.first %></b></h2></strong>
+  </div>
+  <div class="col-md-8">
+    <span id="legendDiv_<%= big.first.to_s %>"></span>
+  </div>
   <div>
     <canvas id="canvas_<%= big.first.to_s %>" height="450" width="600"></canvas>
-    <span id="legendDiv_<%= big.first.to_s %>"></span>
   </div>
 </div>
 
 <div class="col-md-6">
-  <h2><b>Defect</b></h2>
-  <strong><h2><b>Line <%= big.first %></b><h2></strong>
-  <div>
-    <canvas id="canvas_def_<%= big.first.to_s %>" height="450" width="600"></canvas>
+  <div class="col-md-4">
+    <h2><b>Defect</b></h2>
+    <strong><h2><b>Line <%= big.first %></b><h2></strong>
+  </div>
+  <div class="col-md-8">
     <span id="legendDiv_def_<%= big.first.to_s %>"></span>
   </div>
+  <div>
+    <canvas id="canvas_def_<%= big.first.to_s %>" height="450" width="600"></canvas>
+  </div>
 </div>
+
 
 <script>
 

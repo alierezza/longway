@@ -114,32 +114,36 @@ class ReportsController < ApplicationController
 	end
 
 	def update
-		if Time.now.strftime("%H").to_i != 12
+		
+		jam = Time.now.strftime("%H").to_i
+		detailreport_id = params[:report][:detailreports_attributes]["0"][:id].to_i
+
+		if jam != 12 and Detailreport.find(detailreport_id).jam == Time.now.strftime("%H").to_i
 			@report = Report.find(params[:id])
 
 			if params[:status] == "actual"
-				params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.last.act.to_i + 1
+				params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.find(detailreport_id).act.to_i + 1
 				#params[:report][:detailreports_attributes]["0"][:act_sum] = @report.detailreports.last.sum.to_i + 1
 			elsif params[:status] == "int_defect"
-				params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.last.defect_int.to_i + 1
+				params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.find(detailreport_id).defect_int.to_i + 1
 			elsif params[:status] == "ext_defect"
-				params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.last.defect_ext.to_i + 1
+				params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.find(detailreport_id).defect_ext.to_i + 1
 			end
 
-			params[:report][:detailreports_attributes]["0"][:opr] != nil ? opr = params[:report][:detailreports_attributes]["0"][:opr].to_i : opr = @report.detailreports.last.opr.to_i
+			params[:report][:detailreports_attributes]["0"][:opr] != nil ? opr = params[:report][:detailreports_attributes]["0"][:opr].to_i : opr = @report.detailreports.find(detailreport_id).opr.to_i
 
-			params[:report][:detailreports_attributes]["0"][:act] != nil ? act = params[:report][:detailreports_attributes]["0"][:act].to_i : act = @report.detailreports.last.act.to_i
+			params[:report][:detailreports_attributes]["0"][:act] != nil ? act = params[:report][:detailreports_attributes]["0"][:act].to_i : act = @report.detailreports.find(detailreport_id).act.to_i
 
-			params[:report][:detailreports_attributes]["0"][:target] != nil ? target = params[:report][:detailreports_attributes]["0"][:target].to_i : target = @report.detailreports.last.target.to_i
+			params[:report][:detailreports_attributes]["0"][:target] != nil ? target = params[:report][:detailreports_attributes]["0"][:target].to_i : target = @report.detailreports.find(detailreport_id).target.to_i
 
 			params[:report][:detailreports_attributes]["0"][:defect_int] != nil ? defect_int = params[:report][:detailreports_attributes]["0"][:defect_int].to_i + @report.detailreports.sum("defect_int").to_i : defect_int = @report.detailreports.sum("defect_int").to_i
 
 			params[:report][:detailreports_attributes]["0"][:defect_ext] != nil ? defect_ext = params[:report][:detailreports_attributes]["0"][:defect_ext].to_i + @report.detailreports.sum("defect_ext").to_i : defect_ext = @report.detailreports.sum("defect_ext").to_i
 
 
-			act_sum = act + @report.detailreports.sum("act").to_i - @report.detailreports.last.act.to_i
+			act_sum = act + @report.detailreports.sum("act").to_i - @report.detailreports.find(detailreport_id).act.to_i
 			#if @report.detailreports.count == 1
-			target_sum = target + ( @report.detailreports.sum("target").to_i - @report.detailreports.last.target.to_i )
+			target_sum = target + ( @report.detailreports.sum("target").to_i - @report.detailreports.find(detailreport_id).target.to_i )
 			#else
 			#	target_sum = target + ( @report.detailreports.sum("target").to_i )
 			#end
