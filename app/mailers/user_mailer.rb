@@ -2,7 +2,8 @@ class UserMailer < ApplicationMailer
 	include Devise::Mailers::Helpers
   	include ApplicationHelper
 
-  	default from: CONFIG["email_dari"]
+  	#default from: CONFIG["email_dari"]
+  	default from: "dynamic-billboard@id.longwaycorp.com"
 
   	def report
   		@temp = Array.new
