@@ -43,8 +43,7 @@ class ReportsController < ApplicationController
 	def new
 		if params[:record] #refresh tiap jam
 			begin
-				
-				if current_user.line.reports.last.detailreports.last.jam.to_i == Time.now.strftime("%H").to_i
+				if current_user.line.reports.last.detailreports.last.jam.to_i >= params[:record].to_i
 
 				else
 					opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
@@ -54,7 +53,7 @@ class ReportsController < ApplicationController
 					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
 					
 					
-					time = Time.now.strftime("%H").to_i
+					time = params[:record].to_i
 
 					if time == 12 
 						pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count) ) .to_f ).round(2)
@@ -67,12 +66,13 @@ class ReportsController < ApplicationController
 					else
 						pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
 						if time == 13
-							target = User.find(params[:user_id]).line.reports.last.detailreports.offset(1).last.target
+							target = target = User.find(params[:user_id]).line.reports.last.detailreports.offset(1).last == nil ? 0 : User.find(params[:user_id]).line.reports.last.detailreports.offset(1).last.target
 						else
 							target = User.find(params[:user_id]).line.reports.last.detailreports.last.target
 						end
 						target_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("target").to_i + target.to_i
 					end
+					
 					percent = target_sum == 0 ? 0 : ((act_sum / target_sum .to_f) *100 ).round(0)
 					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
 					
@@ -118,7 +118,7 @@ class ReportsController < ApplicationController
 		jam = Time.now.strftime("%H").to_i
 		detailreport_id = params[:report][:detailreports_attributes]["0"][:id].to_i
 
-		if jam != 12 and Detailreport.find(detailreport_id).jam == Time.now.strftime("%H").to_i
+		if jam != 12 and Detailreport.find(detailreport_id).jam >= Time.now.strftime("%H").to_i
 			@report = Report.find(params[:id])
 
 			if params[:status] == "actual"

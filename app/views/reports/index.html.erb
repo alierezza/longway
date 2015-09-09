@@ -275,6 +275,7 @@
                location.reload(true);
       });
 
-
+      var hours = new Date().getHours();
+      $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>"}, null, "script");
       
     </script>

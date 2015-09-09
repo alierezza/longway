@@ -12,7 +12,7 @@ class Report < ActiveRecord::Base
 
 		User.where("status = ? and role = ?",true,"User").each_with_index do |user,index|
 			begin
-				if user.line.reports.last.detailreports.last.jam.to_i == Time.now.strftime("%H").to_i
+				if user.line.reports.last.detailreports.last.jam.to_i >= Time.now.strftime("%H").to_i
 					puts "Sudah ada!(user aktif) user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				else
 					opr = user.line.reports.last.detailreports.last.opr
@@ -28,7 +28,7 @@ class Report < ActiveRecord::Base
 					else
 						pph = opr == 0 ? 0 : (act_sum / ( opr * (user.line.reports.last.detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
 						if time == 13
-							target = user.line.reports.last.detailreports.offset(1).last.target
+							target = user.line.reports.last.detailreports.offset(1).last == nil ? 0 : user.line.reports.last.detailreports.offset(1).last.target
 						else
 							target = user.line.reports.last.detailreports.last.target
 						end
