@@ -7,6 +7,7 @@
 	<br><br>
 
 	<% Line.all.where("visible=?",true).order("no").each_with_index do |board,line| %>
+		<br><br>
 		<div id="board" align="center">
 
 		<b>Line No :</b> <%= board.no %><br>
@@ -48,19 +49,19 @@
 
 							<tr>
 								<td valign="top"><%= detailreport.jam %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.opr %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.target %></td>
-								<td bgcolor="#fff !important" valign="top"><%= sum_target %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.act %></td>
-								<td bgcolor="#fff !important" valign="top"><%= sum_act %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.percent.to_i %> %</td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.pph %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.defect_int %></td>
-								<td bgcolor="#fff !important" valign="top"><%= sum_defect_int %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.defect_ext %></td>
-								<td bgcolor="#fff !important" valign="top"><%= sum_defect_ext %></td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.rft.to_i %> %</td>
-								<td bgcolor="#fff !important" valign="top"><%= detailreport.remark %></td>
+								<td valign="top"><%= detailreport.opr %></td>
+								<td valign="top"><%= detailreport.target %></td>
+								<td valign="top"><%= sum_target %></td>
+								<td valign="top"><%= detailreport.act %></td>
+								<td valign="top"><%= sum_act %></td>
+								<td valign="top"><%= detailreport.percent.to_i %> %</td>
+								<td valign="top"><%= detailreport.pph %></td>
+								<td valign="top"><%= detailreport.defect_int %></td>
+								<td valign="top"><%= sum_defect_int %></td>
+								<td valign="top"><%= detailreport.defect_ext %></td>
+								<td valign="top"><%= sum_defect_ext %></td>
+								<td valign="top"><%= detailreport.rft.to_i %> %</td>
+								<td valign="top"><%= detailreport.remark %></td>
 							</tr>
 						<% end %>
 					</tbody>
