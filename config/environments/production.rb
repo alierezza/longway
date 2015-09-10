@@ -79,13 +79,22 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: '127.0.0.1' }
 
+  # config.action_mailer.smtp_settings = {
+  #    :address              => "idmail.longwaycorp.com",
+  #  :port                 => 25,
+  #  :user_name            => "dynamic-billboard@id.longwaycorp.com",
+  #  :password             => "bill0908",
+  #  :authentication       => :plain,
+  #   :enable_starttls_auto => false 
+  # }
+
   config.action_mailer.smtp_settings = {
-     :address              => "idmail.longwaycorp.com",
-   :port                 => 25,
-   :user_name            => "dynamic-billboard@id.longwaycorp.com",
-   :password             => "bill0908",
+     :address              => "smtp.gmail.com",
+   :port                 => 587,
+   :user_name            => "hendranatadnet@gmail.com",
+   :password             => "Sidosermol1755gd",
    :authentication       => :plain,
-    :enable_starttls_auto => false 
+    :enable_starttls_auto => true 
   }
 
 
