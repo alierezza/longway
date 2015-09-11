@@ -10,7 +10,7 @@
       <label>Target</label>
     </div>
     <div class='col-md-10'>
-      <%= detailreport.number_field :target, class: 'form-control' %>
+      <%= detailreport.number_field :target, min: 1,:required=>true, class: 'form-control' %>
     </div>
   </div>
 </div>
@@ -20,7 +20,7 @@
       <label>OPR</label>
     </div>
     <div class='col-md-10'>
-      <%= detailreport.number_field :opr, class: 'form-control' %>
+      <%= detailreport.number_field :opr, min: 1,:required=>true, class: 'form-control' %>
     </div>
   </div>
 </div>
