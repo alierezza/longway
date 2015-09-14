@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    SyslogLogger (2.0)
     actionmailer (4.2.1)
       actionpack (= 4.2.1)
       actionview (= 4.2.1)
@@ -185,6 +186,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  SyslogLogger
   bootstrap-switch-rails
   byebug
   cancancan

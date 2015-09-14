@@ -4,4 +4,8 @@ class Board < ActiveRecord::Base
 			UserMailer.report.deliver
 	end
 
+	# def self.remove
+			
+	# end
+
 end
