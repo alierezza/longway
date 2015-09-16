@@ -33,7 +33,7 @@
 					<td><b><font size="6"><%= report.detailreports.last.pph %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.sum("defect_int") %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.sum("defect_ext") %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.last.rft.to_i %> %</font></b></td>
+					<td><b><font size="6"><%= report.detailreports.last.rft.to_i %> %</font></b></td><% binding.pry %>
 					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.remark %></font></b></td>
 				</tr>
 			<% end %>

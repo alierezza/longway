@@ -34,9 +34,9 @@ class UserMailer < ApplicationMailer
 	    			row = sheet1.row(baris)
 	    			format = Spreadsheet::Format.new :color => :black,
                                  :weight => :bold,
-                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle
+                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
                     format2 = Spreadsheet::Format.new :color => :black,
-                                 :size => 11, :align=>:center, :border =>:thin
+                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
                     14.times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
 					sheet1.column(2).width = 10
@@ -50,7 +50,7 @@ class UserMailer < ApplicationMailer
 					sheet1.column(10).width = 10
 					sheet1.column(11).width = 15
 					sheet1.column(12).width = 10
-					sheet1.column(13).width = 40
+					sheet1.column(13).width = 70
 					sheet1.merge_cells(baris, 8, baris, 11)
 					8.times do |y|
 						sheet1.merge_cells(baris, y, baris+1, y)
@@ -76,8 +76,11 @@ class UserMailer < ApplicationMailer
 						sum_defect_int += detailreport.defect_int.to_i
 						sum_defect_ext += detailreport.defect_ext.to_i 
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark]
-						sheet1.row(baris).height = 16
+						size = detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
+						height = (size / 60 .to_f ).ceil
+						
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ')]
+						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 	    				14.times do |x|
 	    					row.set_format(x,format2)
