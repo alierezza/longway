@@ -3,7 +3,8 @@ class UserMailer < ApplicationMailer
   	include ApplicationHelper
 
   	#default from: CONFIG["email_dari"]
-  	default from: "dynamic-billboard@id.longwaycorp.com"
+  	#default from: "dynamic-billboard@id.longwaycorp.com"
+  	default from: "hendranatadnet@gmail.com"
 
   	def report
   		@temp = Array.new
@@ -12,6 +13,86 @@ class UserMailer < ApplicationMailer
 	    end
 	    @temp.join(",")
 
+	    book = Spreadsheet::Workbook.new
+	    sheet1 = book.create_worksheet
+	    sheet1.name = 'GlobalWay Daily Report'
+
+	    sheet1.row(0).push "Berikut detail hasil produksi pada tanggal #{Date.today.strftime('%d %B %Y')} hingga pukul 6:10 PM"
+	    baris = 0
+	    Line.all.where("visible=?",true).order("no").each_with_index do |board,index|
+
+	    	sheet1.row(baris = baris +2).push "Line No: #{board.no}"
+
+	    	if board.reports.where("tanggal=?",Date.today).count == 0
+	    		sheet1.row(baris = baris + 1).push "Empty"
+	    		#baris += index + 2
+	    	else
+	    		board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index2|
+
+	    			sheet1.row(baris = baris+1).replace ["JAM","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","", "RFT", "REMARK"]
+	    			sheet1.row(baris).height = 16
+	    			row = sheet1.row(baris)
+	    			format = Spreadsheet::Format.new :color => :black,
+                                 :weight => :bold,
+                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle
+                    format2 = Spreadsheet::Format.new :color => :black,
+                                 :size => 11, :align=>:center, :border =>:thin
+                    14.times do |x| row.set_format(x,format) end
+					#sheet1.row(baris).default_format = format
+					sheet1.column(2).width = 10
+					sheet1.column(3).width = 20
+					sheet1.column(4).width = 10
+					sheet1.column(5).width = 20
+					sheet1.column(6).width = 10
+					sheet1.column(7).width = 10
+					sheet1.column(8).width = 10
+					sheet1.column(9).width = 15
+					sheet1.column(10).width = 10
+					sheet1.column(11).width = 15
+					sheet1.column(12).width = 10
+					sheet1.column(13).width = 40
+					sheet1.merge_cells(baris, 8, baris, 11)
+					8.times do |y|
+						sheet1.merge_cells(baris, y, baris+1, y)
+					end
+					sheet1.merge_cells(baris, 12, baris+1, 12)
+					sheet1.merge_cells(baris, 13, baris+1, 13)
+	    			
+	    			sheet1.row(baris = baris+1).replace ["","","","","","","","","INT","INT (SUM)","EXT","EXT (SUM)"]
+	    			sheet1.row(baris).height = 16
+	    			row = sheet1.row(baris)
+	    			14.times do |x|
+	    				row.set_format(x,format)
+	    			end
+	    			
+	    			sum_target = 0
+	    			sum_act = 0
+	    			sum_defect_int = 0
+	    			sum_defect_ext = 0
+
+	    			report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index|
+	    				sum_target += detailreport.target.to_i
+						sum_act += detailreport.act.to_i
+						sum_defect_int += detailreport.defect_int.to_i
+						sum_defect_ext += detailreport.defect_ext.to_i 
+
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark]
+						sheet1.row(baris).height = 16
+						row = sheet1.row(baris)
+	    				14.times do |x|
+	    					row.set_format(x,format2)
+	    				end
+	    			end
+
+			#sheet1.row(4).push 'Charles Lowe', 'Author of the ruby-ole Library',"sssss"
+				end
+			end
+		end
+		path = "#{Rails.root}/Report_#{Time.now.strftime('%d-%m-%Y')}.xls"
+		book.write path
+
+
+	    attachments["Report_#{Time.now.strftime('%d-%m-%Y')}.xls"] = File.read(path)
 	    mail(to: @temp, subject: "[Global Way Indonesia] Laporan Hasil Produksi Harian (#{Date.today.strftime('%d %B %Y')})")
   	end
 

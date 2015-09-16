@@ -40,15 +40,23 @@ config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  # config.action_mailer.smtp_settings = {
+  #    :address              => "idmail.longwaycorp.com",
+  #  :port                 => 25,
+  #  :user_name            => "dynamic-billboard@id.longwaycorp.com",
+  #  :password             => "bill0908",
+  #  :authentication       => :plain,
+  #   :enable_starttls_auto => false 
+  # }
+
+
   config.action_mailer.smtp_settings = {
-     :address              => "idmail.longwaycorp.com",
-   :port                 => 25,
-   :user_name            => "dynamic-billboard@id.longwaycorp.com",
-   :password             => "bill0908",
+     :address              => "smtp.gmail.com",
+   :port                 => 587,
+   :user_name            => "hendranatadnet@gmail.com",
+   :password             => "Sidosermol1755gd",
    :authentication       => :plain,
-    :enable_starttls_auto => false 
+    :enable_starttls_auto => true 
   }
-
-
   
 end

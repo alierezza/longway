@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></head>
-<body bgcolor="#fff">
+<body>
 
-	Berikut detail hasil produksi pada tanggal <%= Date.today.strftime("%d %B %Y") %> hingga pukul 6:10 PM
+
+	Berikut Attachment hasil produksi pada tanggal <%= Date.today.strftime("%d %B %Y") %> hingga pukul 6:10 PM
+
 	<br><br>
-
-	<% Line.all.where("visible=?",true).order("no").each_with_index do |board,line| %>
+<!-- 
+	<%# Line.all.where("visible=?",true).order("no").each_with_index do |board,line| %>
 		<br><br>
 		<div id="board" align="center">
 
-		<b>Line No :</b> <%= board.no %><br>
-		<% if board.reports.where("tanggal=?",Date.today).count == 0 %>
+		<b>Line No :</b> <%#= board.no %><br>
+		<%# if board.reports.where("tanggal=?",Date.today).count == 0 %>
 			Empty
-		<% else %>
-			<% board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
+		<%# else %>
+			<%# board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
 			
 
 				<table border=1 bgcolor="transparent">
@@ -40,35 +42,35 @@
 					</tr>
 					</thead>
 					<tbody>
-						<% sum_target = 0 %><% sum_act = 0 %><% sum_defect_int = 0 %><% sum_defect_ext = 0 %>
-						<% report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index| %>
-							<% sum_target += detailreport.target.to_i  %>
-							<% sum_act += detailreport.act.to_i  %>
-							<% sum_defect_int += detailreport.defect_int.to_i  %>
-							<% sum_defect_ext += detailreport.defect_ext.to_i  %>
+						<%# sum_target = 0 %><%# sum_act = 0 %><%# sum_defect_int = 0 %><%# sum_defect_ext = 0 %>
+						<%# report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index| %>
+							<%# sum_target += detailreport.target.to_i  %>
+							<%# sum_act += detailreport.act.to_i  %>
+							<%# sum_defect_int += detailreport.defect_int.to_i  %>
+							<%# sum_defect_ext += detailreport.defect_ext.to_i  %>
 
 							<tr>
-								<td valign="top"><%= detailreport.jam %></td>
-								<td valign="top"><%= detailreport.opr %></td>
-								<td valign="top"><%= detailreport.target %></td>
-								<td valign="top"><%= sum_target %></td>
-								<td valign="top"><%= detailreport.act %></td>
-								<td valign="top"><%= sum_act %></td>
-								<td valign="top"><%= detailreport.percent.to_i %> %</td>
-								<td valign="top"><%= detailreport.pph %></td>
-								<td valign="top"><%= detailreport.defect_int %></td>
-								<td valign="top"><%= sum_defect_int %></td>
-								<td valign="top"><%= detailreport.defect_ext %></td>
-								<td valign="top"><%= sum_defect_ext %></td>
-								<td valign="top"><%= detailreport.rft.to_i %> %</td>
-								<td valign="top"><%= detailreport.remark %></td>
+								<td valign="top"><%#= detailreport.jam %></td>
+								<td valign="top"><%#= detailreport.opr %></td>
+								<td valign="top"><%#= detailreport.target %></td>
+								<td valign="top"><%#= sum_target %></td>
+								<td valign="top"><%#= detailreport.act %></td>
+								<td valign="top"><%#= sum_act %></td>
+								<td valign="top"><%#= detailreport.percent.to_i %> %</td>
+								<td valign="top"><%#= detailreport.pph %></td>
+								<td valign="top"><%#= detailreport.defect_int %></td>
+								<td valign="top"><%#= sum_defect_int %></td>
+								<td valign="top"><%#= detailreport.defect_ext %></td>
+								<td valign="top"><%#= sum_defect_ext %></td>
+								<td valign="top"><%#= detailreport.rft.to_i %> %</td>
+								<td valign="top"><%#= detailreport.remark %></td>
 							</tr>
-						<% end %>
+						<%# end %>
 					</tbody>
 				</table>
-			<% end %>
-		<% end %>
+			<%# end %>
+		<%# end %>
 		</div>
-	<% end %>
+	<%# end %> -->
 </body>
 </html>
