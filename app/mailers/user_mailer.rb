@@ -76,7 +76,7 @@ class UserMailer < ApplicationMailer
 						sum_defect_int += detailreport.defect_int.to_i
 						sum_defect_ext += detailreport.defect_ext.to_i 
 
-						size = detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
+						size = detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
 
 						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ')]
