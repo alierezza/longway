@@ -1,6 +1,7 @@
 require 'em-websocket'
 require 'date'
 require "socket"
+require 'pry'
 
   EM.run do
     @clients = []
