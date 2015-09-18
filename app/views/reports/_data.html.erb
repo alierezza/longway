@@ -24,7 +24,7 @@
 			</tr>
 		</thead>
 		<tbody><% sum_target = 0 %><% sum_act = 0 %><% sum_defect_int = 0 %><% sum_defect_ext = 0 %>
-				<% @data.first.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index| %>
+				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
 					<% sum_target += detailreport.target.to_i  %>
 					<% sum_act += detailreport.act.to_i  %>
 					<% sum_defect_int += detailreport.defect_int.to_i  %>

@@ -5,7 +5,7 @@ every 1.day, :at => "6:10 pm" do
   runner "Board.send_email"
 end
 
-every '* 8,9,10,11,12,13,14,15 * * 1-5' do
+every '* 7,8,9,10,11,12,13,14,15 * * 1-5' do
   runner "Report.hourly"
 end
 
