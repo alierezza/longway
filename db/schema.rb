@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824123506) do
+ActiveRecord::Schema.define(version: 20150921110500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ads", force: :cascade do |t|
+    t.string   "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "boards", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -40,6 +46,16 @@ ActiveRecord::Schema.define(version: 20150824123506) do
   create_table "homes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.boolean  "status",              default: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "banner_file_name"
+    t.string   "banner_content_type"
+    t.integer  "banner_file_size"
+    t.datetime "banner_updated_at"
   end
 
   create_table "lines", force: :cascade do |t|

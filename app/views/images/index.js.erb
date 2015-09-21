@@ -1,0 +1,7 @@
+
+<% if @cek == true %>
+
+<% else %>
+	<% flash[:alert] = "Only allow 5 images to be enabled" %>
+	location.reload();
+<% end %>

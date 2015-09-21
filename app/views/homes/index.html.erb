@@ -1,20 +1,53 @@
-
+<% if can? :home, current_user %>
 	<div class="col-md-4 big_icon">
 		<%= link_to homes_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home <% end %>
 	</div>
+<% end %>
+
+<% if can? :manage, current_user  %>
 	<div class="col-md-4 big_icon">
 		<%= link_to users_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  User <% end %>
 	</div>
+<% end %>
+
+<% if can? :line, current_user %>
 	<div class="col-md-4 big_icon">
 		<%= link_to lines_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Line <% end %>
 	</div>
+<% end %>
 
+<% if can? :visual_board, current_user %>
 	<div class="col-md-4 big_icon">
 		<%= link_to  boards_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>  Visual Board <% end %>
 	</div>
+<% end %>
+
+<% if can? :visual_problem, current_user %>
 	<div class="col-md-4 big_icon">
 		<%= link_to problems_path , class: "btn btn-default btn-block" do %> <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>  Machine Problem <% end %>
 	</div>
+<% end %>
+
+<% if can? :data, current_user %>
 	<div class="col-md-4 big_icon">
 		<%= link_to data_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Data <% end %>
 	</div>
+<% end %>
+
+<% if can? :masteremail, current_user %>
+	<div class="col-md-4 big_icon">
+		<%= link_to masteremails_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>  Email <% end %>
+	</div>
+<% end %>
+
+<% if can? :running_text, current_user %>
+	<div class="col-md-4 big_icon">
+		<%= link_to ads_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-font" aria-hidden="true"></span>  Running Text <% end %>
+	</div>
+<% end %>
+
+<% if can? :image, current_user %>
+	<div class="col-md-4 big_icon">
+		<%= link_to images_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>  Banner <% end %>
+	</div>
+<% end %>

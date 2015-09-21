@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Banner List</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="form-group">
+	  	<%= link_to new_image_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Banner <% end %>
+	  </div>
+    <table class="table table-stripped table-bordered">
+			<thead>
+				<th>Image</th>
+				<th>Status</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<% @images.all.each_with_index do |image, index| %>
+					<tr>
+						<td><%= image_tag image.banner.url(:medium) %></td>
+						<td>
+							<% if image.status == true %>
+								<input type="checkbox" name="show_<%= index.to_s %>" id="<%= image.id.to_s %>" data-size="mini" checked >
+							<% else %>
+								<input type="checkbox" name="show_<%= index.to_s %>" id="<%= image.id.to_s %>" data-size="mini" >
+							<% end %>
+						</td>
+						<td>
+							<%= link_to "Update", edit_image_path(image), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+							<%= link_to "Delete", image_path(image), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this image ?", :class=>"btn btn-xs btn-danger" %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+  </div>
+</div>
+
+<script>
+$("[name^='show']").bootstrapSwitch();
+
+$('input[name^="show"]').on('switchChange.bootstrapSwitch', function(event, state) {
+  image_id = this.id
+  $.get("/images/", {status: state, id: image_id}, null, "script");
+});
+</script>

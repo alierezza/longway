@@ -593,3 +593,22 @@ div.carousel .fill {
   background-position: 0 -135px;
   color: #00aeef;
 }
+
+
+#footer {
+    position:absolute;
+   bottom:0;
+   width:100%;
+   height:45px;   /* Height of the footer */
+   background:darkred;
+   color: white;
+   font-size: 20pt;
+   margin-left:-30px;
+}
+
+div[id^='target_']{
+  img {
+    width: 300px;
+    height: 200px;
+  }
+}

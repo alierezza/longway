@@ -28,9 +28,16 @@
     <span class="icon-next"></span>
   </a>
 </div>
+<br><br>
 
-
-
+<% begin %>
+  <% if Ad.first.message.gsub("\r","").gsub("\n","") != "" %>
+    <div id="footer">
+      <marquee behavior="scroll" direction="left"><%= Ad.first.message %></marquee>
+    </div>
+  <% end %>
+<% rescue %>
+<% end %>
 
 <script>
 $(function(){
@@ -56,5 +63,7 @@ setInterval(GetClock,1000);
 
 
 </script>
+
+
 
 

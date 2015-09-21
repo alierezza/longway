@@ -49,6 +49,13 @@
 				<li> <%= link_to "Email", masteremails_path %></li>
 			<% end %>
 
+			<% if can? :running_text, current_user %>
+				<li> <%= link_to "Running Text", ads_path %></li>
+			<% end %>
+
+			<% if can? :image, current_user %>
+				<li> <%= link_to "Image", images_path %></li>
+			<% end %>
 
 		</ul>
 	</nav>

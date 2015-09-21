@@ -4,22 +4,46 @@ class Ability
   def initialize(user)
     
     if user.role == "Admin"
-        can :manage, Home
-        can :manage, Line #master LINE
-        can :manage, User #master User/ pegawai
-        can :manage, Board 
-        can :manage, Problem
-        can :manage, Masteremail
-        can :data, Report do |report|
-            report.line.user.role == "Admin"
-        end
+        
+        if user.email == "visualboard@globalwayindonesia.com"
+            #menu
+            can :home, User
+            can :visual_board, User
 
-        #menu
-        can :home, User
-        can :visual_board, User
-        can :visual_problem, User
-        can :line, User
-        can :masteremail, User
+            can :manage, Home
+            can :manage, Board 
+
+
+        elsif user.email == "machineproblem@globalwayindonesia.com"
+            #menu
+            can :home, User
+            can :visual_problem, User
+
+            can :manage, Home
+            can :manage, Problem
+        else
+            #menu
+            can :home, User
+            can :visual_board, User
+            can :visual_problem, User
+            can :line, User
+            can :masteremail, User
+            can :running_text, User
+            can :image, User
+
+            can :manage, Home
+            can :manage, Line #master LINE
+            can :manage, User #master User/ pegawai
+            can :manage, Board 
+            can :manage, Problem
+            can :manage, Masteremail
+            can :data, Report do |report|
+                report.line.user.role == "Admin"
+            end
+            can :manage, Ad
+            can :manage, Image
+        end
+            
 
     elsif user.role == "User"
         can :manage, Home

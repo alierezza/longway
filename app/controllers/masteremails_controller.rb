@@ -36,19 +36,19 @@ class MasteremailsController < ApplicationController
 	    respond_to do |format|
 	      if @email.update(my_sanitizer)
 	        format.html { redirect_to masteremails_path, notice: 'Email has been updated'}
-	        format.json { render action: 'new', status: :created, location: @line }
+	        format.json { render action: 'new', status: :created, location: @email }
 	      else
-	        flash.now.alert = @line.errors.full_messages.to_sentence
+	        flash.now.alert = @email.errors.full_messages.to_sentence
 	        format.html { render action: "new" }
-	        format.json { render json: @line.errors, status: :unprocessable_entity }
+	        format.json { render json: @email.errors, status: :unprocessable_entity }
 	      end
 	    end
 	end
 
 
 	def destroy
-		@line = Masteremail.find(params[:id])
-		@line.destroy
+		@email = Masteremail.find(params[:id])
+		@email.destroy
 		flash[:alert] = "Email has been deleted"
 		redirect_to masteremails_path
 	end
