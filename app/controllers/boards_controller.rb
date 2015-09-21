@@ -114,6 +114,12 @@ class BoardsController < ApplicationController
 
 	def new
 
+		begin
+			respond_to do |format|
+	        	format.json { render json: Ad.first, status: :created }
+	    	end
+		rescue
+		end
 	end
 
 	def create

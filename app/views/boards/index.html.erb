@@ -28,16 +28,9 @@
     <span class="icon-next"></span>
   </a>
 </div>
-<br><br>
 
-<% begin %>
-  <% if Ad.first.message.gsub("\r","").gsub("\n","") != "" %>
-    <div id="footer">
-      <marquee behavior="scroll" direction="left"><%= Ad.first.message %></marquee>
-    </div>
-  <% end %>
-<% rescue %>
-<% end %>
+
+<%= render "footer" %>
 
 <script>
 $(function(){
@@ -59,6 +52,49 @@ function GetClock(){
 GetClock();
 setInterval(GetClock,1000);
 
+});
+
+
+
+$(document).ready(function(){
+  
+$(window).load(function() {
+
+    $('#aa').bind('finished', function(){
+        //Change text to something else after first loop finishes
+        //$(this).marquee('destroy');
+        showText();
+
+        
+        $(this).html($("#message").val())
+         
+            //Apply marquee plugin again
+            .marquee({
+              duration: 13000,
+          gap: 0,
+          //'left' or 'right'
+          direction: 'left'
+            })
+    }).marquee({
+    //speed in milliseconds of the marquee
+    duration: 13000,
+    gap: 0,
+    //'left' or 'right'
+    direction: 'left'
+});
+});
+
+
+    function showText(){
+        $.ajax({
+            type:"GET",
+            url:"/boards/new",
+            data:{},
+            success:function(data){
+              $("#message").val(data.message);
+            }
+        });
+    }
 });
 
 

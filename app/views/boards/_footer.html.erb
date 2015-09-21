@@ -1,0 +1,10 @@
+<% begin %>
+  <%# if Ad.first.message.gsub("\r","").gsub("\n","") != "" %>
+    <div id="footer">
+      <div id="aa"><%= Ad.first.message %></div>
+    </div>
+  <%# end %>
+<% rescue %>
+<% end %>
+
+<%= hidden_field_tag :message,Ad.first == nil ? nil :Ad.first.message,:id=>"message" %>

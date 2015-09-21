@@ -12,6 +12,7 @@ class Ability
 
             can :manage, Home
             can :manage, Board 
+            can :read, Ad
 
 
         elsif user.email == "machineproblem@globalwayindonesia.com"
