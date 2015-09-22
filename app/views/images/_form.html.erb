@@ -2,7 +2,7 @@
     <%= form_for(@image) do |f| %>
         
         <div class='form-group'>
-            <label class='control-label'>Image</label>
+            <label class='control-label'>Image (max: 4Mb)</label>
             <%= f.file_field :banner, :class=>"avatar", required: true,:accept=>"image/*" %>
               <div id="target_image_banner">
                 <%= image_tag @image.banner.url(:medium) %>

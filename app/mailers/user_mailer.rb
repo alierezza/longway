@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
 
   	#default from: CONFIG["email_dari"]
   	#default from: "dynamic-billboard@id.longwaycorp.com"
-  	default from: "hendranatadnet@gmail.com"
+  	default from: "visualboard.gwi@gmail.com"
 
   	def report
   		@temp = Array.new
@@ -34,8 +34,6 @@ class UserMailer < ApplicationMailer
 	    			row = sheet1.row(baris)
 	    			format = Spreadsheet::Format.new :color => :black,
                                  :weight => :bold,
-                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-                    format2 = Spreadsheet::Format.new :color => :black,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
                     14.times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
@@ -82,8 +80,18 @@ class UserMailer < ApplicationMailer
 						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ')]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
+
+						format_normal = Spreadsheet::Format.new :color => :black,
+                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
+                    	format_red = Spreadsheet::Format.new :color => :red,
+                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
+                    
 	    				14.times do |x|
-	    					row.set_format(x,format2)
+	    					if x == 4 and detailreport.act < detailreport.target
+	    						row.set_format(x,format_red)
+	    					else
+	    						row.set_format(x,format_normal)
+	    					end
 	    				end
 	    			end
 

@@ -27,7 +27,19 @@
 					<td><b><font size="6"><%= report.detailreports.last.opr %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.target %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.sum("target") %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.last.act %></font></b></td>
+					<td>
+						<b>
+							<% if report.detailreports.last.act < report.detailreports.last.target %>
+								<font size="6" color=red>
+									<%= report.detailreports.last.act %>
+								</font>
+							<% else %>
+								<font size="6">
+									<%= report.detailreports.last.act %>
+								</font>
+							<% end %>
+						</b>
+					</td>
 					<td><b><font size="6"><%= report.detailreports.sum("act") %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.percent.to_i %> %</font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.pph %></font></b></td>
