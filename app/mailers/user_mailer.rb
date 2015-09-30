@@ -106,7 +106,7 @@ class UserMailer < ApplicationMailer
 
 
 	    attachments["Report_#{Time.now.strftime('%d-%m-%Y')}.xls"] = File.read(path)
-	    mail(to: @temp, subject: "[Global Way Indonesia] Laporan Hasil Produksi Harian (#{Date.today.strftime('%d %B %Y')})")
+	    mail(to: @temp, subject: "[Global Way Indonesia] Daily Production Report (#{Date.today.strftime('%d %B %Y')})")
 
 	    FileUtils.rm_f(path)
   	end
