@@ -48,6 +48,7 @@ class ReportsController < ApplicationController
 				else
 					opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
 					remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
+					article = User.find(params[:user_id]).line.reports.last.detailreports.last.article
 					act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
 					
 					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
@@ -74,7 +75,7 @@ class ReportsController < ApplicationController
 					end
 					
 					percent = target_sum == 0 ? 0 : ((act_sum / target_sum .to_f) *100 ).round(0)
-					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
+					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target, :article=>article)
 					
 				end
 			rescue Exception => e

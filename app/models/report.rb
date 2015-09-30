@@ -17,6 +17,7 @@ class Report < ActiveRecord::Base
 				else
 					opr = user.line.reports.last.detailreports.last.opr
 					remark = user.line.reports.last.detailreports.last.remark
+					article = user.line.reports.last.detailreports.last.article
 					act_sum = user.line.reports.last.detailreports.sum("act").to_i
 					rft = user.line.reports.last.detailreports.last.rft
 					
@@ -36,7 +37,7 @@ class Report < ActiveRecord::Base
 						target_sum = user.line.reports.last.detailreports.sum("target").to_i  + target.to_i
 					end
 					percent = target_sum == 0 ? 0 : ((act_sum / target_sum .to_f) *100 ).round(0)
-					user.line.reports.last.detailreports.create!(:jam=>Time.now.strftime("%H").to_i, :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target)
+					user.line.reports.last.detailreports.create!(:jam=>Time.now.strftime("%H").to_i, :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target, :article=>article)
 					puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				end
 			rescue Exception => e

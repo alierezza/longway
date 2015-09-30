@@ -15,6 +15,7 @@
 				<th colspan=4>DEFECT</th>
 				<th rowspan=2>RFT</th>
 				<th rowspan=2  width="25%">REMARK</th>
+				<th rowspan=2>ARTICLE</th>
 			</tr>
 			<tr>
 				<th>INT</th>
@@ -44,10 +45,11 @@
 						<td><%= sum_defect_ext %></td>
 						<td><%= detailreport.rft.to_i %> %</td>
 						<td><%= detailreport.remark %></td>
+						<td><%= detailreport.article %></td>
 					</tr>
 				<% end %>
 					<tr>
-						<td colspan=14>Total <%= @data.first.detailreports.count %> Jam</td>
+						<td colspan=15>Total <%= @data.first.detailreports.count %> Jam</td>
 					</tr>
 
 		</tbody>
