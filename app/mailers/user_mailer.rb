@@ -29,7 +29,7 @@ class UserMailer < ApplicationMailer
 	    	else
 	    		board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index2|
 
-	    			sheet1.row(baris = baris+1).replace ["JAM","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","", "RFT", "REMARK", "ARTICLE"]
+	    			sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","", "RFT", "REMARK", "ARTICLE"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
 	    			format = Spreadsheet::Format.new :color => :black,
