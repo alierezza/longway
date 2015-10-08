@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930101709) do
+ActiveRecord::Schema.define(version: 20151008114224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20150930101709) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.string   "article"
+    t.string   "po"
+    t.string   "mfg"
   end
 
   create_table "homes", force: :cascade do |t|
@@ -86,6 +88,8 @@ ActiveRecord::Schema.define(version: 20150930101709) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "reports", ["line_id", "tanggal"], name: "reports_line_id_tanggal_key", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                             default: "",     null: false

@@ -19,7 +19,8 @@
     </div>
     <div class="counter_button">
       <%= f.button "", class: "actual"  %>
-    </div>
+    </div><br>
+    <div><b>TOTAL : <%= @target_and_opr.detailreports.sum("act") == nil ? 0 : @target_and_opr.detailreports.sum("act") %></b></div>
     <% end %>
   <% end %>
 </div> <!-- end id="actual" -->

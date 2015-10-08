@@ -43,39 +43,73 @@ class ReportsController < ApplicationController
 	def new
 		if params[:record] #refresh tiap jam
 			begin
-				if current_user.line.reports.last.detailreports.last.jam.to_i >= params[:record].to_i
+				if current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.last.jam.to_i >= params[:record].to_i
 
 				else
-					opr = User.find(params[:user_id]).line.reports.last.detailreports.last.opr
-					remark = User.find(params[:user_id]).line.reports.last.detailreports.last.remark
-					article = User.find(params[:user_id]).line.reports.last.detailreports.last.article
-					act_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("act").to_i
+					opr = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.opr
+					remark = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.remark
+					article = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.article
+					po = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.po
+					mfg = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg
+
+					act_sum = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.sum("act").to_i
 					
-					rft = User.find(params[:user_id]).line.reports.last.detailreports.last.rft
+					rft = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.rft
 					
 					
 					time = params[:record].to_i
 
-					if time == 12 
-						pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.count) ) .to_f ).round(2)
-						target = 0
-						target_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("target").to_i
-					elsif time == 16 or time == 17
-						pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
-						target = 0
-						target_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("target").to_i
-					else
-						pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.last.detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
-						if time == 13
-							target = target = User.find(params[:user_id]).line.reports.last.detailreports.offset(1).last == nil ? 0 : User.find(params[:user_id]).line.reports.last.detailreports.offset(1).last.target
+					if time == 12
+						if Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 1
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.count - 0.5) ) .to_f ).round(2)
 						else
-							target = User.find(params[:user_id]).line.reports.last.detailreports.last.target
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.count) ) .to_f ).round(2)
 						end
-						target_sum = User.find(params[:user_id]).line.reports.last.detailreports.sum("target").to_i + target.to_i
+
+						target = 0
+						target_sum = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.sum("target").to_i
+					elsif time == 16 or time == 17
+						if Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 1 and time == 16
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1 - 1) ) .to_f ).round(2)
+						elsif Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 0 and time == 16
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1 - 0.5) ) .to_f ).round(2)
+						elsif Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 1 and time == 17
+							
+							pph_fix = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count - 0.5) ) .to_f ).round(2)
+							fix = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.find_by(:jam=>16)
+							fix.update!(:pph=>pph_fix)
+
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1 - 0.5) ) .to_f ).round(2)
+						elsif Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 0 and time == 17
+							
+							pph_fix = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count) ) .to_f ).round(2)
+							fix = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.find_by(:jam=>16)
+							fix.update!(:pph=>pph_fix)
+
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
+						else
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
+						end
+
+						target = 0
+						target_sum = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.sum("target").to_i
+					else
+						if Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 1
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1 - 0.5) ) .to_f ).round(2)
+						else
+							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1) ) .to_f ).round(2)
+						end
+
+						if time == 13
+							target = target = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.offset(1).last == nil ? 0 : User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.offset(1).last.target
+						else
+							target = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.last.target
+						end
+						target_sum = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.sum("target").to_i + target.to_i
 					end
 					
 					percent = target_sum == 0 ? 0 : ((act_sum / target_sum .to_f) *100 ).round(0)
-					User.find(params[:user_id]).line.reports.last.detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target, :article=>article)
+					User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.create!(:jam=>params[:record], :opr=>opr,:percent=>percent,:pph=>pph,:rft=>rft, :remark=>remark, :target=>target, :article=>article, :po=>po, :mfg=>mfg)
 					
 				end
 			rescue Exception => e
@@ -100,7 +134,13 @@ class ReportsController < ApplicationController
 			end
 
 			params[:report][:detailreports_attributes]["0"][:percent] = params[:report][:detailreports_attributes]["0"][:target].to_i == 0 ? 0 : ((params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:target].to_i .to_f )* 100 ).round(0)
-			params[:report][:detailreports_attributes]["0"][:pph] = params[:report][:detailreports_attributes]["0"][:opr].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:opr].to_i .to_f).round(2)
+			
+			if (Time.now.friday? and Time.now.strftime("%H").to_i == 11) or (Time.now.friday? and Time.now.strftime("%H").to_i == 16)
+				params[:report][:detailreports_attributes]["0"][:pph] = params[:report][:detailreports_attributes]["0"][:opr].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / (params[:report][:detailreports_attributes]["0"][:opr].to_i * 0.5) .to_f).round(2)
+			else
+				params[:report][:detailreports_attributes]["0"][:pph] = params[:report][:detailreports_attributes]["0"][:opr].to_i == 0 ? 0 : (params[:report][:detailreports_attributes]["0"][:act].to_i / params[:report][:detailreports_attributes]["0"][:opr].to_i .to_f).round(2)
+			end
+
 			defact = params[:report][:detailreports_attributes]["0"][:defect_int].to_i+params[:report][:detailreports_attributes]["0"][:defect_ext].to_i .to_f
 			temp = params[:report][:detailreports_attributes]["0"][:act].to_i == 0 ? 0 :  params[:report][:detailreports_attributes]["0"][:act].to_i / ( params[:report][:detailreports_attributes]["0"][:act].to_i  + defact ) .to_f
 			params[:report][:detailreports_attributes]["0"][:rft] = temp == 0 ? 0 : ( temp * 100 .to_f).round(0)
@@ -151,7 +191,29 @@ class ReportsController < ApplicationController
 			defact = defect_int + defect_ext
 
 			params[:report][:detailreports_attributes]["0"][:percent] = target_sum == 0 ? 0 : ((act_sum / target_sum	 .to_f	) * 100).round(0)
-			params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.last.detailreports.where("jam != ?",12).count) ) .to_f ).round(2)
+
+			if Time.now.friday?
+				if Time.now.strftime("%H").to_i < 11
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i == 11
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count - 0.5) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i >= 11 and Time.now.strftime("%H").to_i <= 15 and  current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam =>11).count == 1
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count - 0.5) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i >= 11 and Time.now.strftime("%H").to_i <= 15 and  current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam =>11).count == 0
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i == 16 and current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam = ?",11).count == 1
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count - 1) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i == 16 and current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam = ?",11).count == 0
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count - 0.5) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i >= 17 and current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam = ?",11).count == 1
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count - 0.5) ) .to_f ).round(2)
+				elsif Time.now.strftime("%H").to_i >= 17 and current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam = ?",11).count == 0
+					params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count) ) .to_f ).round(2)
+				end
+			else
+				params[:report][:detailreports_attributes]["0"][:pph] = opr == 0 ? 0 : (act_sum / ( opr * (current_user.line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count) ) .to_f ).round(2)
+			end
+
 			params[:report][:detailreports_attributes]["0"][:rft] = act_sum + defact == 0 ? 0 : ( ( ( act_sum / ( act_sum + defact )  .to_f )  .to_f) * 100).round(0)
 
 

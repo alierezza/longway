@@ -29,13 +29,13 @@ class UserMailer < ApplicationMailer
 	    	else
 	    		board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index2|
 
-	    			sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","", "RFT", "REMARK", "ARTICLE"]
+	    			sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","", "RFT", "REMARK", "ARTICLE", "P/O", "MFG No"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
 	    			format = Spreadsheet::Format.new :color => :black,
                                  :weight => :bold,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-                    15.times do |x| row.set_format(x,format) end
+                    17.times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
 					sheet1.column(2).width = 10
 					sheet1.column(3).width = 20
@@ -50,6 +50,8 @@ class UserMailer < ApplicationMailer
 					sheet1.column(12).width = 10
 					sheet1.column(13).width = 70
 					sheet1.column(14).width = 15
+					sheet1.column(15).width = 20
+					sheet1.column(16).width = 20
 					sheet1.merge_cells(baris, 8, baris, 11)
 					8.times do |y|
 						sheet1.merge_cells(baris, y, baris+1, y)
@@ -57,11 +59,13 @@ class UserMailer < ApplicationMailer
 					sheet1.merge_cells(baris, 12, baris+1, 12)
 					sheet1.merge_cells(baris, 13, baris+1, 13)
 					sheet1.merge_cells(baris, 14, baris+1, 14)
+					sheet1.merge_cells(baris, 15, baris+1, 15)
+					sheet1.merge_cells(baris, 16, baris+1, 16)
 	    			
 	    			sheet1.row(baris = baris+1).replace ["","","","","","","","","INT","INT (SUM)","EXT","EXT (SUM)"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
-	    			15.times do |x|
+	    			17.times do |x|
 	    				row.set_format(x,format)
 	    			end
 	    			
@@ -79,7 +83,7 @@ class UserMailer < ApplicationMailer
 						size = detailreport.remark == nil ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.article]
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,sum_defect_int,detailreport.defect_ext,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.article, detailreport.po, detailreport.mfg]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
@@ -88,7 +92,7 @@ class UserMailer < ApplicationMailer
                     	format_red = Spreadsheet::Format.new :color => :red,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
                     
-	    				15.times do |x|
+	    				17.times do |x|
 	    					if x == 4 and detailreport.act < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else

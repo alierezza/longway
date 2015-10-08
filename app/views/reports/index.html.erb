@@ -24,6 +24,8 @@
           <div class="counter_button">
             <%= f.button "", class: "actual", :id=>"btn_act"  %>
           </div>
+          <br>
+          <div><b>TOTAL : <%= @target_and_opr.detailreports.sum("act") == nil ? 0 : @target_and_opr.detailreports.sum("act") %></b></div>
           <% end %>
         <% end %>
       </div> <!-- end id="actual" -->
@@ -116,7 +118,7 @@
     <div id="target_and_opr">
       <%= form_for(@target_and_opr, :remote=>true) do |f| %>
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-      <div class='form-group'>
+     
         <div class="row">
           <div class='col-xs-2'>
             <label>Article</label>
@@ -125,8 +127,6 @@
             <%= detailreport.text_field :article,:required=>true,class: 'form-control' %>
           </div>
         </div>
-      </div>
-      <div class='form-group'>
         <div class="row">
           <div class='col-xs-2'>
             <label>Target</label>
@@ -135,8 +135,6 @@
             <%= detailreport.number_field :target, min: 1 ,:required=>true,class: 'form-control' %>
           </div>
         </div>
-      </div>
-      <div class='form-group'>
         <div class="row">
           <div class='col-xs-2'>
             <label>OPR</label>
@@ -145,7 +143,23 @@
             <%= detailreport.number_field :opr, min: 1,:required=>true, class: 'form-control' %>
           </div>
         </div>
-      </div>
+        <div class="row">
+          <div class='col-xs-2'>
+            <label>P/O</label>
+          </div>
+          <div class='col-xs-10'>
+            <%= detailreport.text_field :po,:required=>true, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-xs-2'>
+            <label>MFG No</label>
+          </div>
+          <div class='col-xs-10'>
+            <%= detailreport.text_field :mfg,:required=>true, class: 'form-control' %>
+          </div>
+        </div>
+
       <div class="row">
         <div class="col-xs-12">
            <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
@@ -159,10 +173,10 @@
     <div id="remark">
       <%= form_for(@target_and_opr, :remote=>true) do |f| %>
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-        <div class='form-group'>
+        
           <label>Remark</label>
           <%= detailreport.text_area :remark, class: "form-control", rows: 4 %>
-        </div>
+        
         <div class="row">
           <div class="col-xs-12">
              <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
