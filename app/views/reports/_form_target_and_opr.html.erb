@@ -5,32 +5,32 @@
 <%= form_for(@target_and_opr, :remote=>true) do |f| %>
 <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
   <div class="row">
-    <div class='col-md-2'>
-      <label>Article</label>
+    <div class='col-xs-2'>
+      <label style="margin-top:7px">Article</label>
     </div>
-    <div class='col-md-10'>
+    <div class='col-xs-10'>
       <%= detailreport.text_field :article, :required=>true, class: 'form-control' %>
     </div>
   </div>
   <div class="row">
-    <div class='col-md-2'>
-      <label>Target</label>
+    <div class='col-xs-2'>
+      <label style="margin-top:7px">Target</label>
     </div>
-    <div class='col-md-10'>
+    <div class='col-xs-10'>
       <%= detailreport.number_field :target, min: 1,:required=>true, class: 'form-control' %>
     </div>
   </div>
   <div class="row">
-    <div class='col-md-2'>
-      <label>OPR</label>
+    <div class='col-xs-2'>
+      <label style="margin-top:7px">OPR</label>
     </div>
-    <div class='col-md-10'>
+    <div class='col-xs-10'>
       <%= detailreport.number_field :opr, min: 1,:required=>true, class: 'form-control' %>
     </div>
   </div>
   <div class="row">
     <div class='col-xs-2'>
-      <label>P/O</label>
+      <label style="margin-top:7px">P/O</label>
     </div>
     <div class='col-xs-10'>
       <%= detailreport.text_field :po,:required=>true, class: 'form-control' %>
@@ -38,7 +38,7 @@
   </div>
   <div class="row">
     <div class='col-xs-2'>
-      <label>MFG No</label>
+      <label style="margin-top:7px">MFG No</label>
     </div>
     <div class='col-xs-10'>
       <%= detailreport.text_field :mfg,:required=>true, class: 'form-control' %>
@@ -46,7 +46,7 @@
   </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-xs-12">
      <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
 </div>
   </div>
