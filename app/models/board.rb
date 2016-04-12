@@ -1,7 +1,13 @@
 class Board < ActiveRecord::Base
 
 	def self.send_email
-			UserMailer.report.deliver
+
+		if Report.find_by(:tanggal=>Time.now.to_date) == nil #jika tidak ada report sama sekali pada hari tsb
+			#nothing
+		else
+			UserMailer.report(Time.now.to_date).deliver
+		end
+			
 	end
 
 	def self.remove

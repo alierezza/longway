@@ -3,6 +3,20 @@ class MasteremailsController < ApplicationController
 
 	def index
 		@emails = Masteremail.all
+
+		if params[:tanggal]
+
+			if Report.find_by(:tanggal=>params[:tanggal].to_date) == nil #jika tidak ada report sama sekali pada hari tsb
+				redirect_to masteremails_path
+				flash[:alert] = "Data empty"
+			else
+				UserMailer.report(params[:tanggal].to_date).deliver
+				redirect_to masteremails_path
+				flash[:notice] = "Email has been sent"
+			end
+
+			
+		end	
 	end
 
 	def show

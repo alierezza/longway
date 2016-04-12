@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
   	#default from: "dynamic-billboard@id.longwaycorp.com"
   	default from: "visualboard.gwi@gmail.com"
 
-  	def report
+  	def report(tanggal)
   		@temp = Array.new
 	    Masteremail.all.each_with_index do |email,index|
 	    	@temp.push(email.name)
@@ -23,11 +23,11 @@ class UserMailer < ApplicationMailer
 
 	    	sheet1.row(baris = baris +2).push "Line No: #{board.no}"
 
-	    	if board.reports.where("tanggal=?",Date.today).count == 0
+	    	if board.reports.where("tanggal=?",tanggal).count == 0
 	    		sheet1.row(baris = baris + 1).push "Empty"
 	    		#baris += index + 2
 	    	else
-	    		board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index2|
+	    		board.reports.where("tanggal=?",tanggal).all.each_with_index do |report,index2|
 
 	    			sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","", "RFT", "REMARK", "ARTICLE", "P/O", "MFG No"]
 	    			sheet1.row(baris).height = 16
