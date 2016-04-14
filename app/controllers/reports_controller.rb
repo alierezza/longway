@@ -68,7 +68,7 @@ class ReportsController < ApplicationController
 
 						target = 0
 						target_sum = User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.sum("target").to_i
-					elsif time == 16 or time == 17
+					elsif time == 16 || time == 17 || time == 18
 						if Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 1 and time == 16
 							pph = opr == 0 ? 0 : (act_sum / ( opr * (User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where("jam != ?",12).count+1 - 1) ) .to_f ).round(2)
 						elsif Time.now.friday? and User.find(params[:user_id]).line.reports.find_by("tanggal = ?",Date.today).detailreports.where(:jam=>11).count == 0 and time == 16

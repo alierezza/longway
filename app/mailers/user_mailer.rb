@@ -110,7 +110,7 @@ class UserMailer < ApplicationMailer
 								@efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil )
 								efisiensi += ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "% ".html_safe
 							else
-							
+								efisiensi += "- "
 							end
 						end
 

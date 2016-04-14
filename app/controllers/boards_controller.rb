@@ -106,11 +106,37 @@ class BoardsController < ApplicationController
 			#defect int & ext
 
 			if report.present?
-				@big_data[line.no].push([report.detailreports.sum("detailreports.defect_int"),report.detailreports.sum("detailreports.defect_int_11b"),report.detailreports.sum("detailreports.defect_int_11c"),report.detailreports.sum("detailreports.defect_int_11j"),report.detailreports.sum("detailreports.defect_int_11l"),report.detailreports.sum("detailreports.defect_int_13d")])
-				@big_data[line.no].push([report.detailreports.sum("detailreports.defect_ext"),report.detailreports.sum("detailreports.defect_ext_bs3"),report.detailreports.sum("detailreports.defect_ext_bs7"),report.detailreports.sum("detailreports.defect_ext_bs13"),report.detailreports.sum("detailreports.defect_ext_bs15"),report.detailreports.sum("detailreports.defect_ext_bs17")])
+
+				defect_int = Array.new
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"11A"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"11B"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11c"),:data=>"11C"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"11J"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11l"),:data=>"11L"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_13d"),:data=>"13D"})
+
+				top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
+
+				defect_ext = Array.new
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext"),:data=>"BS2"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs3"),:data=>"BS3"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs7"),:data=>"BS7"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs13"),:data=>"BS13"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs15"),:data=>"BS15"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs17"),:data=>"BS17"})
+
+				top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
+
+				@big_data[line.no].push(top_3_int.map{|i| i[:value]})
+				@big_data[line.no].push(top_3_int.map{|i| i[:data]})
+				@big_data[line.no].push(top_3_ext.map{|i| i[:value]})
+				@big_data[line.no].push(top_3_ext.map{|i| i[:data]})
+
 			else
-				@big_data[line.no].push([0,0,0,0,0,0])
-				@big_data[line.no].push([0,0,0,0,0,0])
+				@big_data[line.no].push([0,0,0])
+				@big_data[line.no].push(["-","-","-"])
+				@big_data[line.no].push([0,0,0])
+				@big_data[line.no].push(["-","-","-"])
 			end
 
 
