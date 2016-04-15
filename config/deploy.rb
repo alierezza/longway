@@ -4,7 +4,7 @@ lock '3.4.0'
 server 'localhost', user: 'globalway', roles: %w{app db web}, my_property: :my_value, password: 'globalway'
 
 
-set :application, 'visual board'
+set :application, 'visual'
 set :repo_url, 'git@github.com:hendranata/globalway.git'
 
 
