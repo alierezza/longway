@@ -13,4 +13,4 @@ every :friday, :at => "11.00 pm" do
 	runner "Board.remove"	
 end
 
-#@reboot sleep 5 && 'ruby /home/gloobalway/public_html/server.rb >> log/server.log 2>&1'
+@reboot sleep 5 && 'ruby /home/gloobalway/public_html/server.rb >> log/server.log 2>&1'
