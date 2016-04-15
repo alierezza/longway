@@ -44,8 +44,8 @@
 					<td><b><font size="6"><%= report.detailreports.sum("act") %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.percent.to_i %> %</font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.pph %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.sum("defect_int") %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.sum("defect_ext") %></font></b></td>
+					<td><b><font size="6"><%= report.detailreports.sum("defect_int + defect_int_11b + defect_int_11c + defect_int_11j + defect_int_11l + defect_int_13d") %></font></b></td>
+					<td><b><font size="6"><%= report.detailreports.sum("defect_ext + defect_ext_bs3 + defect_ext_bs7 + defect_ext_bs13 + defect_ext_bs15 + defect_ext_bs17") %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.rft.to_i %> %</font></b></td>
 					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.remark %></font></b></td>
 					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.article %></font></b></td>
