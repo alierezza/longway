@@ -123,8 +123,7 @@ class ReportsController < ApplicationController
 	def create
 
 
-
-		if Time.now.strftime("%H").to_i != 12
+		if Time.now.strftime("%H").to_i != 12 
 			params[:report][:tanggal] = Date.today
 			#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target]
 			params[:report][:detailreports_attributes]["0"][:jam] = Time.now.strftime("%H")
@@ -151,7 +150,12 @@ class ReportsController < ApplicationController
 			params[:report][:detailreports_attributes]["0"][:rft] = temp == 0 ? 0 : ( temp * 100 .to_f).round(0)
 
 			@report = current_user.line.reports.new(my_sanitizer)
-		    @report.save!
+		    
+		    if @report.save
+
+			else
+
+			end
 		end
 	end
 
@@ -249,7 +253,14 @@ class ReportsController < ApplicationController
 
 
 			#params[:report][:detailreports_attributes]["0"][:target_sum] = params[:report][:detailreports_attributes]["0"][:target].to_i + @report.detailreports.last.target_sum.to_i
-		    @report.update!(my_sanitizer)
+		    
+
+		    if @report.update(my_sanitizer)
+			
+			else #jika ada error karena validasi
+
+			end
+
 		end
 	end
 

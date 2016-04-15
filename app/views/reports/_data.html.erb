@@ -12,24 +12,41 @@
 				<th rowspan=2>ACT (SUM)</th>
 				<th rowspan=2  width="7%">%</th>
 				<th rowspan=2>PPH</th>
-				<th colspan=4>DEFECT</th>
+				<th colspan=14>DEFECT</th>
 				<th rowspan=2>RFT</th>
 				<th rowspan=2  width="25%">REMARK</th>
-				<th rowspan=2>ARTICLE</th>
+				<th rowspan=2 >ARTICLE</th>
+				<th rowspan=2>EFISIENSI / ARTICLE</th>
+				<th rowspan=2>EFISIENSI (Akumulasi)</th>
+				<th rowspan=2>P/O</th>
+				<th rowspan=2>MFG No</th>
 			</tr>
 			<tr>
-				<th>INT</th>
+				<th>INT 11A</th>
+				<th>INT 11B</th>
+				<th>INT 11C</th>
+				<th>INT 11J</th>
+				<th>INT 11L</th>
+				<th>INT 13D</th>
 				<th>INT (SUM)</th>
-				<th>EXT</th>
+				<th>EXT BS2</th>
+				<th>EXT BS3</th>
+				<th>EXT BS7</th>
+				<th>EXT BS13</th>
+				<th>EXT BS15</th>
+				<th>EXT BS17</th>
 				<th>EXT (SUM)</th>
 			</tr>
 		</thead>
+		<% @efficiency = Hash.new{|h,k| h[k] = []} %>
+		<% @eff_acc = Array.new %>
 		<tbody><% sum_target = 0 %><% sum_act = 0 %><% sum_defect_int = 0 %><% sum_defect_ext = 0 %>
 				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
+			
 					<% sum_target += detailreport.target.to_i  %>
 					<% sum_act += detailreport.act.to_i  %>
-					<% sum_defect_int += detailreport.defect_int.to_i  %>
-					<% sum_defect_ext += detailreport.defect_ext.to_i  %>
+					<% sum_defect_int += detailreport.defect_int.to_i  + detailreport.defect_int_11b.to_i + detailreport.defect_int_11c.to_i + detailreport.defect_int_11j.to_i + detailreport.defect_int_11l.to_i + detailreport.defect_int_13d.to_i  %>
+					<% sum_defect_ext += detailreport.defect_ext.to_i + detailreport.defect_ext_bs3.to_i + detailreport.defect_ext_bs7.to_i + detailreport.defect_ext_bs13.to_i + detailreport.defect_ext_bs15.to_i + detailreport.defect_ext_bs17.to_i %>
 					<tr>
 						<td><%= detailreport.jam %></td>
 						<td><%= detailreport.opr %></td>
@@ -40,12 +57,42 @@
 						<td><%= detailreport.percent.to_i %> %</td>
 						<td><%= detailreport.pph %></td>
 						<td><%= detailreport.defect_int %></td>
+						<td><%= detailreport.defect_int_11b %></td>
+						<td><%= detailreport.defect_int_11c %></td>
+						<td><%= detailreport.defect_int_11j %></td>
+						<td><%= detailreport.defect_int_11l %></td>
+						<td><%= detailreport.defect_int_13d %></td>
 						<td><%= sum_defect_int %></td>
 						<td><%= detailreport.defect_ext %></td>
+						<td><%= detailreport.defect_ext_bs3 %></td>
+						<td><%= detailreport.defect_ext_bs7 %></td>
+						<td><%= detailreport.defect_ext_bs13 %></td>
+						<td><%= detailreport.defect_ext_bs15 %></td>
+						<td><%= detailreport.defect_ext_bs17 %></td>
 						<td><%= sum_defect_ext %></td>
 						<td><%= detailreport.rft.to_i %> %</td>
 						<td><%= detailreport.remark %></td>
-						<td><%= detailreport.article %></td>
+						<td><%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)</font>" }.join("<br>").html_safe %></td>
+						<td>
+							<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data| %>
+							
+								<% if Article.find_by_name(data[0]) != nil %>
+								<% article = Article.find_by_name(data[0]) %>
+									<% minutes = ( (data[4] - data[3]) / 1.minute ).ceil %>
+									<% @efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil ) %>
+									<%= ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "%<br>".html_safe %>
+								<% else %>
+								-
+								<% end %>
+							<% end %>
+						</td>
+						<td>
+							<%= temp = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil  %>%
+							<% @eff_acc.push(temp) %>
+							<%= "<br><font color=blue>(#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)</font>".html_safe %>
+						</td>
+						<td><%= detailreport.po %></td>
+						<td><%= detailreport.mfg %></td>
 					</tr>
 				<% end %>
 					<tr>

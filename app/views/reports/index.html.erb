@@ -156,6 +156,7 @@
           </div>
           <div class='col-xs-10'>
             <%= detailreport.text_field :article,:required=>true,class: 'form-control', :style=>"text-transform:uppercase" %>
+            <font color=red><b>Masukan Article Code dengan benar</b></font>
           </div>
         </div>
         <div class="row">
@@ -300,10 +301,10 @@
           var mins = d.getMinutes();
           var secs = d.getSeconds();
   
-          if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18"|| hours == "19" )){
+          if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18")){
           //if(secs == "0"){
               $("#report_detailreports_attributes_0_act").val(0);
-              if(hours == "12" || hours == "16" || hours == "17" || hours == "18" || hours == "19")
+              if(hours == "12" || hours == "16" || hours == "17" || hours == "18")
               {
                 $("#report_detailreports_attributes_0_target").val(0);
               }

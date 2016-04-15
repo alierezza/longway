@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414072931) do
+ActiveRecord::Schema.define(version: 20160415022549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160414072931) do
   create_table "articles", force: :cascade do |t|
     t.string   "session"
     t.string   "name"
-    t.integer  "duration"
+    t.float    "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20160414072931) do
   create_table "boards", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "detailreportarticles", force: :cascade do |t|
+    t.integer  "detailreport_id"
+    t.string   "article"
+    t.integer  "operator"
+    t.integer  "output",          default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "detailreports", force: :cascade do |t|

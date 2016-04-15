@@ -39,14 +39,14 @@ class BoardsController < ApplicationController
 			arr_empty = []
 
 
-			reports = line.reports.find_by("tanggal = ?",DateTime.now.to_date) # <--------------------- uncomment
+			report = line.reports.find_by("tanggal = ?",DateTime.now.to_date) # <--------------------- uncomment
 			#reports = lines.reports.find_by("tanggal = ?","2015-08-13".to_date)
 
-				if reports.present?
-					12.times do |jam|
+				if report.present?
+					14.times do |jam|
 						@temp = false # <--------------------- uncomment
 						@jam = jam + 6 # <--------------------- uncomment
-						reports.detailreports.order("created_at ASC").each_with_index do |report,index|
+						report.detailreports.order("created_at ASC").each_with_index do |report,index|
 
 							if report.jam.to_i == @jam # <--------------------- uncomment
 
@@ -58,8 +58,8 @@ class BoardsController < ApplicationController
 								# arr_act << report.id.to_s+"-"+sum_act.to_s
 								arr_target << sum_target
 								arr_act << sum_act
-								arr_def_int << sum_def_int
-								arr_def_ext << sum_def_ext
+								#arr_def_int << sum_def_int
+								#arr_def_ext << sum_def_ext
 
 								@temp = true
 							end # <--------------------- uncomment
@@ -68,17 +68,17 @@ class BoardsController < ApplicationController
 						if @temp == false and Time.now.strftime("%H").to_i >= @jam
 							arr_target << 0
 							arr_act << 0
-							arr_def_int << 0
-							arr_def_ext << 0
+							#arr_def_int << 0
+							#arr_def_ext << 0
 						end
 
 					end # <--------------------- uncomment
 					arr_line << arr_target
 					arr_line << arr_act
-					arr_line << arr_def_int
-					arr_line << arr_def_ext
+					#arr_line << arr_def_int
+					#arr_line << arr_def_ext
 
-					@big_data[reports.line.no] = arr_line
+					@big_data[report.line.no] = arr_line
 
 				else
 
@@ -86,8 +86,8 @@ class BoardsController < ApplicationController
 
 					arr_empty << [0]
 					arr_empty << [0]
-					arr_empty << [0]
-					arr_empty << [0]
+					#arr_empty << [0]
+					#arr_empty << [0]
 					@big_data[line.no] = arr_empty
 				end
 			# format big_data :
@@ -103,9 +103,20 @@ class BoardsController < ApplicationController
 
 			# }
 
+			#defect int & ext
+
+			if report.present?
+				@big_data[line.no].push([report.detailreports.sum("detailreports.defect_int"),report.detailreports.sum("detailreports.defect_int_11b"),report.detailreports.sum("detailreports.defect_int_11c"),report.detailreports.sum("detailreports.defect_int_11j"),report.detailreports.sum("detailreports.defect_int_11l"),report.detailreports.sum("detailreports.defect_int_13d")])
+				@big_data[line.no].push([report.detailreports.sum("detailreports.defect_ext"),report.detailreports.sum("detailreports.defect_ext_bs3"),report.detailreports.sum("detailreports.defect_ext_bs7"),report.detailreports.sum("detailreports.defect_ext_bs13"),report.detailreports.sum("detailreports.defect_ext_bs15"),report.detailreports.sum("detailreports.defect_ext_bs17")])
+			else
+				@big_data[line.no].push([0,0,0,0,0,0])
+				@big_data[line.no].push([0,0,0,0,0,0])
+			end
+
 
 		end
 		
+						
 	end
 
 	def show
