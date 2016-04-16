@@ -72,24 +72,33 @@
 						<td><%= sum_defect_ext %></td>
 						<td><%= detailreport.rft.to_i %> %</td>
 						<td><%= detailreport.remark %></td>
-						<td><%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)</font>" }.join("<br>").html_safe %></td>
 						<td>
-							<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data| %>
-							
-								<% if Article.find_by_name(data[0]) != nil %>
-								<% article = Article.find_by_name(data[0]) %>
-									<% minutes = ( (data[4] - data[3]) / 1.minute ).ceil %>
-									<% @efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil ) %>
-									<%= ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "%<br>".html_safe %>
-								<% else %>
-								-
+							<% if detailreport.detailreportarticles != [] %>
+								<%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)</font>" }.join("<br>").html_safe %></td>
+							<% else %>
+								<%= detailreport.article %>
+							<% end %>
+						<td>
+							<% if detailreport.detailreportarticles != [] %>
+								<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data| %>
+								
+									<% if Article.find_by_name(data[0]) != nil %>
+									<% article = Article.find_by_name(data[0]) %>
+										<% minutes = ( (data[4] - data[3]) / 1.minute ).ceil %>
+										<% @efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil ) %>
+										<%= ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "%<br>".html_safe %>
+									<% else %>
+									-
+									<% end %>
 								<% end %>
 							<% end %>
 						</td>
 						<td>
-							<%= temp = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil  %>%
-							<% @eff_acc.push(temp) %>
-							<%= "<br><font color=blue>(#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)</font>".html_safe %>
+							<% if detailreport.detailreportarticles != [] %>
+								<%= temp = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil  %>%
+								<% @eff_acc.push(temp) %>
+								<%= "<br><font color=blue>(#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)</font>".html_safe %>
+							<% end %>						
 						</td>
 						<td><%= detailreport.po %></td>
 						<td><%= detailreport.mfg %></td>

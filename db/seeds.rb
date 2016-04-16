@@ -26,7 +26,7 @@ ActiveRecord::Base.transaction do
   (6..spreadsheet.last_row).each do |i|
 
   	row = spreadsheet.row(i)
-  	Article.create!(:session=>row[0] ,:name=>row[1],:duration=>row[2])
+  	Article.create!(:session=>row[0] ,:name=>row[1],:duration=>row[2].round(2))
 
   end
 end
