@@ -100,25 +100,40 @@ class UserMailer < ApplicationMailer
 						size = detailreport.remark == nil ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
 
-						#effisiensi
+
+						# article
+						article_detail = ""
+						detailreport.detailreportarticles != []
+							article_detail = detailreport.detailreportarticles.map{|i| i.article.to_s + "(act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)" }.join(", ")
+						end
+
+
+						#effisiensi / article
 						efisiensi = ""
-						detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data|
-							
-							if Article.find_by_name(data[0]) != nil 
-							article = Article.find_by_name(data[0])
-								minutes = ( (data[4] - data[3]) / 1.minute ).ceil
-								@efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil )
-								efisiensi += ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "% ".html_safe
-							else
-								efisiensi += "- "
+						detailreport.detailreportarticles != []
+							detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data|
+								
+								if Article.find_by_name(data[0]) != nil 
+								article = Article.find_by_name(data[0])
+									minutes = ( (data[4] - data[3]) / 1.minute ).ceil
+									@efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil )
+									efisiensi += ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "% ".html_safe
+								else
+									efisiensi += "- "
+								end
 							end
 						end
 
-						eff_avg_per_hour = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil
-						@eff_acc.push(eff_avg_per_hour)
-						
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.detailreportarticles.map{|i| i.article.to_s + "(act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)" }.join(", ").html_safe, efisiensi.html_safe , eff_avg_per_hour.to_s + "%" + " (#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)".html_safe , detailreport.po, detailreport.mfg]
+						# efisiensi (akumulasi)
+						efisiensi_akumulasi = ""
+						detailreport.detailreportarticles != []
+							eff_avg_per_hour = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil
+							@eff_acc.push(eff_avg_per_hour)
+							efisiensi_akumulasi = eff_avg_per_hour.to_s + "%" + " (#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)"
+						end
+
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), article_detail.html_safe, efisiensi.html_safe , efisiensi_akumulasi.html_safe , detailreport.po, detailreport.mfg]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
