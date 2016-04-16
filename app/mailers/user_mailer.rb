@@ -103,14 +103,14 @@ class UserMailer < ApplicationMailer
 
 						# article
 						article_detail = ""
-						detailreport.detailreportarticles != []
+						if detailreport.detailreportarticles != []
 							article_detail = detailreport.detailreportarticles.map{|i| i.article.to_s + "(act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)" }.join(", ")
 						end
 
 
 						#effisiensi / article
 						efisiensi = ""
-						detailreport.detailreportarticles != []
+						if detailreport.detailreportarticles != []
 							detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data|
 								
 								if Article.find_by_name(data[0]) != nil 
@@ -127,7 +127,7 @@ class UserMailer < ApplicationMailer
 
 						# efisiensi (akumulasi)
 						efisiensi_akumulasi = ""
-						detailreport.detailreportarticles != []
+						if detailreport.detailreportarticles != []
 							eff_avg_per_hour = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil
 							@eff_acc.push(eff_avg_per_hour)
 							efisiensi_akumulasi = eff_avg_per_hour.to_s + "%" + " (#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)"
