@@ -97,7 +97,7 @@
 							<% if detailreport.detailreportarticles != [] %>
 								<%= temp = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil  %>%
 								<% @eff_acc.push(temp) %>
-								<%= "<br><font color=blue>(#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)</font>".html_safe %>
+								<%= "<br><font color=blue>(#{ (@eff_acc.sum / @eff_acc.size.to_f ).round(2) }%)</font>".html_safe %>
 							<% end %>						
 						</td>
 						<td><%= detailreport.po %></td>

@@ -131,7 +131,7 @@ class UserMailer < ApplicationMailer
 						if detailreport.detailreportarticles != []
 							eff_avg_per_hour = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil
 							@eff_acc.push(eff_avg_per_hour)
-							efisiensi_akumulasi = eff_avg_per_hour.to_s + "%" + " (#{ @eff_acc.sum / @eff_acc.size.to_f .round(2) }%)"
+							efisiensi_akumulasi = eff_avg_per_hour.to_s + "%" + " (#{ (@eff_acc.sum / @eff_acc.size.to_f ).round(2) }%)"
 						end
 
 						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), article_detail.html_safe, efisiensi.html_safe , efisiensi_akumulasi.html_safe , detailreport.po, detailreport.mfg]
