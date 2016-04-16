@@ -11,7 +11,8 @@ class UserMailer < ApplicationMailer
 	    Masteremail.all.each_with_index do |email,index|
 	    	@temp.push(email.name)
 	    end
-	    @temp.join(",")
+	    @temp = @temp.join(",")
+	    
 
 	    book = Spreadsheet::Workbook.new
 	    sheet1 = book.create_worksheet
@@ -158,11 +159,11 @@ class UserMailer < ApplicationMailer
 		path = "#{Rails.root}/Report_#{Time.now.strftime('%d-%m-%Y')}.xls"
 		book.write path
 
-
 	    attachments["Report_#{Time.now.strftime('%d-%m-%Y')}.xls"] = File.read(path)
 	    mail(to: @temp, subject: "[Global Way Indonesia] Daily Production Report (#{Date.today.strftime('%d %B %Y')})")
 
 	    FileUtils.rm_f(path)
+  	
   	end
 
 end

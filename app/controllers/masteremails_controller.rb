@@ -9,6 +9,9 @@ class MasteremailsController < ApplicationController
 			if Report.find_by(:tanggal=>params[:tanggal].to_date) == nil #jika tidak ada report sama sekali pada hari tsb
 				redirect_to masteremails_path
 				flash[:alert] = "Data empty"
+			elsif Masteremail.all.count <= 0
+				redirect_to masteremails_path
+				flash[:alert] = "Email List empty"
 			else
 				UserMailer.report(params[:tanggal].to_date).deliver
 				redirect_to masteremails_path

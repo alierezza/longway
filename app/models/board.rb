@@ -4,6 +4,8 @@ class Board < ActiveRecord::Base
 
 		if Report.find_by(:tanggal=>Time.now.to_date) == nil #jika tidak ada report sama sekali pada hari tsb
 			#nothing
+		elsif Masteremail.all.count <= 0 #jika email list kosong 
+			#nothing
 		else
 			UserMailer.report(Time.now.to_date).deliver
 		end
