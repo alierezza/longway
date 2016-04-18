@@ -14,5 +14,5 @@ every :friday, :at => "11.00 pm" do
 end
 
 every :reboot do # Many shortcuts available: :hour, :day, :month, :year, :reboot
-  runner "sleep 5 && ruby /var/www/visualboard/current/server.rb >> /var/www/visualboard/current/log/server.log 2>&1"
+  command "sleep 5 && ruby /var/www/visualboard/current/server.rb >> /var/www/visualboard/current/log/server.log 2>&1"
 end
