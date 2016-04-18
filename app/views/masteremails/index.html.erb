@@ -16,7 +16,8 @@
 						<%= label_tag :tanggal, "Pilih Tanggal", class: "control-label" %>
 						<%= date_field_tag :tanggal, nil, :required=>true, class: "form-control" %>
 					</div>
-						<%= submit_tag "Send Email", class: "btn btn-default" %>
+						<%= submit_tag "Send Email", :name=>"send_email", class: "btn btn-default" %>
+						<%= submit_tag "Download Excel",:name=>"download_excel", class: "btn btn-info pull-right" %>
 					<% end %>
 				</div>
 			</fieldset>

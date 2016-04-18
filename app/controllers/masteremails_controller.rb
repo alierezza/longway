@@ -6,17 +6,37 @@ class MasteremailsController < ApplicationController
 
 		if params[:tanggal]
 
-			if Report.find_by(:tanggal=>params[:tanggal].to_date) == nil #jika tidak ada report sama sekali pada hari tsb
-				redirect_to masteremails_path
-				flash[:alert] = "Data empty"
-			elsif Masteremail.all.count <= 0
-				redirect_to masteremails_path
-				flash[:alert] = "Email List empty"
-			else
-				UserMailer.report(params[:tanggal].to_date).deliver
-				redirect_to masteremails_path
-				flash[:notice] = "Email has been sent"
+			if params[:send_email]
+
+				if Report.find_by(:tanggal=>params[:tanggal].to_date) == nil #jika tidak ada report sama sekali pada hari tsb
+					redirect_to masteremails_path
+					flash[:alert] = "Data empty"
+				elsif Masteremail.all.count <= 0
+					redirect_to masteremails_path
+					flash[:alert] = "Email List empty"
+				else
+					UserMailer.report(params[:tanggal].to_date).deliver
+					redirect_to masteremails_path
+					flash[:notice] = "Email has been sent"
+				end
+
+
+			elsif params[:download_excel]
+
+				if Report.find_by(:tanggal=>params[:tanggal].to_date) == nil #jika tidak ada report sama sekali pada hari tsb
+					redirect_to masteremails_path
+					flash[:alert] = "Data empty"
+				else
+					path = Masteremail.generate_excel(params[:tanggal])
+					send_file path, :type => "application/vnd.ms-excel", :filename => "data.xls", :stream => false
+
+					#FileUtils.rm(path)
+				end
+
 			end
+				
+
+			
 
 			
 		end	
