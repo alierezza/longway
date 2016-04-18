@@ -10,11 +10,11 @@ class Detailreport < ActiveRecord::Base
 	validates :opr, presence: true, on: :create
 
 
-	# validate :check_article
+	 validate :check_article
 
-	# def check_article
-	# 	if Article.find_by_name(self.article) == nil
-	# 		self.errors.add(:created_on, "is invalid")
+	 def check_article
+	 	if Article.find_by_name(self.article) == nil
+	 		self.errors.add(:created_on, "is invalid")
 	# 	else
 	# 		begin
 	# 			data = self.detailreportarticles.find_or_create_by(:article=>self.article)
@@ -30,8 +30,8 @@ class Detailreport < ActiveRecord::Base
 	# 		end
 
 	# 		return true
-	# 	end
-	# end
+	 	end
+	 end
 
 
 	def article=(val)
