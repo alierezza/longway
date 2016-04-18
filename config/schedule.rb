@@ -1,16 +1,16 @@
 
-set :output, "log/cron_log.log"
+#set :output, "log/cron_log.log"
 
 every 1.day, :at => "6:10 pm" do
-  runner "Board.send_email"
+  runner "Board.send_email >> log/cron_log.log 2>&1"
 end
 
 every '* 7,8,9,10,11,12,13,14,15,16,17,18 * * 1-6' do
-  runner "Report.hourly"
+  runner "Report.hourly >> log/cron_log.log 2>&1"
 end
 
 every :friday, :at => "11.00 pm" do
-	runner "Board.remove"	
+	runner "Board.remove >> log/cron_log.log 2>&1"	
 end
 
 every :reboot do # Many shortcuts available: :hour, :day, :month, :year, :reboot
