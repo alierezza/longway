@@ -43,6 +43,7 @@ class Ability
             end
             can :manage, Ad
             can :manage, Image
+            can :manage, Article
         end
             
 

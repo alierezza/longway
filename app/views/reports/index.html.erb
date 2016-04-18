@@ -40,7 +40,7 @@
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_int %>
               <div id="defect_int">
-                <%= detailreport.object.defect_int %>
+                <%= detailreport.object.defect_int + detailreport.object.defect_int_11b + detailreport.object.defect_int_11c + detailreport.object.defect_int_11j + detailreport.object.defect_int_11l + detailreport.object.defect_int_13d %>
               </div>
               <%= hidden_field_tag :status, "int_defect" %>
             </div>
@@ -49,8 +49,19 @@
             <div>DEFECT</div>
             <div>INTERNAL</div>
           </div>
-          <div class="counter_button">
-            <%= f.button "", class: "defect"  %>
+          <div class="">
+            <div class="row">
+              <%= f.button "11A", class: "btn btn-danger btn-md" , :name=>"11A", :value=>true %>
+              <%= f.button "11B", class: "btn btn-danger btn-md" , :name=>"11B", :value=>true %>
+            </div><br>
+            <div class="row">
+              <%= f.button "11C", class: "btn btn-danger btn-md", :name=>"11C", :value=>true %>
+              <%= f.button "11J", class: "btn btn-danger btn-md", :name=>"11J", :value=>true %>
+            </div><br>
+            <div class="row">
+              <%= f.button "11L", class: "btn btn-danger btn-md", :name=>"11L", :value=>true %>
+              <%= f.button "13D", class: "btn btn-danger btn-md", :name=>"13D", :value=>true %>
+            </div>
           </div>
           <% end %>
         <% end %>
@@ -66,7 +77,7 @@
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_ext %>
               <div id="defect_ext">
-                <%= detailreport.object.defect_ext %>
+                <%= detailreport.object.defect_ext + detailreport.object.defect_ext_bs3 + detailreport.object.defect_ext_bs7 + detailreport.object.defect_ext_bs13 + detailreport.object.defect_ext_bs15 + detailreport.object.defect_ext_bs17 %>
               </div>
               <%= hidden_field_tag :status, "ext_defect" %>
             </div>
@@ -75,7 +86,19 @@
             <div>DEFECT</div>
             <div>EXTERNAL</div>
           </div>
-          <div class="counter_button">
+          <div class="">
+            <div class="row">
+              <%= f.button "BS2", class: "btn btn-danger btn-md" , :name=>"BS2", :value=>true %>
+              <%= f.button "BS3", class: "btn btn-danger btn-md" , :name=>"BS3", :value=>true %>
+            </div><br>
+            <div class="row">
+              <%= f.button "BS7", class: "btn btn-danger btn-md", :name=>"BS7", :value=>true %>
+              <%= f.button "BS13", class: "btn btn-danger btn-md", :name=>"BS13", :value=>true %>
+            </div><br>
+            <div class="row">
+              <%= f.button "BS15", class: "btn btn-danger btn-md", :name=>"BS15", :value=>true %>
+              <%= f.button "BS17", class: "btn btn-danger btn-md", :name=>"BS17", :value=>true %>
+            </div>
             <%= f.button "", class: "defect" %>
           </div>
           <% end %>
@@ -132,7 +155,7 @@
             <label style="margin-top:7px">Article</label>
           </div>
           <div class='col-xs-10'>
-            <%= detailreport.text_field :article,:required=>true,class: 'form-control' %>
+            <%= detailreport.text_field :article,:required=>true,class: 'form-control', :style=>"text-transform:uppercase" %>
           </div>
         </div>
         <div class="row">
@@ -183,7 +206,7 @@
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
         
           <label>Remark</label>
-          <%= detailreport.text_area :remark, class: "form-control", rows: 4 %>
+          <%= detailreport.text_area :remark, class: "form-control", rows: 2 %>
         
         <div class="row">
           <div class="col-xs-12">
@@ -277,10 +300,10 @@
           var mins = d.getMinutes();
           var secs = d.getSeconds();
   
-          if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" )){
+          if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18"|| hours == "19" )){
           //if(secs == "0"){
               $("#report_detailreports_attributes_0_act").val(0);
-              if(hours == "12" || hours == "16" || hours == "17")
+              if(hours == "12" || hours == "16" || hours == "17" || hours == "18" || hours == "19")
               {
                 $("#report_detailreports_attributes_0_target").val(0);
               }

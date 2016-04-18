@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Article List</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="form-group">
+	  	<%= link_to new_article_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Article <% end %>
+	</div>
+    <table id="article" class="table table-stripped table-bordered" data-source="<%= articles_path(format: :json) %>">
+			<thead>
+				<th>Session</th>
+				<th>Name</th>
+				<th>Duration (minutes)</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<%# @articles.all.each_with_index do |article, index| %>
+					<!-- <tr>
+						<td><%#= article.name %></td>
+						<td><%#= article.duration %></td>
+						<td>
+							<%#= link_to "Update", edit_article_path(article), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+							<%#= link_to "Delete", article_path(article), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this article ?", :class=>"btn btn-xs btn-danger" %>
+						</td>
+					</tr> -->
+				<%# end %>
+			</tbody>
+		</table>
+  </div>
+</div>
+
+<script>
+
+$(function () {
+ table = $("#article").dataTable({
+  bProcessing: true,
+  bServerSide: true,
+  sAjaxSource: $('#article').data('source'),
+  pagingType: 'full_numbers',
+  aoColumnDefs: [  
+      { bSortable: false, aTargets: [ 2 ] } ]
+  })
+});
+
+
+
+</script>

@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008114224) do
+ActiveRecord::Schema.define(version: 20160414072931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "ads", force: :cascade do |t|
     t.string   "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "session"
+    t.string   "name"
+    t.integer  "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -29,21 +37,31 @@ ActiveRecord::Schema.define(version: 20151008114224) do
 
   create_table "detailreports", force: :cascade do |t|
     t.integer  "report_id"
-    t.integer  "opr",        default: 0
-    t.integer  "target",     default: 0
-    t.integer  "act",        default: 0
-    t.float    "percent",    default: 0.0
-    t.float    "pph",        default: 0.0
-    t.integer  "defect_int", default: 0
-    t.integer  "defect_ext", default: 0
-    t.float    "rft",        default: 0.0
+    t.integer  "opr",             default: 0
+    t.integer  "target",          default: 0
+    t.integer  "act",             default: 0
+    t.float    "percent",         default: 0.0
+    t.float    "pph",             default: 0.0
+    t.integer  "defect_int",      default: 0
+    t.integer  "defect_ext",      default: 0
+    t.float    "rft",             default: 0.0
     t.text     "remark"
     t.integer  "jam"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "article"
     t.string   "po"
     t.string   "mfg"
+    t.integer  "defect_int_11b",  default: 0
+    t.integer  "defect_int_11c",  default: 0
+    t.integer  "defect_int_11j",  default: 0
+    t.integer  "defect_int_11l",  default: 0
+    t.integer  "defect_int_13d",  default: 0
+    t.integer  "defect_ext_bs3",  default: 0
+    t.integer  "defect_ext_bs7",  default: 0
+    t.integer  "defect_ext_bs13", default: 0
+    t.integer  "defect_ext_bs15", default: 0
+    t.integer  "defect_ext_bs17", default: 0
   end
 
   create_table "homes", force: :cascade do |t|

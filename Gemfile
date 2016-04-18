@@ -35,7 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 	gem "pry"
-  gem 'kaminari'
+
  	gem 'devise'
 	gem "pg"
 	gem 'cancancan'
@@ -48,7 +48,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem "bootstrap-switch-rails"
   gem "spreadsheet"
   gem "paperclip", "~> 4.3"
-
+  gem 'jquery-datatables-rails'
+  gem 'ajax-datatables-rails', git: 'git://github.com/antillas21/ajax-datatables-rails.git', branch: 'legacy'
+  gem 'kaminari'
+  gem 'roo', '~> 2.1.0'
   
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

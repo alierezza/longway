@@ -9,7 +9,8 @@
       <label style="margin-top:7px">Article</label>
     </div>
     <div class='col-xs-10'>
-      <%= detailreport.text_field :article, :required=>true, class: 'form-control' %>
+      <%= detailreport.text_field :article, :required=>true, class: 'form-control', :style=>"text-transform:uppercase"  %>
+      <%= Article.find_by(:name=>detailreport.object.article) != nil ? "<b>Duration : ".html_safe + Article.find_by(:name=>detailreport.object.article).duration.to_s + " Minutes</b>".html_safe : "<font color=red><b>Masukan Article Code dengan benar</b></font>".html_safe %>
     </div>
   </div>
   <div class="row">

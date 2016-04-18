@@ -51,3 +51,9 @@
 		<%= link_to images_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>  Banner <% end %>
 	</div>
 <% end %>
+
+<% if can? :article, current_user %>
+	<div class="col-md-4 big_icon">
+		<%= link_to articles_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>  Article <% end %>
+	</div>
+<% end %>

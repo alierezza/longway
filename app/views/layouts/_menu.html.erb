@@ -60,6 +60,10 @@
 				<li> <%= link_to "Running Text", ads_path %></li>
 			<% end %>
 
+			<% if can? :article, current_user %>
+				<li> <%= link_to "Article", articles_path %></li>
+			<% end %>
+
 			<% if can? :image, current_user %>
 				<li> <%= link_to "Image", images_path %></li>
 			<% end %>

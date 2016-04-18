@@ -8,7 +8,7 @@
     <div class="counter_number">
       <%= detailreport.hidden_field :defect_int %>
       <div id="defect_int">
-        <%= detailreport.object.defect_int %>
+        <%= detailreport.object.defect_int + detailreport.object.defect_int_11b + detailreport.object.defect_int_11c + detailreport.object.defect_int_11j + detailreport.object.defect_int_11l + detailreport.object.defect_int_13d %>
       </div>
       <%= hidden_field_tag :status, "int_defect" %>
     </div>
@@ -17,8 +17,21 @@
     <div>DEFECT</div>
     <div>INTERNAL</div>
   </div>
-  <div class="counter_button">
-    <%= f.button "", class: "defect" %>
+  <div class="">
+    <div class="row">
+      <%= f.button "11A", class: "btn btn-danger btn-md" , :name=>"11A", :value=>true %>
+      <%= f.button "11B", class: "btn btn-danger btn-md" , :name=>"11B", :value=>true %>
+    </div><br>
+    <div class="row">
+      <%= f.button "11C", class: "btn btn-danger btn-md", :name=>"11C", :value=>true %>
+      <%= f.button "11J", class: "btn btn-danger btn-md", :name=>"11J", :value=>true %>
+    </div><br>
+    <div class="row">
+      <%= f.button "11L", class: "btn btn-danger btn-md", :name=>"11L", :value=>true %>
+      <%= f.button "13D", class: "btn btn-danger btn-md", :name=>"13D", :value=>true %>
+    </div>
+
   </div>
   <% end %>
 <% end %>
+
