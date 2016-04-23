@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415022549) do
+ActiveRecord::Schema.define(version: 20160423114640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20160415022549) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "reports", ["line_id", "tanggal"], name: "index_reports_on_line_id_and_tanggal", unique: true, using: :btree
   add_index "reports", ["line_id", "tanggal"], name: "reports_line_id_tanggal_key", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
