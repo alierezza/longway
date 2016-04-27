@@ -125,13 +125,13 @@
           scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="satu">'
-                        +' <font size=6><%=raw big[1][4][0] %></font>'
+                        +' <font size=5><%=raw big[1][4][0] %></font>'
                         +'</li>'
                         +'<li class="dua">'
-                        +' <font size=6><%=raw big[1][4][1] %></font>'
+                        +' <font size=5><%=raw big[1][4][1] %></font>'
                         +'</li>'
                         +'<li class="tiga">'
-                        +' <font size=6><%=raw big[1][4][2] %></font>'
+                        +' <font size=5><%=raw big[1][4][2] %></font>'
                         +'</li>'
 
                   +'</ul>'
@@ -179,13 +179,13 @@
           scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="satu">'
-                        +' <font size=6><%=raw big[1][7][0] %></font>'
+                        +' <font size=5><%=raw big[1][7][0] %></font>'
                         +'</li>'
                         +'<li class="dua">'
-                        +' <font size=6><%=raw big[1][7][1] %></font>'
+                        +' <font size=5><%=raw big[1][7][1] %></font>'
                         +'</li>'
                         +'<li class="tiga">'
-                        +' <font size=6><%=raw big[1][7][2] %></font>'
+                        +' <font size=5><%=raw big[1][7][2] %></font>'
                         +'</li>'
 
                   +'</ul>'
@@ -199,7 +199,7 @@
         mybar2.datasets[0].bars[1].fillColor = "orange";
         mybar2.datasets[0].bars[2].fillColor = "yellow";
         mybar2.update();
-        
+
          document.getElementById("legendDiv_def_ext_<%= big.first.to_s %>").innerHTML = mybar2.generateLegend();
 
 
