@@ -27,7 +27,7 @@ class MasteremailsController < ApplicationController
 					redirect_to masteremails_path
 					flash[:alert] = "Data empty"
 				else
-					path = Masteremail.generate_excel(params[:tanggal])
+					path = Masteremail.generate_excel(params[:tanggal].to_date)
 					send_file path, :type => "application/vnd.ms-excel", :filename => "data.xls", :stream => false
 
 					#FileUtils.rm(path)

@@ -14,10 +14,14 @@ class UserMailer < ApplicationMailer
 	    end
 	    @send_to = @send_to.join(",")
 
-  		path = Masteremail.generate_excel(tanggal)
+  		path = Masteremail.generate_excel(tanggal.to_date)
 
-	    attachments["Report_#{Time.now.strftime('%d-%m-%Y')}.xls"] = File.read(path)
-	    mail(to: @send_to, subject: "[Global Way Indonesia] Daily Production Report (#{Date.today.strftime('%d %B %Y')})")
+	    attachments["Report_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"] = File.read(path)
+	    mail(to: @send_to, subject: "[Global Way Indonesia] Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
+        format.html{
+          render locals: {tanggal: tanggal.to_date}
+        }
+      end
 
 	    #FileUtils.rm_f(path)
   	

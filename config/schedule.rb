@@ -1,7 +1,7 @@
 
 #set :output, "log/cron_log.log"
 
-every 1.day, :at => "6:10 pm" do
+every 1.day, :at => "8:00 pm" do
   runner "Board.send_email", :output=>"log/send_email_log.log"
 end
 
