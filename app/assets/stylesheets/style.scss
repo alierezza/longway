@@ -324,6 +324,16 @@ button#connect {
       background-color: darkblue;
     }
 
+    li.satu:before {
+      background-color: red;
+    }
+    li.dua:before {
+      background-color: orange;
+    }
+    li.tiga:before {
+      background-color: yellow;
+    }
+
     li.def-int:before {
       background-color: rgb(231,30,19);
     }

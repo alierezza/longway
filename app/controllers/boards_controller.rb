@@ -108,34 +108,38 @@ class BoardsController < ApplicationController
 			if report.present?
 
 				defect_int = Array.new
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"JAHIT TANGAN BURUK"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"JAHITAN ROBEK"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11c"),:data=>"JAHITAN LONGGAR"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"TAK TERJAHIT"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11l"),:data=>"TAK TEPAT POSISI"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_13d"),:data=>"LUBANG KATUB DEFECT"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"11A", :message=>"JAHIT TANGAN BURUK/ULANGI DIJAHIT"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"11B", :message=>"KERUT/JAHITAN ROBEK"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11c"),:data=>"11C", :message=>"JAHITAN LONGGAR"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"11J", :message=>"PELOMPAT/TAK TERJAHIT"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11l"),:data=>"11L", :message=>"TAK TEPAT POSISI/DISLOKASI"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_13d"),:data=>"13D", :message=>"LUBANG KATUB DEFECT/MASALAH"})
 
 				top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
 
 				defect_ext = Array.new
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext"),:data=>"POLA TAK PENUH"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs3"),:data=>"TRKENA HMBTN BENDA"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs7"),:data=>"BAYANGAN GANDA"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs13"),:data=>"TIDAK AKURAT/MIRING"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs15"),:data=>"KONTAMINASI TINTA"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs17"),:data=>"FARIASI BEDA WARNA"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext"),:data=>"BS2", :message=>"SABLON POLA TAK PENUH"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs3"),:data=>"BS3", :message=>"SABLON TERKENA HAMBATAN BENDA"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs7"),:data=>"BS7", :message=>"BAYANGAN GANDA"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs13"),:data=>"BS13", :message=>"TAK TEPAT POSISI/TIDAK AKURAT/MIRING"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs15"),:data=>"BS15", :message=>"KONTAMINASI TINTA"})
+				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs17"),:data=>"BS17", :message=>"SABLON FARIASI BEDA WARNA"})
 
 				top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
 
 				@big_data[line.no].push(top_3_int.map{|i| i[:value]})
 				@big_data[line.no].push(top_3_int.map{|i| i[:data]})
+				@big_data[line.no].push(top_3_int.map{|i| i[:message]})
 				@big_data[line.no].push(top_3_ext.map{|i| i[:value]})
 				@big_data[line.no].push(top_3_ext.map{|i| i[:data]})
+				@big_data[line.no].push(top_3_int.map{|i| i[:message]})
 
 			else
 				@big_data[line.no].push([0,0,0])
 				@big_data[line.no].push(["-","-","-"])
+				@big_data[line.no].push(["-","-","-"])
 				@big_data[line.no].push([0,0,0])
+				@big_data[line.no].push(["-","-","-"])
 				@big_data[line.no].push(["-","-","-"])
 			end
 

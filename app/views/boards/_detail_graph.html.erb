@@ -114,27 +114,46 @@
 
         }
 
+
         ctx = document.getElementById("canvas_def_int_<%= big.first.to_s %>").getContext("2d");
-        window.myLine = new Chart(ctx).Bar(<%= "graph_def_int" + big.first.to_s %>, {
+        window.mybar1 = new Chart(ctx).Bar(<%= "graph_def_int" + big.first.to_s %>, {
           responsive: true,
           showTooltips: true,
           animation : false,
           scaleShowHorizontalLines: true,
           scaleFontSize: 20,
-          scaleFontStyle: "bold"
+          scaleFontStyle: "bold",
+          legendTemplate : '<ul class="graph-legend">'
+                        +'<li class="satu">'
+                        +' <font size=6><%=raw big[1][4][0] %></font>'
+                        +'</li>'
+                        +'<li class="dua">'
+                        +' <font size=6><%=raw big[1][4][1] %></font>'
+                        +'</li>'
+                        +'<li class="tiga">'
+                        +' <font size=6><%=raw big[1][4][2] %></font>'
+                        +'</li>'
+
+                  +'</ul>'
           // onAnimationComplete: function()
           // {
           //     this.showTooltip(this.datasets[0].bars, true);
           // }
         });
-        //document.getElementById("legendDiv_def_int_<%= big.first.to_s %>").innerHTML = myLine.generateLegend();
+
+        mybar1.datasets[0].bars[0].fillColor = "red";
+        mybar1.datasets[0].bars[1].fillColor = "orange";
+        mybar1.datasets[0].bars[2].fillColor = "yellow";
+        mybar1.update();
+
+        document.getElementById("legendDiv_def_int_<%= big.first.to_s %>").innerHTML = mybar1.generateLegend();
 
 
         // defect EXT
 
 
         <%= "graph_def_ext" + big.first.to_s %> = {
-          labels : <%=raw big[1][5] %>,
+          labels : <%=raw big[1][6] %>,
           datasets : [
             {
               label: "Defect Internal",
@@ -144,25 +163,44 @@
               pointStrokeColor : "rgb(231,30,19)",
               pointHighlightFill : "rgb(231,30,19)",
               pointHighlightStroke : "rgba(220,220,220,1)",
-              data : <%= big[1][4] %>
+              data : <%= big[1][5] %>
             }
           ]
 
         }
 
         ctx = document.getElementById("canvas_def_ext_<%= big.first.to_s %>").getContext("2d");
-        window.myLine = new Chart(ctx).Bar(<%= "graph_def_ext" + big.first.to_s %>, {
+        window.mybar2 = new Chart(ctx).Bar(<%= "graph_def_ext" + big.first.to_s %>, {
           responsive: true,
           showTooltips: true,
           animation : false,
           scaleShowHorizontalLines: true,
           scaleFontSize: 20,
-          scaleFontStyle: "bold"
+          scaleFontStyle: "bold",
+          legendTemplate : '<ul class="graph-legend">'
+                        +'<li class="satu">'
+                        +' <font size=6><%=raw big[1][7][0] %></font>'
+                        +'</li>'
+                        +'<li class="dua">'
+                        +' <font size=6><%=raw big[1][7][1] %></font>'
+                        +'</li>'
+                        +'<li class="tiga">'
+                        +' <font size=6><%=raw big[1][7][2] %></font>'
+                        +'</li>'
+
+                  +'</ul>'
           // onAnimationComplete: function()
           // {
           //     this.showTooltip(this.datasets[0].bars, true);
           // }
         });
+
+        mybar2.datasets[0].bars[0].fillColor = "red";
+        mybar2.datasets[0].bars[1].fillColor = "orange";
+        mybar2.datasets[0].bars[2].fillColor = "yellow";
+        mybar2.update();
+        
+         document.getElementById("legendDiv_def_ext_<%= big.first.to_s %>").innerHTML = mybar2.generateLegend();
 
 
         // defect
