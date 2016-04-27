@@ -109,9 +109,9 @@ class BoardsController < ApplicationController
 
 				defect_int = Array.new
 				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"JAHIT TANGAN BURUK"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"KERUT/JAHITAN ROBEK"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"JAHITAN ROBEK"})
 				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11c"),:data=>"JAHITAN LONGGAR"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"PELOMPAT/TAK TERJAHIT"})
+				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"TAK TERJAHIT"})
 				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11l"),:data=>"TAK TEPAT POSISI"})
 				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_13d"),:data=>"LUBANG KATUB DEFECT"})
 
