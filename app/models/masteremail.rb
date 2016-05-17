@@ -22,13 +22,13 @@ class Masteremail < ActiveRecord::Base
 	    	else
 	    		board.reports.where("tanggal=?",tanggal).all.each_with_index do |report,index2|
 
-	    			sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","","","","","","","","","","","", "RFT", "REMARK", "ARTICLE","EFFICIENCY / ARTICLE","EFFICIENCY (Accumulation)", "P/O", "MFG No"]
+	    			sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "DEFECT","","","","","","","","","","","","","", "RFT", "REMARK", "ARTICLE","EFFICIENCY (Accumulation)", "P/O", "MFG No"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
 	    			format = Spreadsheet::Format.new :color => :black,
                                  :weight => :bold,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-                    29.times do |x| row.set_format(x,format) end
+                    28.times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
 					sheet1.column(2).width = 10
 					sheet1.column(3).width = 20
@@ -53,10 +53,9 @@ class Masteremail < ActiveRecord::Base
 					sheet1.column(22).width = 10
 					sheet1.column(23).width = 70
 					sheet1.column(24).width = 70 #article
-					sheet1.column(25).width = 30 #effisiensi / article
-					sheet1.column(26).width = 30 #effisiensi (akumulasi)
+					sheet1.column(25).width = 30 #effisiensi (akumulasi)
+					sheet1.column(26).width = 20
 					sheet1.column(27).width = 20
-					sheet1.column(28).width = 20
 					sheet1.merge_cells(baris, 8, baris, 21)
 					8.times do |y|
 						sheet1.merge_cells(baris, y, baris+1, y)
@@ -67,12 +66,11 @@ class Masteremail < ActiveRecord::Base
 					sheet1.merge_cells(baris, 25, baris+1, 25)
 					sheet1.merge_cells(baris, 26, baris+1, 26)
 					sheet1.merge_cells(baris, 27, baris+1, 27)
-					sheet1.merge_cells(baris, 28, baris+1, 28)
 	    			
 	    			sheet1.row(baris = baris+1).replace ["","","","","","","","","11A","11B","11C","11J","11L","13D","INT (SUM)","BS2","BS3","BS7","BS13","BS15","BS17","EXT (SUM)"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
-	    			29.times do |x|
+	    			28.times do |x|
 	    				row.set_format(x,format)
 	    			end
 	    			
@@ -81,8 +79,8 @@ class Masteremail < ActiveRecord::Base
 	    			sum_defect_int = 0
 	    			sum_defect_ext = 0
 
-	    			@efficiency = Hash.new{|h,k| h[k] = []}
-					@eff_acc = Array.new
+	    			@article_x_duration = Array.new{}
+					@total_working_time = Array.new{}
 
 	    			report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index|
 	    				sum_target += detailreport.target.to_i
@@ -107,10 +105,10 @@ class Masteremail < ActiveRecord::Base
 							detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data|
 								
 								if Article.find_by_name(data[0]) != nil 
-								article = Article.find_by_name(data[0])
+									article = Article.find_by_name(data[0])
 									minutes = ( (data[4] - data[3]) / 1.minute ).ceil
-									@efficiency[index].push( ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil )
-									efisiensi += ( ( (data[2] * article.duration) / (data[1] * minutes ) ) * 100).ceil.to_s.html_safe + "% ".html_safe
+									@article_x_duration.push(  data[2] * article.duration )
+									@total_working_time.push(  minutes )
 								else
 									efisiensi += "- "
 								end
@@ -121,12 +119,10 @@ class Masteremail < ActiveRecord::Base
 						# efisiensi (akumulasi)
 						efisiensi_akumulasi = ""
 						if detailreport.detailreportarticles != []
-							eff_avg_per_hour = (@efficiency[index].sum / @efficiency[index].size.to_f ).ceil
-							@eff_acc.push(eff_avg_per_hour)
-							efisiensi_akumulasi = eff_avg_per_hour.to_s + "%" + " (#{ (@eff_acc.sum / @eff_acc.size.to_f ).round(2) }%)"
+							efisiensi_akumulasi = " (#{ ((@article_x_duration.sum / ( @total_working_time.sum * detailreport.opr ) ) * 100) .round(2) }%)"
 						end
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), article_detail.html_safe, efisiensi.html_safe , efisiensi_akumulasi.html_safe , detailreport.po, detailreport.mfg]
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), article_detail.html_safe , efisiensi_akumulasi.html_safe , detailreport.po, detailreport.mfg]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
@@ -135,7 +131,7 @@ class Masteremail < ActiveRecord::Base
                     	format_red = Spreadsheet::Format.new :color => :red,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
                     
-	    				29.times do |x|
+	    				28.times do |x|
 	    					if x == 4 and detailreport.act < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else

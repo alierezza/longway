@@ -50,9 +50,9 @@ class Detailreport < ActiveRecord::Base
 				data = self.detailreportarticles.find_or_create_by(:article=>self.article)
 
 				if self.act == self.act_was
-					output = data.output
+					output = self.act_was
 				else
-					output = data.output + 1
+					output = self.act
 				end
 
 				data.update(:operator=>self.opr,:output=>output)
