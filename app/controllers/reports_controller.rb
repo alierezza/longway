@@ -168,6 +168,8 @@ class ReportsController < ApplicationController
 		jam = Time.now.strftime("%H").to_i
 		detailreport_id = params[:report][:detailreports_attributes]["0"][:id].to_i
 
+		defect_fly = 0
+
 		if jam != 12 and Detailreport.find(detailreport_id).jam >= Time.now.strftime("%H").to_i
 			@report = Report.find(params[:id])
 
@@ -177,31 +179,43 @@ class ReportsController < ApplicationController
 			elsif params[:status] == "int_defect"
 				if params["11A"]
 					params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.find(detailreport_id).defect_int.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["11B"]
 					params[:report][:detailreports_attributes]["0"][:defect_int_11b] = @report.detailreports.find(detailreport_id).defect_int_11b.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["11C"]
 					params[:report][:detailreports_attributes]["0"][:defect_int_11c] = @report.detailreports.find(detailreport_id).defect_int_11c.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["11J"]
 					params[:report][:detailreports_attributes]["0"][:defect_int_11j] = @report.detailreports.find(detailreport_id).defect_int_11j.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["11L"]
 					params[:report][:detailreports_attributes]["0"][:defect_int_11l] = @report.detailreports.find(detailreport_id).defect_int_11l.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["13D"]
 					params[:report][:detailreports_attributes]["0"][:defect_int_13d] = @report.detailreports.find(detailreport_id).defect_int_13d.to_i + 1
+					defect_fly = defect_fly + 1
 				end
 
 			elsif params[:status] == "ext_defect"
 				if params["BS2"]
 					params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.find(detailreport_id).defect_ext.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["BS3"]
 					params[:report][:detailreports_attributes]["0"][:defect_ext_bs3] = @report.detailreports.find(detailreport_id).defect_ext_bs3.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["BS7"]
 					params[:report][:detailreports_attributes]["0"][:defect_ext_bs7] = @report.detailreports.find(detailreport_id).defect_ext_bs7.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["BS13"]
 					params[:report][:detailreports_attributes]["0"][:defect_ext_bs13] = @report.detailreports.find(detailreport_id).defect_ext_bs13.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["BS15"]
 					params[:report][:detailreports_attributes]["0"][:defect_ext_bs15] = @report.detailreports.find(detailreport_id).defect_ext_bs15.to_i + 1
+					defect_fly = defect_fly + 1
 				elsif params["BS17"]
 					params[:report][:detailreports_attributes]["0"][:defect_ext_bs17] = @report.detailreports.find(detailreport_id).defect_ext_bs17.to_i + 1
+					defect_fly = defect_fly + 1
 				end
 
 			end
@@ -212,9 +226,9 @@ class ReportsController < ApplicationController
 
 			params[:report][:detailreports_attributes]["0"][:target] != nil ? target = params[:report][:detailreports_attributes]["0"][:target].to_i : target = @report.detailreports.find(detailreport_id).target.to_i
 
-			params[:report][:detailreports_attributes]["0"][:defect_int] != nil ? defect_int = params[:report][:detailreports_attributes]["0"][:defect_int].to_i + @report.detailreports.sum("defect_int").to_i : defect_int = @report.detailreports.sum("defect_int").to_i
+			#params[:report][:detailreports_attributes]["0"][:defect_int] != nil ? defect_int = params[:report][:detailreports_attributes]["0"][:defect_int].to_i + @report.detailreports.sum("defect_int+defect_int_11b+defect_int_11c+defect_int_11j+defect_int_11l+defect_int_13d").to_i : defect_int = @report.detailreports.sum("defect_int+defect_int_11b+defect_int_11c+defect_int_11j+defect_int_11l+defect_int_13d").to_i
 
-			params[:report][:detailreports_attributes]["0"][:defect_ext] != nil ? defect_ext = params[:report][:detailreports_attributes]["0"][:defect_ext].to_i + @report.detailreports.sum("defect_ext").to_i : defect_ext = @report.detailreports.sum("defect_ext").to_i
+			#params[:report][:detailreports_attributes]["0"][:defect_ext] != nil ? defect_ext = params[:report][:detailreports_attributes]["0"][:defect_ext].to_i + @report.detailreports.sum("defect_ext+defect_ext_bs3+defect_ext_bs7+defect_ext_bs13+defect_ext_bs15+defect_ext_bs17").to_i : defect_ext = @report.detailreports.sum("defect_ext+defect_ext_bs3+defect_ext_bs7+defect_ext_bs13+defect_ext_bs15+defect_ext_bs17").to_i
 
 
 			act_sum = act + @report.detailreports.sum("act").to_i - @report.detailreports.find(detailreport_id).act.to_i
@@ -223,7 +237,7 @@ class ReportsController < ApplicationController
 			#else
 			#	target_sum = target + ( @report.detailreports.sum("target").to_i )
 			#end
-			defact = defect_int + defect_ext
+			defact = @report.detailreports.sum("defect_int+defect_int_11b+defect_int_11c+defect_int_11j+defect_int_11l+defect_int_13d+defect_ext+defect_ext_bs3+defect_ext_bs7+defect_ext_bs13+defect_ext_bs15+defect_ext_bs17").to_i + defect_fly
 
 			params[:report][:detailreports_attributes]["0"][:percent] = target_sum == 0 ? 0 : ((act_sum / target_sum	 .to_f	) * 100).round(0)
 
