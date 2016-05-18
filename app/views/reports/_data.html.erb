@@ -12,12 +12,11 @@
 				<th rowspan=2>ACT (SUM)</th>
 				<th rowspan=2  width="7%">%</th>
 				<th rowspan=2>PPH</th>
+				<th rowspan=2 >ARTICLE</th>
+				<th rowspan=2>EFISIENSI (Akumulasi)</th>
 				<th colspan=14>DEFECT</th>
 				<th rowspan=2>RFT</th>
 				<th rowspan=2  width="25%">REMARK</th>
-				<th rowspan=2 >ARTICLE</th>
-				<!-- <th rowspan=2>EFISIENSI / ARTICLE</th> -->
-				<th rowspan=2>EFISIENSI (Akumulasi)</th>
 				<th rowspan=2>P/O</th>
 				<th rowspan=2>MFG No</th>
 			</tr>
@@ -56,6 +55,32 @@
 						<td><%= sum_act %></td>
 						<td><%= detailreport.percent.to_i %> %</td>
 						<td><%= detailreport.pph %></td>
+						<td>
+							<% if detailreport.detailreportarticles != [] %>
+								<%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join("<br>").html_safe %>
+							<% else %>
+								<%= detailreport.article %>
+							<% end %>
+						</td>
+						
+							<% if detailreport.detailreportarticles != [] %>
+								<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data| %>
+								
+									<% if Article.find_by_name(data[0]) != nil %>
+										<% article = Article.find_by_name(data[0]) %>
+										<% minutes = 60 %>
+										<% @article_x_duration.push(  data[2] * article.duration ) %>
+										<% @total_working_time.push(  minutes ) %>
+									<% else %>
+									-
+									<% end %>
+								<% end %>
+							<% end %>
+						<td>
+							<% if detailreport.detailreportarticles != [] %>
+								<%= "<br><font color=blue>(#{ ((@article_x_duration.sum / ( @total_working_time.sum * detailreport.opr ) ) * 100) .round(2) }%)</font>".html_safe %>
+							<% end %>						
+						</td>
 						<td><%= detailreport.defect_int %></td>
 						<td><%= detailreport.defect_int_11b %></td>
 						<td><%= detailreport.defect_int_11c %></td>
@@ -72,33 +97,6 @@
 						<td><%= sum_defect_ext %></td>
 						<td><%= detailreport.rft.to_i %> %</td>
 						<td><%= detailreport.remark %></td>
-						<td>
-							<% if detailreport.detailreportarticles != [] %>
-								<%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" + " (work:" + ( (i.updated_at - i.created_at) / 1.minute ).ceil.to_s + " min)</font>" }.join("<br>").html_safe %>
-							<% else %>
-								<%= detailreport.article %>
-							<% end %>
-						</td>
-						
-							<% if detailreport.detailreportarticles != [] %>
-								<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at] }.each do |data| %>
-								
-									<% if Article.find_by_name(data[0]) != nil %>
-										<% article = Article.find_by_name(data[0]) %>
-										<% minutes = ( (data[4] - data[3]) / 1.minute ).ceil %>
-										<% @article_x_duration.push(  data[2] * article.duration ) %>
-										<% @total_working_time.push(  minutes ) %>
-									<% else %>
-									-
-									<% end %>
-								<% end %>
-							<% end %>
-						
-						<td>
-							<% if detailreport.detailreportarticles != [] %>
-								<%= "<br><font color=blue>(#{ ((@article_x_duration.sum / ( @total_working_time.sum * detailreport.opr ) ) * 100) .round(2) }%)</font>".html_safe %>
-							<% end %>						
-						</td>
 						<td><%= detailreport.po %></td>
 						<td><%= detailreport.mfg %></td>
 					</tr>
