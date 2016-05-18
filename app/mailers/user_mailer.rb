@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
   		path = Masteremail.generate_excel(tanggal.to_date)
 
 	    attachments["Report_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"] = File.read(path)
-	    mail(to: @send_to, subject: "[Global Way Indonesia] Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
+	    mail(to: @send_to, subject: "[Global Way Indonesia] MSB - Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
         format.html{
           render locals: {tanggal: tanggal.to_date}
         }
