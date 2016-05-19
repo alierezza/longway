@@ -101,11 +101,19 @@ class Masteremail < ActiveRecord::Base
 
 						#effisiensi / article
 						if detailreport.detailreportarticles != []
-							detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.detailreport.jam] }.each do |data|
+							detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at] }.each do |data|
 								
-								if Article.find_by_name(data[0]) != nil && data[5] != 12
+								if Article.find_by_name(data[0]) != nil && data[5].strftime("%H").to_i != 12
 									article = Article.find_by_name(data[0])
-									minutes = 60
+									if data[5].strftime("%H").to_i >= 16
+										if data[5].strftime("%M").to_i < 30
+											minutes = 30
+										else
+											minutes = 60
+										end
+									else
+										minutes = 60
+									end
 									@article_x_duration.push(  data[2] * article.duration )
 									@total_working_time.push(  minutes )
 								end
