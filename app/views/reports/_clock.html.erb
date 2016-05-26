@@ -1,0 +1,26 @@
+STITCHING LINE <%= current_user.line.no %>
+
+<script type="text/javascript">
+
+ //localStorage.setItem('tanggal', "<%= Time.now %>");
+
+  var d=new Date("<%= DateTime.now.iso8601(6) %>");
+  
+  function GetClock(){
+    d.setMilliseconds(d.getMilliseconds() + 1000);
+
+    var nhour=d.getHours();
+    var nmin=d.getMinutes();
+    var nsec=d.getSeconds();
+    if(nmin<=9) nmin="0"+nmin;
+    if(nsec<=9) nsec="0"+nsec;
+
+    document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+"";
+  }
+
+  window.onload=function(){
+    GetClock();
+    setInterval(GetClock,1000);
+  }
+</script>
+<div id="clockbox"></div>
