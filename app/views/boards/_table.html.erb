@@ -22,8 +22,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.where("no >= 1 and no <= 8").order("no").each_with_index do |board,line| %>
-			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
+		<% @boards.where("no >= 1 and no <= 8").order("no").each_with_index do |line,index| %>
+			<% line.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
 				<tr>
 					<td><b><font size="6">L. <%= report.line.no %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.opr %></font></b></td>
@@ -43,40 +43,15 @@
 						</b>
 					</td>
 					<td><b><font size="6"><%= report.detailreports.sum("act") %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.last.percent.to_i %> %</font></b></td>
-					<td><b><font size="6"><%= report.detailreports.last.pph %></font></b></td>
-					<td><b><font size="6">
-						<% @article_x_duration = Array.new{} %>
-						<% @total_working_time = Array.new{} %>
-
-						<% report.detailreports.order("created_at ASC").each_with_index do |detailreport, index| %>
-							<% if detailreport.detailreportarticles != [] %>
-								<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| %>
-								
-									<% if Article.find_by_name(data[0]) != nil && data[5].strftime("%H").to_i != 12 %>
-										<% article = Article.find_by_name(data[0]) %>
-										<% if data[5].strftime("%H").to_i >= 16  %>
-											<% if data[5].strftime("%M").to_i < 30 %>
-												<% minutes = 30 %>
-											<% else %>
-												<% minutes = 60 %>
-											<% end %>
-										<% else %>
-											<% minutes = 60 %>
-										<% end %>
-										<% @article_x_duration.push(  data[2] * article.duration ) %>
-										<% @total_working_time.push(  minutes ) %>
-									<% end %>
-								<% end %>
-							<% end %>
-						<% end %>
-
-						<% if report.detailreports.last.detailreportarticles != [] && report.detailreports.last.jam != 12 %>
-							<%= "#{ ((@article_x_duration.sum / ( @total_working_time.sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe %>
-						<% else %>
-							-
-						<% end %>	
-					</font></b></td>
+					<td><b><font size="6"><%#= report.detailreports.last.percent.to_i %> %</font></b></td>
+					<td><b><font size="6"><%#= report.detailreports.last.pph %></font></b></td>
+					<td> <!-- efficiency -->
+						<b>
+							<font size="6">
+								<% Report.efficiency_in_the_board(report) %>	
+							</font>
+						</b>
+					</td>
 					<td><b><font size="6"><%= report.detailreports.sum("defect_int + defect_int_11b + defect_int_11c + defect_int_11j + defect_int_11l + defect_int_13d") %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.sum("defect_ext + defect_ext_bs3 + defect_ext_bs7 + defect_ext_bs13 + defect_ext_bs15 + defect_ext_bs17") %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.rft.to_i %> %</font></b></td>

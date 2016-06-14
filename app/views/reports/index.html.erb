@@ -99,7 +99,6 @@
               <%= f.button "BS15", class: "btn btn-danger btn-md", :name=>"BS15", :value=>true %>
               <%= f.button "BS17", class: "btn btn-danger btn-md", :name=>"BS17", :value=>true %>
             </div>
-            <%= f.button "", class: "defect" %>
           </div>
           <% end %>
         <% end %>
@@ -287,7 +286,7 @@
               //$("#defect_int").html(0);
               //$("#defect_ext").html(0);
 
-              $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>"}, null, "script");
+              $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
            }
 
            if(hours == "12")
