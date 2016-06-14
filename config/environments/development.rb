@@ -53,8 +53,8 @@ config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.smtp_settings = {
      :address              => "smtp.gmail.com",
    :port                 => 587,
-   :user_name            => "visualboard.gwi@gmail.com",
-   :password             => "aq1sw2de3fr4",
+   :user_name            => "longwayvnit@gmail.com",
+   :password             => "longway123",
    :authentication       => :plain,
     :enable_starttls_auto => true 
   }
