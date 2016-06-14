@@ -12,7 +12,7 @@ default: &default
 development:
   <<: *default
   host: localhost
-  database: globalway_development
+  database: longway_development
   username: sowo_user
   password: 123456
 
@@ -22,13 +22,13 @@ development:
 test:
   <<: *default
   host: localhost
-  database: globalway_test
+  database: longway_test
   username: sowo_user
   password: 123456
 
 production:
   <<: *default
   host: localhost
-  database: globalway_production
-  username: globalway
+  database: longway_production
+  username: longway
   password: q1w2e3r4
