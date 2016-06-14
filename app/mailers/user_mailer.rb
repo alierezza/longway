@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
 
   	#default from: CONFIG["email_dari"]
   	#default from: "dynamic-billboard@id.longwaycorp.com"
-  	default from: "visualboard.gwi@gmail.com"
+  	default from: "longwayvnit@gmail.com"
 
   	def report(tanggal)
   		
@@ -16,8 +16,8 @@ class UserMailer < ApplicationMailer
 
   		path = Masteremail.generate_excel(tanggal.to_date)
 
-	    attachments["MSB_Report_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"] = File.read(path)
-	    mail(to: @send_to, subject: "[Global Way Indonesia] MSB - Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
+	    attachments["LongWay_Report_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"] = File.read(path)
+	    mail(to: @send_to, subject: "[Long Way Vietnam] Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
         format.html{
           render locals: {tanggal: tanggal.to_date}
         }
