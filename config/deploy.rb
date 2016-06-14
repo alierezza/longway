@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-server 'localhost', user: 'longway', roles: %w{app db web}, my_property: :my_value, password: 'globalway'
+server 'localhost', user: 'longway', roles: %w{app db web}, my_property: :my_value, password: 'q1w2e3r4'
 
 
 set :application, 'visual'
