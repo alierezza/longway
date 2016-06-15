@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Country</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="form-group">
+	  	<%= link_to new_country_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Country <% end %>
+	</div>
+    <table id="country" class="table table-stripped table-bordered" data-source="<%= countries_path(format: :json) %>">
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+  </div>
+</div>
+
+<script>
+
+$(function () {
+ table = $("#country").dataTable({
+  bProcessing: true,
+  bServerSide: true,
+  sAjaxSource: $('#country').data('source'),
+  pagingType: 'full_numbers'
+  })
+});
+
+
+
+</script>

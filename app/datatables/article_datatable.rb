@@ -45,7 +45,7 @@ class ArticleDatatable < AjaxDatatablesRails::Base
 
 
     advance_search = Article.all
-    keyword = Article.full_search(params[:sSearch])
+    keyword = Home.full_search(params[:sSearch])
 
     if keyword == ":*"
       advance_search

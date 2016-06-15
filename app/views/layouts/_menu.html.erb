@@ -68,6 +68,14 @@
 				<li> <%= link_to "Image", images_path %></li>
 			<% end %>
 
+			<% if can? :category, current_user %>
+				<li> <%= link_to "Category", categories_path %></li>
+			<% end %>
+
+			<% if can? :country, current_user %>
+				<li> <%= link_to "Country", countries_path %></li>
+			<% end %>
+
 		</ul>
 	</nav>
 </header>

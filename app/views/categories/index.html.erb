@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Category</h3>
+  </div>
+  <div class="panel-body">
+  	<div class="form-group">
+	  	<%= link_to new_category_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Category <% end %>
+	</div>
+    <table id="category" class="table table-stripped table-bordered" data-source="<%= categories_path(format: :json) %>">
+			<thead>
+				<th>Name</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<%# @articles.all.each_with_index do |article, index| %>
+					<!-- <tr>
+						<td><%#= article.name %></td>
+						<td><%#= article.duration %></td>
+						<td>
+							<%#= link_to "Update", edit_article_path(article), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+							<%#= link_to "Delete", article_path(article), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this article ?", :class=>"btn btn-xs btn-danger" %>
+						</td>
+					</tr> -->
+				<%# end %>
+			</tbody>
+		</table>
+  </div>
+</div>
+
+<script>
+
+$(function () {
+ table = $("#category").dataTable({
+  bProcessing: true,
+  bServerSide: true,
+  sAjaxSource: $('#category').data('source'),
+  pagingType: 'full_numbers'
+  })
+});
+
+
+
+</script>

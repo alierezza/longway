@@ -62,8 +62,4 @@ load_and_authorize_resource param_method: :my_sanitizer
 	def my_sanitizer
 		params.require(:country).permit!
 	end
-
-
-
-
 end

@@ -57,3 +57,16 @@
 		<%= link_to articles_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>  Article <% end %>
 	</div>
 <% end %>
+
+<% if can? :country, current_user %>
+	<div class="col-md-4 big_icon">
+		<%= link_to countries_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>  Country <% end %>
+	</div>
+<% end %>
+
+
+<% if can? :categories, current_user %>
+	<div class="col-md-4 big_icon">
+		<%= link_to categories_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-book" aria-hidden="true"></span>  Category <% end %>
+	</div>
+<% end %>

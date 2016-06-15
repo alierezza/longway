@@ -22,7 +22,8 @@ class Ability
 
             can :manage, Home
             can :manage, Problem
-        else
+        else #admin
+
             #menu
             can :home, User
             can :visual_board, User
@@ -31,6 +32,8 @@ class Ability
             can :masteremail, User
             can :running_text, User
             can :image, User
+            can :country, User
+            can :category, User
 
             can :manage, Home
             can :manage, Line #master LINE
@@ -44,6 +47,8 @@ class Ability
             can :manage, Ad
             can :manage, Image
             can :manage, Article
+            can :manage, Country
+            can :manage, Category
         end
             
 
