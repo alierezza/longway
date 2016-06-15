@@ -1,6 +1,9 @@
+<% if @status == true %>
+	$("#target_and_opr").html("<%= escape_javascript(render 'form_target_and_opr') %>");
+	$("#actual").html("<%= escape_javascript(render 'form_actual') %>");
+	$("#int_defect").html("<%= escape_javascript(render 'form_int_defect') %>");
+	$("#ext_defect").html("<%= escape_javascript(render 'form_ext_defect') %>");
+	$("#remark").html("<%= escape_javascript(render 'form_remark') %>");
 
-$("#target_and_opr").html("<%= escape_javascript(render 'form_target_and_opr') %>");
-$("#remark").html("<%= escape_javascript(render 'form_remark') %>");
-$("#actual").html("<%= escape_javascript(render 'form_actual') %>");
-$("#int_defect").html("<%= escape_javascript(render 'form_int_defect') %>");
-$("#ext_defect").html("<%= escape_javascript(render 'form_ext_defect') %>");
+	$("#line_and_clock").html("<%= escape_javascript(render 'clock') %>");
+<% end %>

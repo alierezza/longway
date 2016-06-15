@@ -21,15 +21,7 @@ class Report < ActiveRecord::Base
 				
 					if Article.find_by_name(data[0]) != nil
 						article = Article.find_by_name(data[0])
-						if data[5].strftime("%H").to_i >= 16 
-							if data[5].strftime("%M").to_i < 30 
-								minutes = 30
-							else
-								minutes = 60 
-							end
-						else
-							minutes = 60
-						end 
+						minutes = 60
 						@article_x_duration.push(  data[2] * article.duration ) 
 						@total_working_time.push(  minutes ) 
 					end
@@ -49,7 +41,7 @@ class Report < ActiveRecord::Base
 	end
 
 	def self.pph_in_the_board(report)
-		return report.detailreports.sum(:act) / (report.detailreports.last.opr * report.detailreports.count) .to_f .round(2)
+		return (report.detailreports.sum(:act) / (report.detailreports.last.opr * report.detailreports.count) .to_f ).round(2)
 	end
 
 	def self.rft_in_the_board(report)
@@ -68,15 +60,7 @@ class Report < ActiveRecord::Base
 			
 				if Article.find_by_name(data[0]) != nil
 					article = Article.find_by_name(data[0])
-					if data[5].strftime("%H").to_i >= 16 
-						if data[5].strftime("%M").to_i < 30 
-							minutes = 30
-						else
-							minutes = 60 
-						end
-					else
-						minutes = 60
-					end 
+					minutes = 60 
 					article_x_duration.push(  data[2] * article.duration ) 
 					total_working_time.push(  minutes ) 
 				end
@@ -96,7 +80,7 @@ class Report < ActiveRecord::Base
 	end
 
 	def self.pph_in_the_report(detailreport)
-		return detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:act) / (detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).last.opr * detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).count) .to_f .round(2)
+		return (detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:act) / (detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).last.opr * detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).count) .to_f ).round(2)
 	end
 
 	def self.rft_in_the_report(detailreport)
@@ -108,17 +92,26 @@ class Report < ActiveRecord::Base
 
 	
 	def self.hourly_per_user(user_id,hour) #dari tablet setiap jam manggil
-		user = User.find(user_id)
-		data = user.line.reports.find_by("tanggal = ?",Date.today)
+		begin
+			user = User.find(user_id)
+			data = user.line.reports.find_by("tanggal = ?",Date.today)
 
-		opr = data.detailreports.last.opr
-		remark = data.detailreports.last.remark
-		article = data.detailreports.last.article
-		po = data.detailreports.last.po
-		mfg = data.detailreports.last.mfg
-		target = data.detailreports.last.target
+			opr = data.detailreports.last.opr
+			remark = data.detailreports.last.remark
+			article = data.detailreports.last.article
+			po = data.detailreports.last.po
+			mfg = data.detailreports.last.mfg
+			target = data.detailreports.last.target
+			country = data.detailreports.last.country
+			category = data.detailreports.last.category
+		rescue
+			puts "still empty"
+			return false
+		end
 
-		user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create!(:jam=>hour, :opr=>opr, :remark=>remark, :target=>target, :article=>article, :po=>po, :mfg=>mfg)
+			user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create(:jam=>hour, :opr=>opr, :remark=>remark, :target=>target, :article=>article, :po=>po, :mfg=>mfg, :country=>country, :category=>category)
+			return true
+		
 	end
 
 	def self.hourly #dari cron
@@ -137,8 +130,10 @@ class Report < ActiveRecord::Base
 					po = data.detailreports.last.po
 					mfg = data.detailreports.last.mfg
 					target = data.detailreports.last.target
+					country = data.detailreports.last.country
+					category = data.detailreports.last.category
 
-					user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create!(:jam=>hour, :opr=>opr, :remark=>remark, :target=>target, :article=>article, :po=>po, :mfg=>mfg)
+					user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create!(:jam=>Time.now.strftime("%H").to_i, :opr=>opr, :remark=>remark, :target=>target, :article=>article, :po=>po, :mfg=>mfg, :country=>country, :category=>category)
 
 		# 			opr = user.line.reports.find_by("tanggal = ?",Date.today).detailreports.last.opr
 		# 			remark = user.line.reports.find_by("tanggal = ?",Date.today).detailreports.last.remark

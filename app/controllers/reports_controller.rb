@@ -42,7 +42,7 @@ class ReportsController < ApplicationController
 
 	def new
 		if params[:from_tablet]
-			Report.hourly_per_user(params[:user_id],params[:record])
+			@status = Report.hourly_per_user(params[:user_id],params[:record])
 		end
 		# if params[:record] #refresh tiap jam
 		# 	begin
@@ -155,12 +155,7 @@ class ReportsController < ApplicationController
 
 
 			@report = current_user.line.reports.new(my_sanitizer)
-		    
-		    if @report.save
-
-			else
-
-			end
+		    @status = @report.save
 		#end
 	end
 

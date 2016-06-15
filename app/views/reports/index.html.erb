@@ -290,13 +290,13 @@
           var mins = d.getMinutes();
           var secs = d.getSeconds();
   
-          if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18")){
+          if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18" || hours == "19" || hours == "20")){
           //if(secs == "0"){
               $("#report_detailreports_attributes_0_act").val(0);
-              if(hours == "12" || hours == "16" || hours == "17" || hours == "18")
-              {
-                $("#report_detailreports_attributes_0_target").val(0);
-              }
+              // if(hours == "12" || hours == "16" || hours == "17" || hours == "18")
+              // {
+              //   $("#report_detailreports_attributes_0_target").val(0);
+              // }
               //$("#act").html(0);
               //$("#defect_int").html(0);
               //$("#defect_ext").html(0);
@@ -304,12 +304,12 @@
               $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
            }
 
-           if(hours == "12")
-          {
-            $("[type='submit']").attr("disabled",true);
-          }else{
-            $("[type='submit']").attr("disabled",false);
-          }
+          //  if(hours == "12")
+          // {
+          //   $("[type='submit']").attr("disabled",true);
+          // }else{
+          //   $("[type='submit']").attr("disabled",false);
+          // }
 
 
       }
@@ -320,6 +320,6 @@
       });
 
       var hours = d.getHours();
-      $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>"}, null, "script");
+      $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
       
     </script>
