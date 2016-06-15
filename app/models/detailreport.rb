@@ -64,5 +64,9 @@ class Detailreport < ActiveRecord::Base
 
 	end
 
+	def self.accumulation_on_that_hour(hour)
+		where("jam <= ?",hour.to_i)
+	end
+
 	
 end

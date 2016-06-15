@@ -7,6 +7,8 @@ class Report < ActiveRecord::Base
 
 	accepts_nested_attributes_for :detailreports, allow_destroy: true
 
+	#### BOARD #########
+
 	def self.efficiency_in_the_board(report) #tampilkan efficiency terakhir saja
 		@article_x_duration = Array.new{}
 		@total_working_time = Array.new{}
@@ -55,7 +57,9 @@ class Report < ActiveRecord::Base
 	end
 
 
-	###############################
+	############# REPORT ###############
+
+	
 
 	def self.efficiency_in_the_report(detailreport,article_x_duration,total_working_time) #tampilkan efficiency setiap jam
 		
@@ -85,6 +89,22 @@ class Report < ActiveRecord::Base
 			return '-'
 		end
 	end
+
+
+	def self.percent_in_the_report(detailreport)
+		return ((detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:act) / detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
+	end
+
+	def self.pph_in_the_report(detailreport)
+		return detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:act) / (detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).last.opr * detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).count) .to_f .round(2)
+	end
+
+	def self.rft_in_the_report(detailreport)
+		return ((detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:act) / ( detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum(:act) + Report.total_defect_on_that_hour(detailreport) ) .to_f * 100 ).to_i ).to_s + "%"
+	end
+
+
+	#########################
 
 	
 	def self.hourly_per_user(user_id,hour) #dari tablet setiap jam manggil
@@ -169,6 +189,10 @@ class Report < ActiveRecord::Base
 
 	def self.total_defect(report)
 		return report.detailreports.sum("defect_int+defect_int_11b+defect_int_11c+defect_int_11j+defect_int_11l+defect_int_13d+defect_ext+defect_ext_bs3+defect_ext_bs7+defect_ext_bs13+defect_ext_bs15+defect_ext_bs17").to_i
+	end
+
+	def self.total_defect_on_that_hour(detailreport)
+		return detailreport.report.detailreports.accumulation_on_that_hour(detailreport.jam).sum("defect_int+defect_int_11b+defect_int_11c+defect_int_11j+defect_int_11l+defect_int_13d+defect_ext+defect_ext_bs3+defect_ext_bs7+defect_ext_bs13+defect_ext_bs15+defect_ext_bs17").to_i
 	end
 
 end

@@ -39,7 +39,11 @@
 		</thead>
 		<% @article_x_duration = Array.new{} %>
 		<% @total_working_time = Array.new{} %>
-		<tbody><% sum_target = 0 %><% sum_act = 0 %><% sum_defect_int = 0 %><% sum_defect_ext = 0 %>
+		<tbody>
+			<% sum_target = 0 %>
+			<% sum_act = 0 %>
+			<% sum_defect_int = 0 %>
+			<% sum_defect_ext = 0 %>
 				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
 			
 					<% sum_target += detailreport.target.to_i  %>
@@ -53,8 +57,8 @@
 						<td><%= sum_target %></td>
 						<td><%= detailreport.act %></td>
 						<td><%= sum_act %></td>
-						<td><%= detailreport.percent.to_i %> %</td>
-						<td><%= detailreport.pph %></td>
+						<td><%= Report.percent_in_the_report(detailreport) %></td>
+						<td><%= Report.pph_in_the_report(detailreport) %></td>
 						<td>
 							<% if detailreport.detailreportarticles != [] %>
 								<%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join("<br>").html_safe %>
@@ -81,7 +85,7 @@
 						<td><%= detailreport.defect_ext_bs15 %></td>
 						<td><%= detailreport.defect_ext_bs17 %></td>
 						<td><%= sum_defect_ext %></td>
-						<td><%= detailreport.rft.to_i %> %</td>
+						<td><%= Report.rft_in_the_report(detailreport) %></td>
 						<td><%= detailreport.remark %></td>
 						<td><%= detailreport.po %></td>
 						<td><%= detailreport.mfg %></td>

@@ -99,37 +99,20 @@ class Masteremail < ActiveRecord::Base
 						end
 
 
-						#effisiensi / article
-						if detailreport.detailreportarticles != []
-							detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at] }.each do |data|
-								
-								if Article.find_by_name(data[0]) != nil && data[5].strftime("%H").to_i != 12
-									article = Article.find_by_name(data[0])
-									if data[5].strftime("%H").to_i >= 16
-										if data[5].strftime("%M").to_i < 30
-											minutes = 30
-										else
-											minutes = 60
-										end
-									else
-										minutes = 60
-									end
-									@article_x_duration.push(  data[2] * article.duration )
-									@total_working_time.push(  minutes )
-								end
-							end
-						end
-
-
 						# efisiensi (akumulasi)
-						efisiensi_akumulasi = ""
-						if detailreport.detailreportarticles != []   && detailreport.jam != 12 
-							efisiensi_akumulasi = " (#{ ((@article_x_duration.sum / ( @total_working_time.sum * detailreport.opr ) ) * 100) .round(2) }%)"
-						else
-							efisiensi_akumulasi = "-"
-						end
+						efisiensi_akumulasi = Report.efficiency_in_the_report(detailreport,@article_x_duration,@total_working_time)
+					
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,detailreport.percent.to_i,detailreport.pph, article_detail.html_safe , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext,detailreport.rft.to_i,detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg]
+						# percent
+						percent = Report.percent_in_the_report(detailreport)
+
+						# PPH
+						pph = Report.pph_in_the_report(detailreport)
+
+						# RFT
+						rft = Report.rft_in_the_report(detailreport)
+
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, article_detail.html_safe , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext, rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
