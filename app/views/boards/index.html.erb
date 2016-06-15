@@ -36,7 +36,8 @@
 $(function(){
 
 $('.carousel').carousel({
-   interval: 15000 //changes the speed
+   interval: 1500000, //changes the speed
+    pause: false
   })
 
 
@@ -63,7 +64,7 @@ $(window).load(function() {
     $('#aa').bind('finished', function(){
         //Change text to something else after first loop finishes
         //$(this).marquee('destroy');
-        showText();
+        //showText();
 
         
         $(this).html($("#message").val())
@@ -85,16 +86,16 @@ $(window).load(function() {
 });
 
 
-    function showText(){
-        $.ajax({
-            type:"GET",
-            url:"/boards/new",
-            data:{},
-            success:function(data){
-              $("#message").val(data.message);
-            }
-        });
-    }
+    // function showText(){
+    //     $.ajax({
+    //         type:"GET",
+    //         url:"/boards/new",
+    //         data:{},
+    //         success:function(data){
+    //           $("#message").val(data.message);
+    //         }
+    //     });
+    // }
 });
 
 

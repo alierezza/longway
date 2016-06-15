@@ -7,12 +7,12 @@
   <div class="col-md-8">
     <span id="legendDiv_<%= big.first.to_s %>"></span>
   </div>
-  <div>
-    <canvas id="canvas_<%= big.first.to_s %>" height="450" width="700"></canvas>
+  <div class="col-md-12">
+    <canvas id="canvas_<%= big.first.to_s %>" height=200px ></canvas>
   </div>
 </div>
 
-<div class="col-md-5">
+<div class="col-md-5" >
   <div class="col-md-12">
     <div class="col-md-4">
       <h2><b>Defect Int</b></h2>
@@ -21,20 +21,20 @@
     <div class="col-md-8">
       <span id="legendDiv_def_int_<%= big.first.to_s %>"></span>
     </div>
-    <div>
-      <canvas id="canvas_def_int_<%= big.first.to_s %>" height="240" width="600"></canvas>
+    <div class="col-md-12" >
+      <canvas id="canvas_def_int_<%= big.first.to_s %>" height=120px ></canvas>
     </div>
   </div>
-  <div class="col-md-12">
-    <div class="col-md-4">
+  <div class="col-md-12" >
+    <div class="col-md-4" >
       <h2><b>Defect Ext</b></h2>
       <strong><h2><b>Line <%= big.first %></b><h2></strong>
     </div>
     <div class="col-md-8">
       <span id="legendDiv_def_ext_<%= big.first.to_s %>"></span>
     </div>
-    <div>
-      <canvas id="canvas_def_ext_<%= big.first.to_s %>" height="240" width="600"></canvas>
+    <div class="col-md-12">
+      <canvas id="canvas_def_ext_<%= big.first.to_s %>" height=120px ></canvas>
     </div>
   </div>
 </div>
