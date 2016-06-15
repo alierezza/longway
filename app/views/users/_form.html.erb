@@ -28,17 +28,17 @@
         <% if params[:reset_password] == "true" and (params[:action] == "edit" or params[:action] == "update" ) %>
         <% else %>
             <div class='form-group'>
-                <label class='control-label'>Nama</label>
+                <label class='control-label'>Name</label>
                 <%= f.text_field :nama, :Class=>"form-control", required: true %>
             </div>
 
             <div class='form-group'>
-                <label class='control-label'>Alamat</label>
+                <label class='control-label'>Address</label>
                 <%= f.text_field :alamat, :Class=>"form-control", required: true %>
             </div>
 
             <div class='form-group'>
-                <label class='control-label'>Telp</label>
+                <label class='control-label'>Phone Number</label>
                 <%= f.text_field :telp, :Class=>"form-control", required: true %>
             </div>
         <% end %>

@@ -9,11 +9,11 @@
 	  	</div>
 	  	<div class="col-md-6">
 	  		<fieldset style="padding:10px">
-	  				<legend>Kirim Ulang Email</legend>
+	  				<legend>Get The Existing Report</legend>
 			  	<div class="form-group">
 					<%= form_tag masteremails_path, :method=>"GET" do %>
 					<div class="form-group">
-						<%= label_tag :tanggal, "Pilih Tanggal", class: "control-label" %>
+						<%= label_tag :tanggal, "Choose Date", class: "control-label" %>
 						<%= date_field_tag :tanggal, nil, :required=>true, class: "form-control" %>
 					</div>
 						<%= submit_tag "Send Email", :name=>"send_email", class: "btn btn-default" %>
