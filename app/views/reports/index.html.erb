@@ -126,6 +126,14 @@
      
         <div class="row">
           <div class='col-xs-2'>
+            <label style="margin-top:7px">Category</label>
+          </div>
+          <div class='col-xs-10'>
+            <%= detailreport.select :category, options_from_collection_for_select(Category.all, 'name', 'name',:selected=>detailreport.object.category),{:include_blank => '-- Select One --'}, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-xs-2'>
             <label style="margin-top:7px">Article</label>
           </div>
           <div class='col-xs-10'>
@@ -165,7 +173,14 @@
             <%= detailreport.text_field :mfg, class: 'form-control' %>
           </div>
         </div>
-
+        <div class="row">
+          <div class='col-xs-2'>
+            <label style="margin-top:7px">Country</label>
+          </div>
+          <div class='col-xs-10'>
+            <%= detailreport.select :country, options_from_collection_for_select(Country.all, 'name', 'name', :selected=>detailreport.object.country),{:include_blank => '-- Select One --'}, class: 'form-control', :required=>true %>
+          </div>
+        </div>
       <div class="row">
         <div class="col-xs-12">
            <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>

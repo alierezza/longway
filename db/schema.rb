@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615064859) do
+ActiveRecord::Schema.define(version: 20160615080932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,8 @@ ActiveRecord::Schema.define(version: 20160615064859) do
     t.integer  "defect_ext_bs13", default: 0
     t.integer  "defect_ext_bs15", default: 0
     t.integer  "defect_ext_bs17", default: 0
+    t.string   "country",                       null: false
+    t.string   "category",                      null: false
   end
 
   create_table "homes", force: :cascade do |t|
