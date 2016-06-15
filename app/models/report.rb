@@ -42,8 +42,48 @@ class Report < ActiveRecord::Base
 		end
 	end
 
-	def self.efficiency_in_the_report(detailreport) #tampilkan efficiency setiap jam
+	def self.percent_in_the_board(report)
+		return ((report.detailreports.sum(:act) / report.detailreports.sum(:target) .to_f * 100 ).to_i ).to_s + "%"
+	end
 
+	def self.pph_in_the_board(report)
+		return report.detailreports.sum(:act) / (report.detailreports.last.opr * report.detailreports.count) .to_f .round(2)
+	end
+
+	def self.rft_in_the_board(report)
+		return ((report.detailreports.sum(:act) / ( report.detailreports.sum(:act) + Report.total_defect(report) ) .to_f * 100 ).to_i ).to_s + "%"
+	end
+
+
+	###############################
+
+	def self.efficiency_in_the_report(detailreport,article_x_duration,total_working_time) #tampilkan efficiency setiap jam
+		
+		if detailreport.detailreportarticles != [] 
+			detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
+			
+				if Article.find_by_name(data[0]) != nil
+					article = Article.find_by_name(data[0])
+					if data[5].strftime("%H").to_i >= 16 
+						if data[5].strftime("%M").to_i < 30 
+							minutes = 30
+						else
+							minutes = 60 
+						end
+					else
+						minutes = 60
+					end 
+					article_x_duration.push(  data[2] * article.duration ) 
+					total_working_time.push(  minutes ) 
+				end
+			end 
+		end
+
+		if detailreport.detailreportarticles != []
+			return "#{ ((article_x_duration.sum / ( total_working_time.sum * detailreport.opr ) ) * 100) .round(2) }%".html_safe 
+		else
+			return '-'
+		end
 	end
 
 	
@@ -123,6 +163,12 @@ class Report < ActiveRecord::Base
 		 		puts "errornya: #{e.message}, user: #{user.email}"
 		 	end
 		 end
+	end
+
+	private
+
+	def self.total_defect(report)
+		return report.detailreports.sum("defect_int+defect_int_11b+defect_int_11c+defect_int_11j+defect_int_11l+defect_int_13d+defect_ext+defect_ext_bs3+defect_ext_bs7+defect_ext_bs13+defect_ext_bs15+defect_ext_bs17").to_i
 	end
 
 end

@@ -62,32 +62,10 @@
 								<%= detailreport.article %>
 							<% end %>
 						</td>
-						
-							<% if detailreport.detailreportarticles != [] %>
-								<% detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| %>
-								
-									<% if Article.find_by_name(data[0]) != nil && data[5].strftime("%H").to_i != 12 %>
-										<% article = Article.find_by_name(data[0]) %>
-										<% if data[5].strftime("%H").to_i >= 16  %>
-											<% if data[5].strftime("%M").to_i < 30 %>
-												<% minutes = 30 %>
-											<% else %>
-												<% minutes = 60 %>
-											<% end %>
-										<% else %>
-											<% minutes = 60 %>
-										<% end %>
-										<% @article_x_duration.push(  data[2] * article.duration ) %>
-										<% @total_working_time.push(  minutes ) %>
-									<% end %>
-								<% end %>
-							<% end %>
 						<td>
-							<% if detailreport.detailreportarticles != [] && detailreport.jam != 12 %>
-								<%= "<br><font color=blue>(#{ ((@article_x_duration.sum / ( @total_working_time.sum * detailreport.opr ) ) * 100) .round(2) }%)</font>".html_safe %>
-							<% else %>
-								-
-							<% end %>						
+							<font color=blue>
+								(<%= Report.efficiency_in_the_report(detailreport,@article_x_duration,@total_working_time) %>)					
+							</font>
 						</td>
 						<td><%= detailreport.defect_int %></td>
 						<td><%= detailreport.defect_int_11b %></td>
