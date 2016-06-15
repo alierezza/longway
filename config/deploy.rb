@@ -42,6 +42,8 @@ set :passenger_restart_with_touch, true
 # Default value for keep_releases is 5
  set :keep_releases, 5
 
+
+ #set :whenever_environment, defer { stage }
  set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
