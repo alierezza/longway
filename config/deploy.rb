@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-server 'localhost', user: 'longway', roles: %w{app db web}, my_property: :my_value, password: 'q1w2e3r4'
+
 
 
 set :application, 'visual'
@@ -12,9 +12,9 @@ set :repo_url, 'git@github.com:hendranata/longway.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, 'master'
+set :branch, 'dev'
 # Default deploy_to directory is /var/www/my_app_name
- set :deploy_to, '/var/www/longway'
+ 
 
 set :passenger_restart_with_touch, true
 
