@@ -6,7 +6,7 @@ lock '3.4.0'
 
 set :application, 'visual'
 set :repo_url, 'git@github.com:hendranata/longway.git'
-
+set :stage, :production
 
 
 
