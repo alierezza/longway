@@ -8,7 +8,7 @@
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 server 'localhost', user: 'ccmfactory', roles: %w{app db web}, my_property: :my_value, password: 'q1w2e3r4'
 
-set :deploy_to, '/var/www/ccmfactory'
+set :deploy_to, '/var/www/longway'
 
 
 # role-based syntax
