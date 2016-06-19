@@ -76,8 +76,6 @@ class Masteremail < ActiveRecord::Base
 	    			
 	    			sum_target = 0
 	    			sum_act = 0
-	    			sum_defect_int = 0
-	    			sum_defect_ext = 0
 
 	    			@article_x_duration = Array.new{}
 					@total_working_time = Array.new{}
@@ -85,34 +83,29 @@ class Masteremail < ActiveRecord::Base
 	    			report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index|
 	    				sum_target += detailreport.target.to_i
 						sum_act += detailreport.act.to_i
-						sum_defect_int += detailreport.defect_int+detailreport.defect_int_11b+detailreport.defect_int_11c+detailreport.defect_int_11j+detailreport.defect_int_11l+detailreport.defect_int_13d
-						sum_defect_ext += detailreport.defect_ext+detailreport.defect_ext_bs3+detailreport.defect_ext_bs7+detailreport.defect_ext_bs13+detailreport.defect_ext_bs15+detailreport.defect_ext_bs17
-
+						
 						size = detailreport.remark == nil ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
 
 
 						# article
-						article_detail = ""
-						if detailreport.detailreportarticles != []
-							article_detail = detailreport.detailreportarticles.map{|i| i.article.to_s + "(act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")" }.join(", ")
-						end
-
+						article_detail = Report.article(detailreport)
 
 						# efisiensi (akumulasi)
-						efisiensi_akumulasi = Report.efficiency_in_the_report(detailreport,@article_x_duration,@total_working_time)
-					
+						efisiensi_akumulasi = Report.efficiency(detailreport.report,detailreport.jam)
 
 						# percent
-						percent = Report.percent_in_the_report(detailreport)
+						percent = Report.percent(detailreport.report, detailreport.jam)
 
 						# PPH
-						pph = Report.pph_in_the_report(detailreport)
+						pph = Report.pph(detailreport.report,detailreport.jam)
 
 						# RFT
-						rft = Report.rft_in_the_report(detailreport)
+						rft = Report.rft(detailreport.report, detailreport.jam)
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, article_detail.html_safe , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,sum_defect_int,detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,sum_defect_ext, rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg]
+
+
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, article_detail.html_safe , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,Report.total_defect_int(detailreport.report, detailreport.jam),detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,Report.total_defect_ext(detailreport.report, detailreport.jam), rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 

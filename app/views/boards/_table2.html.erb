@@ -43,19 +43,19 @@
 						</b>
 					</td>
 					<td><b><font size="6"><%= report.detailreports.sum("act") %></font></b></td>
-					<td><b><font size="6"><%= Report.percent_in_the_board(report) %></font></b></td>
-					<td><b><font size="6"><%= Report.pph_in_the_board(report) %></font></b></td>
+					<td><b><font size="6"><%= Report.percent(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%= Report.pph(report, report.detailreports.last.jam) %></font></b></td>
 					<!-- efficiency -->
 					<!-- <td>
 						<b>
 							<font size="6">
-								<%#= Report.efficiency_in_the_board(report) %>
+								<%#= Report.efficiency(report, report.detailreports.last.jam) %>
 							</font>
 						</b>
 					</td> -->
-					<td><b><font size="6"><%= report.detailreports.sum("defect_int + defect_int_11b + defect_int_11c + defect_int_11j + defect_int_11l + defect_int_13d") %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.sum("defect_ext + defect_ext_bs3 + defect_ext_bs7 + defect_ext_bs13 + defect_ext_bs15 + defect_ext_bs17") %></font></b></td>
-					<td><b><font size="6"><%= Report.rft_in_the_board(report) %></font></b></td>
+					<td><b><font size="6"><%= Report.total_defect_int(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%= Report.total_defect_ext(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%= Report.rft(report, report.detailreports.last.jam) %></font></b></td>
 					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.remark %></font></b></td>
 					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.detailreportarticles.last.article %></font></b></td>
 				</tr>

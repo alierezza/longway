@@ -304,12 +304,12 @@
               $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
            }
 
-          //  if(hours == "12")
-          // {
-          //   $("[type='submit']").attr("disabled",true);
-          // }else{
-          //   $("[type='submit']").attr("disabled",false);
-          // }
+           if(hours == "12")
+          {
+            $("[type='submit']").attr("disabled",true);
+          }else{
+            $("[type='submit']").attr("disabled",false);
+          }
 
 
       }

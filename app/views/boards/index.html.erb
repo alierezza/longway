@@ -59,7 +59,7 @@ setInterval(GetClock,1000);
 
 $(document).ready(function(){
   
-$(window).load(function() {
+  $(window).load(function() {
 
     $('#aa').bind('finished', function(){
         //Change text to something else after first loop finishes
@@ -69,21 +69,22 @@ $(window).load(function() {
         
         $(this).html($("#message").val())
          
-            //Apply marquee plugin again
-            .marquee({
-              duration: 13000,
-          gap: 0,
-          //'left' or 'right'
-          direction: 'left'
-            })
+          //Apply marquee plugin again
+          .marquee({
+            duration: 13000,
+            gap: 0,
+            //'left' or 'right'
+            direction: 'left'
+          })
+
     }).marquee({
-    //speed in milliseconds of the marquee
-    duration: 13000,
-    gap: 0,
-    //'left' or 'right'
-    direction: 'left'
-});
-});
+        //speed in milliseconds of the marquee
+        duration: 13000,
+        gap: 0,
+        //'left' or 'right'
+        direction: 'left'
+    });
+  });
 
 
     // function showText(){

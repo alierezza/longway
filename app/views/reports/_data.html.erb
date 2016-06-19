@@ -42,14 +42,10 @@
 		<tbody>
 			<% sum_target = 0 %>
 			<% sum_act = 0 %>
-			<% sum_defect_int = 0 %>
-			<% sum_defect_ext = 0 %>
 				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
 			
 					<% sum_target += detailreport.target.to_i  %>
 					<% sum_act += detailreport.act.to_i  %>
-					<% sum_defect_int += detailreport.defect_int.to_i  + detailreport.defect_int_11b.to_i + detailreport.defect_int_11c.to_i + detailreport.defect_int_11j.to_i + detailreport.defect_int_11l.to_i + detailreport.defect_int_13d.to_i  %>
-					<% sum_defect_ext += detailreport.defect_ext.to_i + detailreport.defect_ext_bs3.to_i + detailreport.defect_ext_bs7.to_i + detailreport.defect_ext_bs13.to_i + detailreport.defect_ext_bs15.to_i + detailreport.defect_ext_bs17.to_i %>
 					<tr>
 						<td><%= detailreport.jam %></td>
 						<td><%= detailreport.opr %></td>
@@ -57,18 +53,14 @@
 						<td><%= sum_target %></td>
 						<td><%= detailreport.act %></td>
 						<td><%= sum_act %></td>
-						<td><%= Report.percent_in_the_report(detailreport) %></td>
-						<td><%= Report.pph_in_the_report(detailreport) %></td>
+						<td><%= Report.percent(detailreport.report, detailreport.jam) %></td>
+						<td><%= Report.pph(detailreport.report,detailreport.jam) %></td>
 						<td>
-							<% if detailreport.detailreportarticles != [] %>
-								<%= detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join("<br>").html_safe %>
-							<% else %>
-								<%= detailreport.article %>
-							<% end %>
+							<%= Report.article(detailreport) %>
 						</td>
 						<td>
 							<font color=blue>
-								(<%= Report.efficiency_in_the_report(detailreport,@article_x_duration,@total_working_time) %>)					
+								(<%= Report.efficiency(detailreport.report,detailreport.jam) %>)					
 							</font>
 						</td>
 						<td><%= detailreport.defect_int %></td>
@@ -77,15 +69,15 @@
 						<td><%= detailreport.defect_int_11j %></td>
 						<td><%= detailreport.defect_int_11l %></td>
 						<td><%= detailreport.defect_int_13d %></td>
-						<td><%= sum_defect_int %></td>
+						<td><%= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
 						<td><%= detailreport.defect_ext %></td>
 						<td><%= detailreport.defect_ext_bs3 %></td>
 						<td><%= detailreport.defect_ext_bs7 %></td>
 						<td><%= detailreport.defect_ext_bs13 %></td>
 						<td><%= detailreport.defect_ext_bs15 %></td>
 						<td><%= detailreport.defect_ext_bs17 %></td>
-						<td><%= sum_defect_ext %></td>
-						<td><%= Report.rft_in_the_report(detailreport) %></td>
+						<td><%= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td>
+						<td><%= Report.rft(detailreport.report, detailreport.jam) %></td>
 						<td><%= detailreport.remark %></td>
 						<td><%= detailreport.po %></td>
 						<td><%= detailreport.mfg %></td>
