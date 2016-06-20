@@ -52,47 +52,66 @@ class Report < ActiveRecord::Base
 	end
 
 	def self.efficiency(report,hour) 
-		
-		total_working_time = Report.total_working_time_in_minutes(report,hour)
-		article_x_duration = Report.article_x_duration(report,hour)
+		begin
+			total_working_time = Report.total_working_time_in_minutes(report,hour)
+			article_x_duration = Report.article_x_duration(report,hour)
 
-		if total_working_time != nil && article_x_duration != nil && hour.to_i != 12
-			return "#{ ((article_x_duration.sum / ( total_working_time.sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe 
-		else
-			return '-'
+			if total_working_time != nil && article_x_duration != nil && hour.to_i != 12
+				return "#{ ((article_x_duration.sum / ( total_working_time.sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe 
+			else
+				return '-'
+			end
+		rescue
+			return 0
 		end
 	end
 
 	def self.percent(report,hour)
-		if hour.to_i != 12
-			return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / report.detailreports.accumulation_on_that_hour(hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
-		else
-			return '-'
+		begin
+			if hour.to_i != 12
+				return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / report.detailreports.accumulation_on_that_hour(hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
+			else
+				return '-'
+			end
+		rescue
+			return 0
 		end
 	end
 
 	def self.pph(report,hour)
-		total_working_time = Report.total_working_time_in_minutes(report,hour)
-		if hour.to_i != 12
-			return (report.detailreports.accumulation_on_that_hour(hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
-		else
-			return '-'
+		begin
+			total_working_time = Report.total_working_time_in_minutes(report,hour)
+			if hour.to_i != 12
+				return (report.detailreports.accumulation_on_that_hour(hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
+			else
+				return '-'
+			end
+		rescue
+			return 0
 		end
 	end
 
 	def self.rft(report,hour)
-		if hour.to_i != 12
-			return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / ( report.detailreports.accumulation_on_that_hour(hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
-		else
-			return '-'
+		begin
+			if hour.to_i != 12
+				return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / ( report.detailreports.accumulation_on_that_hour(hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
+			else
+				return '-'
+			end
+		rescue
+			return 0
 		end
 	end
 
 	def self.article(detailreport)
-		if detailreport.detailreportarticles != [] && detailreport.jam != 12
-			return detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join("<br>").html_safe 
-		else 
-			return '-'
+		begin
+			if detailreport.detailreportarticles != [] && detailreport.jam != 12
+				return detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join("<br>").html_safe 
+			else 
+				return '-'
+			end
+		rescue
+			return 0
 		end
 	end
 
