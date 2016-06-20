@@ -49,10 +49,14 @@ class Detailreport < ActiveRecord::Base
 			begin
 				data = self.detailreportarticles.find_or_create_by(:article=>self.article)
 
-				if self.act == self.act_was
+				if self.act == self.act_was && data.output != 0
 					output = self.act_was
 				else
-					output = self.act
+					if self.detailreportarticles.count > 1
+						output = self.act - self.detailreportarticles.where("id != ?",data.id).sum(:output)
+					else
+						output = self.act
+					end
 				end
 
 				data.update(:operator=>self.opr,:output=>output)
