@@ -4,11 +4,11 @@ class ReportsController < ApplicationController
 	def index
 		if params[:message]
 			status = params[:message].split("_")[0]
-			id = params[:message].split("_")[1]
+			line_no = params[:message].split("_")[1]
 
 			status == "on" ? status = false : status = true
 
-			Line.find(id).update!(:status=>status)
+			Line.find_by(:no=>line_no).update!(:status=>status)
 		end
 
 		if current_user.line.reports == []

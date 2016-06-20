@@ -1,30 +1,30 @@
 <table class="table table-bordered table-stripped table_problems">
 <thead>
 	<tr>
-		<%= begin Line.find(1).status == true ? "<th id=1>1</th>".html_safe : "<th id=1 style='background-color:yellow'>1</th>".html_safe rescue "<th id=1>1</th>".html_safe end %>
-		<%= begin Line.find(2).status == true ? "<th id=2>2</th>".html_safe : "<th id=2 style='background-color:yellow'>2</th>".html_safe rescue "<th id=2>2</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>1).status == true ? "<th id=1>1</th>".html_safe : "<th id=1 style='background-color:yellow'>1</th>".html_safe rescue "<th id=1>1</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>2).status == true ? "<th id=2>2</th>".html_safe : "<th id=2 style='background-color:yellow'>2</th>".html_safe rescue "<th id=2>2</th>".html_safe end %>
 		<th colspan=3 style="font-size: 60px;vertical-align: middle;"><u><font color="darkblue">Machine Problem in Line</font></u></th>
 	</tr>
 	<tr>
-		<%= begin Line.find(3).status == true ? "<th id=3>3</th>".html_safe : "<th id=3 style='background-color:yellow'>3</th>".html_safe rescue "<th id=3>3</th>".html_safe end %>
-		<%= begin Line.find(4).status == true ? "<th id=4>4</th>".html_safe : "<th id=4 style='background-color:yellow'>4</th>".html_safe rescue "<th id=4>4</th>".html_safe end %>
-		<%= begin Line.find(5).status == true ? "<th id=5>5</th>".html_safe : "<th id=5 style='background-color:yellow'>5</th>".html_safe rescue "<th id=5>5</th>".html_safe end %>
-		<%= begin Line.find(6).status == true ? "<th id=6>6</th>".html_safe : "<th id=6 style='background-color:yellow'>6</th>".html_safe rescue "<th id=6>6</th>".html_safe end %>
-		<%= begin Line.find(7).status == true ? "<th id=7>7</th>".html_safe : "<th id=7 style='background-color:yellow'>7</th>".html_safe rescue "<th id=7>7</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>3).status == true ? "<th id=3>3</th>".html_safe : "<th id=3 style='background-color:yellow'>3</th>".html_safe rescue "<th id=3>3</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>4).status == true ? "<th id=4>4</th>".html_safe : "<th id=4 style='background-color:yellow'>4</th>".html_safe rescue "<th id=4>4</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>5).status == true ? "<th id=5>5</th>".html_safe : "<th id=5 style='background-color:yellow'>5</th>".html_safe rescue "<th id=5>5</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>6).status == true ? "<th id=6>6</th>".html_safe : "<th id=6 style='background-color:yellow'>6</th>".html_safe rescue "<th id=6>6</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>7).status == true ? "<th id=7>7</th>".html_safe : "<th id=7 style='background-color:yellow'>7</th>".html_safe rescue "<th id=7>7</th>".html_safe end %>
 	</tr>
 	<tr>
-		<%= begin Line.find(8).status == true ? "<th id=8>8</th>".html_safe : "<th id=8 style='background-color:yellow'>8</th>".html_safe rescue "<th id=8>8</th>".html_safe end %>
-		<%= begin Line.find(9).status == true ? "<th id=9>9</th>".html_safe : "<th id=9 style='background-color:yellow'>9</th>".html_safe rescue "<th id=9>9</th>".html_safe end %>
-		<%= begin Line.find(10).status == true ? "<th id=10>10</th>".html_safe : "<th id=10 style='background-color:yellow'>10</th>".html_safe rescue "<th id=10>10</th>".html_safe end %>
-		<%= begin Line.find(11).status == true ? "<th id=11>11</th>".html_safe : "<th id=11 style='background-color:yellow'>11</th>".html_safe rescue "<th id=11>11</th>".html_safe end %>
-		<%= begin Line.find(12).status == true ? "<th id=12>12</th>".html_safe : "<th id=12 style='background-color:yellow'>12</th>".html_safe rescue "<th id=12>12</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>8).status == true ? "<th id=8>8</th>".html_safe : "<th id=8 style='background-color:yellow'>8</th>".html_safe rescue "<th id=8>8</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>9).status == true ? "<th id=9>9</th>".html_safe : "<th id=9 style='background-color:yellow'>9</th>".html_safe rescue "<th id=9>9</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>10).status == true ? "<th id=10>10</th>".html_safe : "<th id=10 style='background-color:yellow'>10</th>".html_safe rescue "<th id=10>10</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>11).status == true ? "<th id=11>11</th>".html_safe : "<th id=11 style='background-color:yellow'>11</th>".html_safe rescue "<th id=11>11</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>12).status == true ? "<th id=12>12</th>".html_safe : "<th id=12 style='background-color:yellow'>12</th>".html_safe rescue "<th id=12>12</th>".html_safe end %>
 	</tr>
 	<tr>
-		<%= begin Line.find(13).status == true ? "<th id=13>3</th>".html_safe : "<th id=13 style='background-color:yellow'>13</th>".html_safe rescue "<th id=13>13</th>".html_safe end %>
-		<%= begin Line.find(14).status == true ? "<th id=14>14</th>".html_safe : "<th id=14 style='background-color:yellow'>14</th>".html_safe rescue "<th id=14>14</th>".html_safe end %>
-		<%= begin Line.find(15).status == true ? "<th id=15>15</th>".html_safe : "<th id=15 style='background-color:yellow'>15</th>".html_safe rescue "<th id=15>15</th>".html_safe end %>
-		<%= begin Line.find(16).status == true ? "<th id=16>16</th>".html_safe : "<th id=16 style='background-color:yellow'>16</th>".html_safe rescue "<th id=16>16</th>".html_safe end %>
-		<%= begin Line.find(17).status == true ? "<th id=17>17</th>".html_safe : "<th id=17 style='background-color:yellow'>17</th>".html_safe rescue "<th id=17>17</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>13).status == true ? "<th id=13>3</th>".html_safe : "<th id=13 style='background-color:yellow'>13</th>".html_safe rescue "<th id=13>13</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>14).status == true ? "<th id=14>14</th>".html_safe : "<th id=14 style='background-color:yellow'>14</th>".html_safe rescue "<th id=14>14</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>15).status == true ? "<th id=15>15</th>".html_safe : "<th id=15 style='background-color:yellow'>15</th>".html_safe rescue "<th id=15>15</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>16).status == true ? "<th id=16>16</th>".html_safe : "<th id=16 style='background-color:yellow'>16</th>".html_safe rescue "<th id=16>16</th>".html_safe end %>
+		<%= begin Line.find_by(:no=>17).status == true ? "<th id=17>17</th>".html_safe : "<th id=17 style='background-color:yellow'>17</th>".html_safe rescue "<th id=17>17</th>".html_safe end %>
 	</tr>
 </thead>
 </table>
