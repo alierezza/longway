@@ -9,7 +9,7 @@ every '* 7,8,9,10,11,12,13,14,15,16 * * 1-6' do
   runner "Report.hourly", :output=>"log/report_hourly_log.log"
 end
 
-every :friday, :at => "11.00 pm" do
+every :sunday, :at => "11.00 am" do
 	runner "Board.remove", :output=>"log/remove_log.log"	
 end
 
