@@ -80,6 +80,10 @@
 				<li> <%= link_to "Defect", defects_path %></li>
 			<% end %>
 
+			<% if can? :header_board, current_user %>
+				<li> <%= link_to "Header Board", header_boards_path %></li>
+			<% end %>
+
 		</ul>
 	</nav>
 </header>

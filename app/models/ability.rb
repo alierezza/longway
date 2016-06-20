@@ -50,6 +50,7 @@ class Ability
             can :manage, Country
             can :manage, Category
             can :manage, Defect
+            can :manage, HeaderBoard
         end
 
 
