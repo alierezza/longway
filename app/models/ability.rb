@@ -2,16 +2,16 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    
+
     if user.role == "Admin"
-        
+
         if user.email == "visualboard@longway.vn"
             #menu
             can :home, User
             can :visual_board, User
 
             can :manage, Home
-            can :manage, Board 
+            can :manage, Board
             can :read, Ad
 
 
@@ -38,7 +38,7 @@ class Ability
             can :manage, Home
             can :manage, Line #master LINE
             can :manage, User #master User/ pegawai
-            can :manage, Board 
+            can :manage, Board
             can :manage, Problem
             can :manage, Masteremail
             can :data, Report do |report|
@@ -49,12 +49,13 @@ class Ability
             can :manage, Article
             can :manage, Country
             can :manage, Category
+            can :manage, Defect
         end
-            
+
 
     elsif user.role == "User"
         can :manage, Home
-        can :manage, Line #master 
+        # can :manage, Line #master
 
         can :manage, Report do |report|
             if report.line != nil

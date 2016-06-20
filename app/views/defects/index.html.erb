@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Defect List</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <%= link_to new_defect_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Defect <% end %>
+    </div>
+    <table class="table table-stripped table-bordered">
+      <thead>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% @defects.order('id asc').each_with_index do |defect, index| %>
+          <tr>
+            <td><%= defect.name %></td>
+            <td><%= defect.defect_type %></td>
+            <td><%= defect.description %></td>
+            <td>
+              <%= link_to "Update", edit_defect_path(defect), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+              <%= link_to "Delete", defect_path(defect), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this defect ?", :class=>
+            "btn btn-xs btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

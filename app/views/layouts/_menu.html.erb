@@ -76,6 +76,10 @@
 				<li> <%= link_to "Country", countries_path %></li>
 			<% end %>
 
+			<% if can? :defect, current_user %>
+				<li> <%= link_to "Defect", defects_path %></li>
+			<% end %>
+
 		</ul>
 	</nav>
 </header>
