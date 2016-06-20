@@ -1,5 +1,6 @@
 class Defect < ActiveRecord::Base
 	validate :defect_count_within_limit, on: :create
+	validates_uniqueness_of :name
 
 	def self.type
 		["Internal", "External"]
