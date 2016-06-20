@@ -27,9 +27,9 @@ module ApplicationHelper
 		when "RFT"
 			return "<td><b><font size='6'>#{Report.rft(report, report.detailreports.last.jam)}</font></b></td>".html_safe
 		when "REMARK"
-			return "<td style='line-height:60%'><b><font size='6'>#{report.detailreports.last.remark}</font></b></td>".html_safe
+			return "<td style='line-height:60%'><b><font size='3'>#{report.detailreports.last.remark}</font></b></td>".html_safe
 		when "ARTICLE"
-			return "<td style='line-height:60%'><b><font size='6'>#{report.detailreports.last.detailreportarticles.last.article}</font></b></td>".html_safe
+			return "<td style='line-height:60%'><b><font size='3'>#{report.detailreports.last.detailreportarticles.last.article}</font></b></td>".html_safe
 		when "EFFICIENT"
 			return "<td><b><font size='6'>#{Report.efficiency(report, report.detailreports.last.jam)}</font></b></td>".html_safe
 		end
