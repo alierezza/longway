@@ -132,7 +132,7 @@ class BoardsController < ApplicationController
 				@big_data[line.no].push(top_3_int.map{|i| i[:message]})
 				@big_data[line.no].push(top_3_ext.map{|i| i[:value]})
 				@big_data[line.no].push(top_3_ext.map{|i| i[:data]})
-				@big_data[line.no].push(top_3_int.map{|i| i[:message]})
+				@big_data[line.no].push(top_3_ext.map{|i| i[:message]})
 
 			else
 				@big_data[line.no].push([0,0,0])
