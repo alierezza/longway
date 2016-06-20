@@ -32,7 +32,8 @@ class DefectsController < ApplicationController
         format.html { redirect_to defects_url, notice: 'Defect was successfully created.' }
         format.json { render :show, status: :created, location: @defect }
       else
-        format.html { redirect_to defects_url, alert: @defect.errors.full_messages.to_sentence }
+        flash.now.alert = @defect.errors.full_messages.to_sentence
+        format.html { render action: "new" }
         format.json { render json: @defect.errors, status: :unprocessable_entity }
       end
     end
