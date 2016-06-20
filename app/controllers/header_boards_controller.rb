@@ -82,6 +82,6 @@ class HeaderBoardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def header_board_params
-      params.require(:header_board).permit(:name, :visible, :order_no_position)
+      params.require(:header_board).permit(:name, :name_vietnam, :visible, :order_no_position)
     end
 end

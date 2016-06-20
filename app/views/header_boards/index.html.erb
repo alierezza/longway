@@ -3,12 +3,13 @@
     <h3 class="panel-title">Header Board List</h3>
   </div>
   <div class="panel-body">
-    <div class="form-group">
-      <%= link_to new_header_board_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Header Board <% end %>
-    </div>
+<!--     <div class="form-group">
+      <%#= link_to new_header_board_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Header Board <%# end %>
+    </div> -->
     <table class="table table-stripped table-bordered" id="sortable">
       <thead>
         <th>Name</th>
+        <th>Name Vietnam</th>
         <th>Visible</th>
         <th>Action</th>
       </thead>
@@ -16,6 +17,7 @@
         <% @header_boards.order('order_no asc').each_with_index do |header_board, index| %>
           <tr data-item-id=<%= "#{header_board.id}" %> class="item">
             <td><%= header_board.name %></td>
+            <td><%= header_board.name_vietnam %></td>
             <td>
               <% if header_board.visible == true %>
                 <input type="checkbox" name="show_<%= index.to_s %>" id="<%= header_board.id.to_s %>" data-size="mini" checked >
@@ -25,7 +27,7 @@
             </td>
             <td>
               <%= link_to "Update", edit_header_board_path(header_board), :method=>"GET",:class=>"btn btn-xs btn-default" %>
-              <%= link_to "Delete", header_board_path(header_board), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this header_board ?", :class=>
+              <%#= link_to "Delete", header_board_path(header_board), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this header_board ?", :class=>
             "btn btn-xs btn-danger" %>
             </td>
           </tr>

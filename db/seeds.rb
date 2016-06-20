@@ -29,5 +29,8 @@ ActiveRecord::Base.transaction do
   	Article.create!(:session=>row[0] ,:name=>row[1],:duration=>row[2].round(2))
 
   end
-end
 
+  ["LINE", "OPR", "TARGET", "TARGET SUM", "ACT", "ACT SUM", "%", "PPH", "DEFECT", "RFT", "REMARK", "ARTICLE", "EFFICIENT"].each do |header|
+  	HeaderBoard.create(name: header, name_vietnam: "")
+  end
+end
