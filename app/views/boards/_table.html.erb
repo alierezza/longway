@@ -24,7 +24,7 @@
 	<tbody>
 		<% @boards.where("no >= 1 and no <= 8").order("no").each_with_index do |line,index| %>
 			<% line.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
-				<tr>
+				<tr id="<%= line.id %>" style="<%= line.status == false ? 'background-color:yellow' : 'background-color:white' %>">
 					<td><b><font size="6">L. <%= report.line.no %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.opr %></font></b></td>
 					<td><b><font size="6"><%= report.detailreports.last.target %></font></b></td>
@@ -46,10 +46,10 @@
 					<td><b><font size="6"><%= Report.percent(report, report.detailreports.last.jam) %></font></b></td>
 					<td><b><font size="6"><%= Report.pph(report, report.detailreports.last.jam) %></font></b></td>
 					<!-- efficiency -->
-					<!-- <td> 
+					<!-- <td>
 						<b>
 							<font size="6">
-								<%#= Report.efficiency(report, report.detailreports.last.jam) %>	
+								<%#= Report.efficiency(report, report.detailreports.last.jam) %>
 							</font>
 						</b>
 					</td> -->

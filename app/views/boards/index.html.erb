@@ -1,3 +1,4 @@
+<%= render 'socket' %>
 
 <div class="row">
   <div class="col-md-6 header_board"><b><u>LONG WAY VIETNAM</u></b><h3>VISUAL BOARD</h3></div>
@@ -58,7 +59,7 @@ setInterval(GetClock,1000);
 
 
 $(document).ready(function(){
-  
+
   $(window).load(function() {
 
     $('#aa').bind('finished', function(){
@@ -66,9 +67,9 @@ $(document).ready(function(){
         //$(this).marquee('destroy');
         //showText();
 
-        
+
         $(this).html($("#message").val())
-         
+
           //Apply marquee plugin again
           .marquee({
             duration: 13000,

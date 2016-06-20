@@ -1,0 +1,67 @@
+<script>
+      // where our WebSockets logic will go later
+      var socket, host;
+      host = "ws://<%= Socket.ip_address_list[1].ip_address.to_s %>:3005";
+
+      function connect() {
+        try {
+          socket = new WebSocket(host);
+
+          //addMessage("Socket State: " + socket.readyState);
+
+          socket.onopen = function() {
+            //addMessage("Socket Status: " + socket.readyState + " (open)");
+            cek("Run");
+          }
+
+          socket.onclose = function() {
+            cek("Disconnected");
+          }
+
+          socket.onmessage = function(msg) {
+          	id = msg.data.split("_")[1];
+          	data = msg.data.split("_")[0];
+            status(data,id);
+          }
+        } catch(exception) {
+          status(exception);
+        }
+      }
+
+      function cek(msg){
+
+        if(msg == 'Run'){
+          clearTimeout(time);
+        }else {
+          var time = setTimeout(function(){
+             window.location.reload(1);
+          }, 1000);
+        }
+
+      }
+
+      function status(data,id){
+      	if(data == "on"){
+      		$("#"+id).css("background-color","yellow");
+      	}else if(data == "off"){
+      		$("#"+id).css("background-color","white");
+      	}
+      }
+
+      function proses(msg) {
+
+        if(msg == "on"){
+        	$("#on").hide();
+        	$("#off").show();
+        }else if(msg == "off"){
+        	$("#on").show();
+        	$("#off").hide();
+        }
+      }
+
+
+      $(function() {
+        connect();
+      });
+
+    </script>
