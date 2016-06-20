@@ -40,9 +40,9 @@
 </div>
 
 <div class="col-md-12" style="text-align:center">
-  <div class="col-md-4"><b><font size=6 color='darkblue'>P/O: </font><font size=6 color='black'><%= begin Line.find(big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.po rescue "" end %></font></b></div>
-  <div class="col-md-4"><b><font size=6  color='darkblue'>MFG No: </font><font size=6 color='black'><%= begin Line.find(big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
-  <div class="col-md-4"><b><font size=6  color='darkblue'>Article: </font><font size=6 color='black'><%= begin Line.find(big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.article rescue "" end %></font></b></div>
+  <div class="col-md-4"><b><font size=6 color='darkblue'>P/O: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.po rescue "" end %></font></b></div>
+  <div class="col-md-4"><b><font size=6  color='darkblue'>MFG No: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
+  <div class="col-md-4"><b><font size=6  color='darkblue'>Article: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.article rescue "" end %></font></b></div>
 </div>
 
 
