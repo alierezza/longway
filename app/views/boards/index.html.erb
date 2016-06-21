@@ -1,7 +1,7 @@
 <%= render 'socket' %>
 
 <div class="row">
-  <div class="col-md-6 header_board"><b><u><%= ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"LongWay Vietnam").foreign_language) %></u></b><h3>VISUAL BOARD</h3></div>
+  <div class="col-md-6 header_board"><b><u><%= ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").try(:foreign_language) || "") %></u></b><h3>VISUAL BOARD</h3></div>
   <div class="col-md-2 header_board">
     <b><div id="clockbox" style="border:2px solid black; text-align:center"></div></b>
   </div>
