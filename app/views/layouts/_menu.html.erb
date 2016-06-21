@@ -76,15 +76,15 @@
 				<li> <%= link_to "Country", countries_path %></li>
 			<% end %>
 
-			<% if can? :defect, current_user %>
+			<% if can? :manage, Defect %>
 				<li> <%= link_to "Defect", defects_path %></li>
 			<% end %>
 
-			<% if can? :header_board, current_user %>
+			<% if can? :manage, HeaderBoard %>
 				<li> <%= link_to "Header Board", header_boards_path %></li>
 			<% end %>
 
-			<% if can? :working_hour, current_user %>
+			<% if can? :manage, WorkingHour %>
 				<li> <%= link_to "Working Hour", working_hours_path %></li>
 			<% end %>
 

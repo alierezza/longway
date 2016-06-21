@@ -71,6 +71,24 @@
 	</div>
 <% end %>
 
+<% if can? :manage, Defect %>
+	<div class="col-md-4 big_icon">
+		<%= link_to defects_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>  Defect <% end %>
+	</div>
+<% end %>
+
+<% if can? :manage, HeaderBoard %>
+	<div class="col-md-4 big_icon">
+		<%= link_to header_boards_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>  Header Board <% end %>
+	</div>
+<% end %>
+
+<% if can? :manage, WorkingHour %>
+	<div class="col-md-4 big_icon">
+		<%= link_to working_hours_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-scale" aria-hidden="true"></span>  Working Hour <% end %>
+	</div>
+<% end %>
+
 <% if can? :manage, Language %>
 	<div class="col-md-4 big_icon">
 		<%= link_to languages_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>  Language <% end %>
