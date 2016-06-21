@@ -35,7 +35,17 @@ ActiveRecord::Base.transaction do
   end
 
   ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].each do |day|
-    WorkingDay.create(name: day)
+    working_day = WorkingDay.create(name: day)
+    [["07:30", "08:30"], ["08:30", "09:30"], ["09:30", "10:30"], ["10:30", "11:30"],
+    ["12:30", "13:30"], ["13:30", "14:30"], ["14:30", "15:30"], ["15:30", "16:30"]].each do |hour|
+      working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Work")
+    end
+    [["11:30", "12:30"], ["16:30", "17:00"]].each do |hour|
+      working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Break")
+    end
+    [["17:00", "18:00"], ["18:00", "19:00"], ["19:00", "20:00"]].each do |hour|
+      working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Overtime")
+    end
   end
 end
 
@@ -43,3 +53,5 @@ Language.create(:message=>"Logout",:description=>"Showing on Tablet",:foreign_la
 Language.create(:message=>"Dont Forget To Logout Before Leaving",:description=>"Showing on Tablet",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
 Language.create(:message=>"Enter Correct Article Code",:description=>"Showing on Tablet",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
 Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"LONGWAY VIETNAM")
+
+

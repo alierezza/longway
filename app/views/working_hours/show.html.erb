@@ -16,7 +16,12 @@
       </thead>
       <tbody>
         <% @working_day.working_hours.order('id asc').each_with_index do |working_hour, index| %>
-          <tr>
+          <% if working_hour.working_state == "Break" %>
+            <% class_name = "danger" %>
+          <% elsif working_hour.working_state == "Overtime" %>
+            <% class_name = "warning" %>
+          <% end %>
+          <tr  class="<%= class_name %>">
             <td><%= working_hour.start %></td>
             <td><%= working_hour.end %></td>
             <td><%= working_hour.working_state %></td>

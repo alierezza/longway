@@ -1,9 +1,11 @@
 <div class='panel-body'>
   <%= form_for([@working_day, @working_hour]) do |f| %>
+    <h3><%= @working_day.name %></h3>
+
     <div class='form-group'>
         <label class='control-label'>Start</label>
         <div class='input-group date' id='datetimepicker1'>
-            <%= f.text_field :start, "data-rule-required"=>true, :Class=>"form-control", onkeydown: "return false", required: true %>
+            <%= f.text_field :start, "data-rule-required"=>true, :Class=>"form-control", onkeydown: "return false", required: true, autocomplete: "off" %>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -13,7 +15,7 @@
     <div class='form-group'>
         <label class='control-label'>End</label>
         <div class='input-group date' id='datetimepicker2'>
-            <%= f.text_field :end, "data-rule-required"=>true, :Class=>"form-control", onkeydown: "return false", required: true %>
+            <%= f.text_field :end, "data-rule-required"=>true, :Class=>"form-control", onkeydown: "return false", required: true, autocomplete: "off" %>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -38,10 +40,10 @@
 <script>
   $(document).ready(function(){
     $('#datetimepicker1').datetimepicker({
-      format: "HH:mm", showClear: true
+      format: "HH:mm", showClear: true, stepping: 30
     });
     $('#datetimepicker2').datetimepicker({
-      format: "HH:mm", showClear: true
+      format: "HH:mm", showClear: true, stepping: 30
     });
   });
 

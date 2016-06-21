@@ -36,6 +36,7 @@ class WorkingHoursController < ApplicationController
         format.html { redirect_to working_hour_url(@working_day), notice: 'Working hour was successfully created.' }
         format.json { render :show, status: :created, location: @working_hour }
       else
+        flash.now.alert = @working_hour.errors.full_messages.to_sentence
         format.html { render :new }
         format.json { render json: @working_hour.errors, status: :unprocessable_entity }
       end
@@ -50,6 +51,7 @@ class WorkingHoursController < ApplicationController
         format.html { redirect_to working_hour_url(@working_day), notice: 'Working hour was successfully updated.' }
         format.json { render :show, status: :ok, location: @working_hour }
       else
+        flash.now.alert = @working_hour.errors.full_messages.to_sentence
         format.html { render :edit }
         format.json { render json: @working_hour.errors, status: :unprocessable_entity }
       end
