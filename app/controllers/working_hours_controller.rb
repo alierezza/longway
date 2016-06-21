@@ -1,5 +1,5 @@
 class WorkingHoursController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: :show
   before_action :set_working_hour, only: [:edit, :update, :destroy]
 
   # GET /working_hours
@@ -12,6 +12,7 @@ class WorkingHoursController < ApplicationController
   # GET /working_hours/1.json
   def show
     @working_day = WorkingDay.find(params[:id])
+    authorize! :show, @working_day
   end
 
   # GET /working_hours/new
