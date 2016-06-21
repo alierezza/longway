@@ -56,6 +56,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem 'ranked-model'
   gem 'momentjs-rails', '>= 2.9.0'
   gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+  gem 'bootstrap-wysihtml5-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

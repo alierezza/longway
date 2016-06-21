@@ -51,6 +51,9 @@ class Ability
             can :manage, Category
             can :manage, Defect
             can :manage, HeaderBoard
+            can :manage, WorkingDay
+            can :manage, WorkingHour
+            can :manage, Language
         end
 
 

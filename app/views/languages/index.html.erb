@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Listing Languages</h3>
+  </div>
+  <div class="panel-body">
+    <!-- <div class="form-group">
+      <%#= link_to new_language_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Language <%# end %>
+    </div> -->
+    <table class="table table-stripped table-bordered">
+      <thead>
+        <th>Message</th>
+        <th>Foreign language</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% @languages.each do |language| %>
+          <tr>
+            <td><%= language.message.html_safe %></td>
+            <td><%= language.foreign_language.html_safe %></td>
+            <td><%= link_to 'Edit', edit_language_path(language),:class=>"btn btn-xs btn-default" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<%#= link_to 'New Language', new_language_path %>

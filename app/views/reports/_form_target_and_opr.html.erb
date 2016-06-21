@@ -18,9 +18,9 @@
     <div class='col-xs-10'>
       <%= detailreport.text_field :article, :required=>true, class: 'form-control', :style=>"text-transform:uppercase"  %>
       <% if @report.errors.messages != {} %>
-        <font color=red><b>Masukan Article Code dengan benar</b></font>
+        <%= Language.find_by(:message=>"Enter Correct Article Code").foreign_language.html_safe %>
       <% else %>
-        <%= Article.find_by(:name=>detailreport.object.article) != nil ? "<b>SMV : ".html_safe + Article.find_by(:name=>detailreport.object.article).duration.to_s + " Minutes</b>".html_safe : "<font color=red><b>Masukan Article Code dengan benar</b></font>".html_safe %>
+        <%= Article.find_by(:name=>detailreport.object.article) != nil ? "<b>SMV : ".html_safe + Article.find_by(:name=>detailreport.object.article).duration.to_s + " Minutes</b>".html_safe : Language.find_by(:message=>"Enter Correct Article Code").foreign_language.html_safe %>
       <% end %>
     </div>
   </div>

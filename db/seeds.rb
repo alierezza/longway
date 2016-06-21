@@ -26,7 +26,7 @@ ActiveRecord::Base.transaction do
   (6..spreadsheet.last_row).each do |i|
 
   	row = spreadsheet.row(i)
-  	Article.create!(:session=>row[0] ,:name=>row[1],:duration=>row[2].round(2))
+  	Article.create(:session=>row[0] ,:name=>row[1],:duration=>row[2].round(2))
 
   end
 
@@ -38,3 +38,7 @@ ActiveRecord::Base.transaction do
     WorkingDay.create(name: day)
   end
 end
+
+Language.create(:message=>"Logout",:foreign_language=>"Logout")
+Language.create(:message=>"Dont Forget To Logout Before Leaving",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
+Language.create(:message=>"Enter Correct Article Code",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
