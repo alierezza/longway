@@ -19,7 +19,7 @@
 				<% if header.name.upcase == "DEFECT" %>
 					<th colspan=2><%= header.name.upcase %></th>
 				<% else %>
-					<th rowspan=2><%= header.name.upcase %></th>
+					<th rowspan=2><u><%= header.name.upcase %></u> <br> <%= header.name_vietnam %></th>
 				<% end %>
 			<% end %>
 		</tr>

@@ -30,7 +30,7 @@ ActiveRecord::Base.transaction do
 
   end
 
-  ["LINE", "OPR", "TARGET", "TARGET SUM", "ACT", "ACT SUM", "%", "PPH", "DEFECT", "RFT", "REMARK", "ARTICLE", "EFFICIENT"].each do |header|
+  ["LINE", "OPR", "TRGT", "TRGT SUM", "ACT", "ACT SUM", "%", "PPH", "DEFECT", "RFT", "REMARK", "ARTICLE", "EFFICIENT"].each do |header|
   	HeaderBoard.create(name: header, name_vietnam: "")
   end
 
