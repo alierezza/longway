@@ -52,6 +52,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem 'ajax-datatables-rails', git: 'git://github.com/antillas21/ajax-datatables-rails.git', branch: 'legacy'
   gem 'kaminari'
   gem 'roo', '~> 2.1.0'
+  gem 'bootstrap-wysihtml5-rails'
   
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
