@@ -15,7 +15,8 @@
 //= require jquery-ui/sortable
 //= require jquery-ui/effect-highlight
 //= require bootstrap-switch
-
+//= require moment
+//= require bootstrap-datetimepicker
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require_tree .

@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Working List</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-stripped table-bordered">
+      <thead>
+        <th>Days</th>
+        <th width="1%">Action</th>
+      </thead>
+      <tbody>
+        <% @working_days.order('id asc').each_with_index do |working_day, index| %>
+          <tr>
+            <td><%= working_day.name %></td>
+            <td>
+              <%= link_to "Set Working Hours", working_hour_path(working_day), :class=>"btn btn-xs btn-primary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

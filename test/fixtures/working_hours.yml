@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  working_day_id: 
+  start: MyString
+  end: MyString
+  working_state: MyString
+
+two:
+  working_day_id: 
+  start: MyString
+  end: MyString
+  working_state: MyString

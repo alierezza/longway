@@ -33,4 +33,8 @@ ActiveRecord::Base.transaction do
   ["LINE", "OPR", "TARGET", "TARGET SUM", "ACT", "ACT SUM", "%", "PPH", "DEFECT", "RFT", "REMARK", "ARTICLE", "EFFICIENT"].each do |header|
   	HeaderBoard.create(name: header, name_vietnam: "")
   end
+
+  ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].each do |day|
+    WorkingDay.create(name: day)
+  end
 end
