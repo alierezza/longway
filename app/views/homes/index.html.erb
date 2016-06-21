@@ -70,3 +70,9 @@
 		<%= link_to categories_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-book" aria-hidden="true"></span>  Category <% end %>
 	</div>
 <% end %>
+
+<% if can? :manage, Language %>
+	<div class="col-md-4 big_icon">
+		<%= link_to languages_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>  Language <% end %>
+	</div>
+<% end %>

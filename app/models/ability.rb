@@ -49,6 +49,7 @@ class Ability
             can :manage, Article
             can :manage, Country
             can :manage, Category
+            can :manage, Language
         end
             
 

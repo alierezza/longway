@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620111834) do
+ActiveRecord::Schema.define(version: 20160621021622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,13 @@ ActiveRecord::Schema.define(version: 20160620111834) do
     t.string   "banner_content_type"
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.text     "message"
+    t.text     "foreign_language"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "lines", force: :cascade do |t|
