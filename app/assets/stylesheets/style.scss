@@ -154,7 +154,7 @@ button#connect {
     font-size: 30px;
     font-weight: bold;
     td {
-      padding: 15px;
+      padding: 0px 10px 0px 10px;
     }
   }
 }
@@ -623,4 +623,9 @@ div[id^='target_']{
     width: 300px;
     height: 200px;
   }
+}
+
+.visual-board {
+  font-size: 40px;
+  font-weight: 700;
 }

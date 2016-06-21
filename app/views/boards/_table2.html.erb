@@ -2,19 +2,26 @@
 <table class="table table-bordered table-stripped">
 	<thead>
 		<tr>
-			<th rowspan=2 width="7%">LINE<br>(9-17)</th>
+<!-- 			<th rowspan=2 width="7%">LINE<br>(9-17)</th>
 			<th rowspan=2>OPR</th>
 			<th rowspan=2 width="7%">TARGET</th>
 			<th rowspan=2>SUM</th>
 			<th rowspan=2>ACT</th>
 			<th rowspan=2>SUM</th>
 			<th rowspan=2 width="7%">%</th>
-			<th rowspan=2>PPH</th>
+			<th rowspan=2>PPH</th> -->
 			<!-- <th rowspan=2 width="1%">EFCY</th> -->
-			<th colspan=2>DEFECT</th>
+<!-- 			<th colspan=2>DEFECT</th>
 			<th rowspan=2>RFT</th>
 			<th rowspan=2 width="25%">REMARK</th>
-			<th rowspan=2 width="1%">ARTICLE</th>
+			<th rowspan=2 width="1%">ARTICLE</th> -->
+			<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>
+				<% if header.name.upcase == "DEFECT" %>
+					<th colspan=2><%= header.name.upcase %></th>
+				<% else %>
+					<th rowspan=2><%= header.name.upcase %></th>
+				<% end %>
+			<% end %>
 		</tr>
 		<tr>
 			<th>INT</th>
@@ -25,26 +32,29 @@
 		<% @boards.where("no > 8 and no <= 17").order("no").each_with_index do |board,line| %>
 			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
 				<tr>
-					<td><b><font size="6"><%= report.line.nama %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.last.opr %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.last.target %></font></b></td>
-					<td><b><font size="6"><%= report.detailreports.sum("target") %></font></b></td>
+					<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>
+						<%= board_details(header.name, report) %>
+					<% end %>
+					<!-- <td><b><font size="6"><%#= report.line.nama %></font></b></td>
+					<td><b><font size="6"><%#= report.detailreports.last.opr %></font></b></td>
+					<td><b><font size="6"><%#= report.detailreports.last.target %></font></b></td>
+					<td><b><font size="6"><%#= report.detailreports.sum("target") %></font></b></td>
 					<td>
 						<b>
-							<% if report.detailreports.last.act < report.detailreports.last.target %>
+							<%# if report.detailreports.last.act < report.detailreports.last.target %>
 								<font size="6" color=red>
-									<%= report.detailreports.last.act %>
+									<%#= report.detailreports.last.act %>
 								</font>
-							<% else %>
+							<%# else %>
 								<font size="6">
-									<%= report.detailreports.last.act %>
+									<%#= report.detailreports.last.act %>
 								</font>
-							<% end %>
+							<%# end %>
 						</b>
 					</td>
-					<td><b><font size="6"><%= report.detailreports.sum("act") %></font></b></td>
-					<td><b><font size="6"><%= Report.percent(report, report.detailreports.last.jam) %></font></b></td>
-					<td><b><font size="6"><%= Report.pph(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%#= report.detailreports.sum("act") %></font></b></td>
+					<td><b><font size="6"><%#= Report.percent(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%#= Report.pph(report, report.detailreports.last.jam) %></font></b></td>
 					<!-- efficiency -->
 					<!-- <td>
 						<b>
@@ -53,11 +63,11 @@
 							</font>
 						</b>
 					</td> -->
-					<td><b><font size="6"><%= Report.total_defect_int(report, report.detailreports.last.jam) %></font></b></td>
-					<td><b><font size="6"><%= Report.total_defect_ext(report, report.detailreports.last.jam) %></font></b></td>
-					<td><b><font size="6"><%= Report.rft(report, report.detailreports.last.jam) %></font></b></td>
-					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.remark %></font></b></td>
-					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%= report.detailreports.last.detailreportarticles.last.article %></font></b></td>
+					<!-- <td><b><font size="6"><%#= Report.total_defect_int(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%#= Report.total_defect_ext(report, report.detailreports.last.jam) %></font></b></td>
+					<td><b><font size="6"><%#= Report.rft(report, report.detailreports.last.jam) %></font></b></td>
+					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%#= report.detailreports.last.remark %></font></b></td>
+					<td style="line-height:60%"><b><font size="3" style="line-height:5%"><%#= report.detailreports.last.detailreportarticles.last.article %></font></b></td> -->
 				</tr>
 			<% end %>
 		<% end %>

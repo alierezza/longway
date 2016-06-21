@@ -3,9 +3,9 @@
     <div class='form-group'>
         <label class='control-label'>Machine Number</label>
         <% if params[:action] == "edit" || params[:action] == "update" %>
-          <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", disabled: true, :min=>1, :max=>17 %>
+          <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", disabled: true, :min=>1, :max=>18 %>
         <% else %>
-          <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1, :max=>17 %>
+          <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1, :max=>18 %>
         <% end %>
     </div>
 

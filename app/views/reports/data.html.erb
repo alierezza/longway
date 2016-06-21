@@ -12,7 +12,12 @@
 
 			<div class="form-group">
 				<%= label_tag :date, "Date", class: "control-label" %>
-				<%= date_field_tag :tanggal, nil, :required=>true, class: "form-control" %>
+		        <div class='input-group date' id='datetimepicker1'>
+		            <%= text_field_tag :tanggal, nil, :Class=>"form-control", onkeydown: "return false", required: true %>
+		            <span class="input-group-addon">
+		                <span class="glyphicon glyphicon-calendar"></span>
+		            </span>
+		        </div>
 			</div>
 
 
@@ -27,3 +32,11 @@
 
 	</div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('#datetimepicker1').datetimepicker({
+      format: "DD/MM/YYYY", showClear: true, showTodayButton: true
+    });
+  });
+</script>
