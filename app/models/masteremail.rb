@@ -14,7 +14,7 @@ class Masteremail < ActiveRecord::Base
 	    baris = 0
 	    Line.all.where("visible=?",true).order("no").each_with_index do |board,index|
 
-	    	sheet1.row(baris = baris +2).push "Line No: #{board.no}"
+	    	sheet1.row(baris = baris +2).push "Line : #{board.nama}"
 
 	    	if board.reports.where("tanggal=?",tanggal).count == 0
 	    		sheet1.row(baris = baris + 1).push "Empty"

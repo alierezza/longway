@@ -4,7 +4,7 @@ module ApplicationHelper
 
 		case header.upcase
 		when "LINE"
-			return (template % ["", "6", "L. #{report.line.no}"]).html_safe
+			return (template % ["", "6", "#{report.line.nama}"]).html_safe
 		when "OPR"
 			return (template % ["", "6", "#{report.detailreports.last.opr}"]).html_safe
 		when "TARGET"

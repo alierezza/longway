@@ -35,7 +35,7 @@
 					<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>
 						<%= board_details(header.name, report) %>
 					<% end %>
-					<!-- <td><b><font size="6">L. <%#= report.line.no %></font></b></td>
+					<!-- <td><b><font size="6"><%#= report.line.nama %></font></b></td>
 					<td><b><font size="6"><%#= report.detailreports.last.opr %></font></b></td>
 					<td><b><font size="6"><%#= report.detailreports.last.target %></font></b></td>
 					<td><b><font size="6"><%#= report.detailreports.sum("target") %></font></b></td>
