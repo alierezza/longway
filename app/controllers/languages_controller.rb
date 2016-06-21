@@ -4,7 +4,7 @@ class LanguagesController < ApplicationController
   # GET /languages
   # GET /languages.json
   def index
-    @languages = Language.all
+    @languages = Language.all.order(:id)
   end
 
   # GET /languages/1

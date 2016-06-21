@@ -108,7 +108,7 @@ class Masteremail < ActiveRecord::Base
 
 
 
-						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, article_detail.html_safe , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,Report.total_defect_int(detailreport.report, detailreport.jam),detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,Report.total_defect_ext(detailreport.report, detailreport.jam), rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg, detailreport.category, detailreport.country]
+						sheet1.row(baris = baris+1).replace [detailreport.jam,detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,Report.total_defect_int(detailreport.report, detailreport.jam),detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,Report.total_defect_ext(detailreport.report, detailreport.jam), rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg, detailreport.category, detailreport.country]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
@@ -130,7 +130,7 @@ class Masteremail < ActiveRecord::Base
 				end
 			end
 		end
-		path = "#{Rails.root}/data/Report_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"
+		path = "#{Rails.root}/data/#{ ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language) }_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"
 		book.write path
 
 		return path

@@ -3,73 +3,7 @@
 <head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></head>
 <body>
 
-	Please Find attached file as final production on (<%= tanggal.strftime("%d %B %Y") %>) taken at 8:00 PM
+	Please Find attached file as final production on (<%= tanggal.strftime("%d %B %Y") %>) taken at 9:00 PM
 
-	<br><br>
-<!-- 
-	<%# Line.all.where("visible=?",true).order("no").each_with_index do |board,line| %>
-		<br><br>
-		<div id="board" align="center">
-
-		<b>Line No :</b> <%#= board.no %><br>
-		<%# if board.reports.where("tanggal=?",Date.today).count == 0 %>
-			Empty
-		<%# else %>
-			<%# board.reports.where("tanggal=?",Date.today).all.each_with_index do |report,index| %>
-			
-
-				<table border=1 bgcolor="transparent">
-					<thead style="background-color: darkblue" bgcolor="darkblue">
-					<tr style=""  bgcolor="darkblue">
-						<th rowspan="2" align="center" bgcolor="darkblue" valign="bottom" style="color:white">JAM</th>
-						<th rowspan="2" align="center" bgcolor="darkblue" valign="bottom" style="color:white">OPR</th>
-						<th rowspan="2" align="center" bgcolor="darkblue" valign="bottom" style="color:white">TARGET</th>
-						<th rowspan="2" align="center" bgcolor="darkblue" valign="bottom" style="color:white">TARGET (SUM)</th>
-						<th rowspan="2" bgcolor="darkblue" valign="bottom" style="color:white">ACT</th>
-						<th rowspan="2" bgcolor="darkblue" valign="bottom" style="color:white">ACT (SUM)</th>
-						<th rowspan="2" bgcolor="darkblue" align="center" valign="bottom" width="7%" style="color:white">%</th>
-						<th rowspan="2" align="center" bgcolor="darkblue" valign="bottom" style="color:white">PPH</th>
-						<th colspan="4" align="center" bgcolor="darkblue" valign="bottom" style="color:white">DEFECT</th>
-						<th rowspan="2" align="center" bgcolor="darkblue" valign="bottom" style="color:white">RFT</th>
-						<th rowspan="2" width="25%" style="color:white" align="center" bgcolor="darkblue" valign="bottom" >REMARK</th>
-					</tr>
-					<tr style="" bgcolor="darkblue">
-						<th style="color:white" align="center" bgcolor="darkblue" valign="bottom">INT</th>
-						<th style="color:white" align="center" bgcolor="darkblue" valign="bottom">INT (SUM)</th>
-						<th style="color:white" align="center" bgcolor="darkblue" valign="bottom">EXT</th>
-						<th style="color:white" align="center" bgcolor="darkblue" valign="bottom">EXT (SUM)</th>
-					</tr>
-					</thead>
-					<tbody>
-						<%# sum_target = 0 %><%# sum_act = 0 %><%# sum_defect_int = 0 %><%# sum_defect_ext = 0 %>
-						<%# report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index| %>
-							<%# sum_target += detailreport.target.to_i  %>
-							<%# sum_act += detailreport.act.to_i  %>
-							<%# sum_defect_int += detailreport.defect_int.to_i  %>
-							<%# sum_defect_ext += detailreport.defect_ext.to_i  %>
-
-							<tr>
-								<td valign="top"><%#= detailreport.jam %></td>
-								<td valign="top"><%#= detailreport.opr %></td>
-								<td valign="top"><%#= detailreport.target %></td>
-								<td valign="top"><%#= sum_target %></td>
-								<td valign="top"><%#= detailreport.act %></td>
-								<td valign="top"><%#= sum_act %></td>
-								<td valign="top"><%#= detailreport.percent.to_i %> %</td>
-								<td valign="top"><%#= detailreport.pph %></td>
-								<td valign="top"><%#= detailreport.defect_int %></td>
-								<td valign="top"><%#= sum_defect_int %></td>
-								<td valign="top"><%#= detailreport.defect_ext %></td>
-								<td valign="top"><%#= sum_defect_ext %></td>
-								<td valign="top"><%#= detailreport.rft.to_i %> %</td>
-								<td valign="top"><%#= detailreport.remark %></td>
-							</tr>
-						<%# end %>
-					</tbody>
-				</table>
-			<%# end %>
-		<%# end %>
-		</div>
-	<%# end %> -->
 </body>
 </html>

@@ -39,6 +39,7 @@ ActiveRecord::Base.transaction do
   end
 end
 
-Language.create(:message=>"Logout",:foreign_language=>"Logout")
-Language.create(:message=>"Dont Forget To Logout Before Leaving",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
-Language.create(:message=>"Enter Correct Article Code",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
+Language.create(:message=>"Logout",:description=>"Showing on Tablet",:foreign_language=>"Logout")
+Language.create(:message=>"Dont Forget To Logout Before Leaving",:description=>"Showing on Tablet",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
+Language.create(:message=>"Enter Correct Article Code",:description=>"Showing on Tablet",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
+Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"LongWay Vietnam")

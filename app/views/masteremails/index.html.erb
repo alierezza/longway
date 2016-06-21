@@ -14,7 +14,12 @@
 					<%= form_tag masteremails_path, :method=>"GET" do %>
 					<div class="form-group">
 						<%= label_tag :tanggal, "Choose Date", class: "control-label" %>
-						<%= date_field_tag :tanggal, nil, :required=>true, class: "form-control" %>
+						<div class='input-group date' id='datetimepicker1'>
+				            <%= text_field_tag :tanggal, nil, :Class=>"form-control", onkeydown: "return false", required: true %>
+				            <span class="input-group-addon">
+				                <span class="glyphicon glyphicon-calendar"></span>
+				            </span>
+				        </div>
 					</div>
 						<%= submit_tag "Send Email", :name=>"send_email", class: "btn btn-default" %>
 						<%= submit_tag "Download Excel",:name=>"download_excel", class: "btn btn-info pull-right" %>
@@ -43,3 +48,11 @@
 		</table>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('#datetimepicker1').datetimepicker({
+      format: "DD/MM/YYYY", showClear: true, showTodayButton: true
+    });
+  });
+</script>
