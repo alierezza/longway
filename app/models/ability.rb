@@ -54,7 +54,7 @@ class Ability
 
     elsif user.role == "User"
         can :manage, Home
-        can :manage, Line #master 
+        #can :manage, Line #master 
 
         can :manage, Report do |report|
             if report.line != nil

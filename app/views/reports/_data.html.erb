@@ -1,5 +1,5 @@
 <% if params[:search] and @data != [] %>
-	<b>Line No :</b> <%= @data.first.line.no %><br>
+	<b>Line :</b> <%= @data.first.line.nama %><br>
 	<b>Tanggal :</b> <%= @data.first.tanggal.strftime("%d %B %Y") %><br><br>
 	<table class="table table-bordered table-stripped" id="data">
 		<thead>
