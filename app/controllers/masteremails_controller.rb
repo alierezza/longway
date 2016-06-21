@@ -28,7 +28,7 @@ class MasteremailsController < ApplicationController
 					flash[:alert] = "Data empty"
 				else
 					path = Masteremail.generate_excel(params[:tanggal].to_date)
-					send_file path, :type => "application/vnd.ms-excel", :filename => "LongWay_Report_#{params[:tanggal].to_date.strftime("%d-%B-%Y")}.xls", :stream => false
+					send_file path, :type => "application/vnd.ms-excel", :filename => "#{ ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language) }_#{params[:tanggal].to_date.strftime("%d-%B-%Y")}.xls", :stream => false
 
 					#FileUtils.rm(path)
 				end

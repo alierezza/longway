@@ -16,8 +16,8 @@ class UserMailer < ApplicationMailer
 
   		path = Masteremail.generate_excel(tanggal.to_date)
 
-	    attachments["LongWay_Report_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"] = File.read(path)
-	    mail(to: @send_to, subject: "[Long Way Vietnam] Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
+	    attachments["#{ ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language) }_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"] = File.read(path)
+	    mail(to: @send_to, subject: "[#{ ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language) }] Daily Production Report (#{tanggal.to_date.strftime('%d %B %Y')})") do |format|
         format.html{
           render locals: {tanggal: tanggal.to_date}
         }

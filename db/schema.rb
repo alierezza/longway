@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20160621021622) do
 
   create_table "languages", force: :cascade do |t|
     t.text     "message"
+    t.text     "description"
     t.text     "foreign_language"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false

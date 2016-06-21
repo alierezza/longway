@@ -9,6 +9,7 @@
     <table class="table table-stripped table-bordered">
       <thead>
         <th>Message</th>
+        <th>Description</th>
         <th>Foreign language</th>
         <th>Action</th>
       </thead>
@@ -16,6 +17,7 @@
         <% @languages.each do |language| %>
           <tr>
             <td><%= language.message.html_safe %></td>
+            <td><%= language.description %></td>
             <td><%= language.foreign_language.html_safe %></td>
             <td><%= link_to 'Edit', edit_language_path(language),:class=>"btn btn-xs btn-default" %></td>
           </tr>
