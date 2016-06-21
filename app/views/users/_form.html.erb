@@ -19,7 +19,7 @@
         <% if params[:action] == "new" or params[:action] == "create" or ( params[:reset_password] == "true" and (params[:action] == "edit" or params[:action] == "update" ) ) %>
             <div class='form-group'>
                 <label class='control-label'>Passowrd</label>
-                <font size=2s color=red>minimal 8 karakter</font>
+                <font size=2s color=red>Minimal 8 Characters</font>
                 <%= f.password_field :password, :Class=>"form-control", required: true %>
                 <%= hidden_field_tag :status, "reset" %>
             </div>
