@@ -1,13 +1,17 @@
 <div class='panel-body'>
   <%= form_for(@line) do |f| %>
     <div class='form-group'>
-        <label class='control-label'>Nomor mesin</label>
-        <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1, :max=>17 %>
+        <label class='control-label'>Machine Number</label>
+        <% if params[:action] == "edit" || params[:action] == "update" %>
+          <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", disabled: true, :min=>1, :max=>17 %>
+        <% else %>
+          <%= f.number_field :no, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1, :max=>17 %>
+        <% end %>
     </div>
 
     <div class='form-group'>
-        <label class='control-label'>Nama Mesin</label>
-        <%= f.text_field :nama, "data-rule-required"=>true, :Class=>"form-control", required: true %>
+        <label class='control-label'>Machine Name <font color=red>(allow A-Z,a-z,1-9 with max 7 chacters)</font></label>
+        <%= f.text_field :nama, "data-rule-required"=>true, :Class=>"form-control", :pattern=>"[A-Za-z0-9. ]{1,7}", required: true %>
     </div>
 
     <div class='form-group'>
