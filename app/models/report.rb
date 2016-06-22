@@ -17,11 +17,12 @@ class Report < ActiveRecord::Base
 		WorkingDay.find_by(:name=>report).working_hours.where.not(:working_state=>"Break").each do |master_hour|
 		
 			if hour.to_time.between?(master_hour.start.to_time,master_hour.end.to_time-1)
-				return [true,master_hour.start]
+				return [true,master_hour.start,master_hour.end]
 				break
 			end
 		end
-		return [false,"23:59"]
+	
+		return [false,"23:59","23:59"]
 	end
 
 
@@ -68,11 +69,15 @@ class Report < ActiveRecord::Base
 						article = Article.find_by_name(data[0])
 						article_x_duration.push(  data[2] * article.duration )
 
-						minutes = WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where.not(:working_state=>"Break").where(:start=>hour).map{|i|  (i.end.to_time-i.start.to_time )/ 60}.first.to_i
-						total_working_time.push(  minutes ) 
+						#minutes = WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where.not(:working_state=>"Break").where(:start=>hour).map{|i|  (i.end.to_time-i.start.to_time )/ 60}.first.to_i
+						
 					end
 				end 
 			end
+
+			minutes = (detailreport.jam_end.to_time - detailreport.jam.to_time )/60
+			total_working_time.push(  minutes ) 
+
 		end
 		return [article_x_duration,total_working_time]
 	end
@@ -107,7 +112,7 @@ class Report < ActiveRecord::Base
 
 	def self.pph(report,hour)
 		begin
-			total_working_time = Report.total_working_time_in_minutes(report,hour)
+			total_working_time = Report.article_x_duration_dibagi_total_working_time(report,hour)[1]
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
 				return (report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(report,hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
@@ -191,7 +196,7 @@ class Report < ActiveRecord::Base
 			return false
 		end
 
-			user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create(:jam=>hour, :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
+			user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
 			return true
 		
 	end
@@ -209,7 +214,7 @@ class Report < ActiveRecord::Base
 
 					hour = Report.check_working_hour
 
-					report.detailreports.create!(:jam=>hour, :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
+					report.detailreports.create!(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
 					
 					puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				end
@@ -226,7 +231,7 @@ class Report < ActiveRecord::Base
 		WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.each_with_index do |hour, index|
 		
 			if Time.now.between?(hour.start.to_time,hour.end.to_time-1) 
-				return hour.start
+				return [hour.start,hour.end]
 				break
 			end
 		end

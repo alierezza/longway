@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621123037) do
+ActiveRecord::Schema.define(version: 20160623022350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20160621123037) do
     t.integer  "defect_ext_bs17", default: 0
     t.string   "country",                       null: false
     t.string   "category",                      null: false
+    t.string   "jam_end"
   end
 
   add_index "detailreports", ["report_id", "jam"], name: "index_detailreports_on_report_id_and_jam", unique: true, using: :btree

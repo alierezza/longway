@@ -34,6 +34,7 @@ class WorkingHour < ActiveRecord::Base
 
 	def end_must_be_before_start_time
 		self.working_day.working_hours.where.not(id: nil).each do |hour|
+      binding.pry
     	if self.end.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
     		errors.add(:base, 'Wrong start and end time 3.')
     		break

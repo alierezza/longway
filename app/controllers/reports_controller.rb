@@ -49,10 +49,12 @@ class ReportsController < ApplicationController
 	def create #first time when line baru dipake pada hari tsb
 		#if Time.now.strftime("%H").to_i != 12 
 
-		if Report.if_not_breaking_time(nil,Time.now.strftime("%H:%M"))[0]
-			params[:report][:tanggal] = Date.today
-			params[:report][:detailreports_attributes]["0"][:jam] = Report.if_not_breaking_time(nil,Time.now.strftime("%H:%M"))[1]
+		if_not_breaking_time = Report.if_not_breaking_time(nil,Time.now.strftime("%H:%M"))
 
+		if if_not_breaking_time[0]
+			params[:report][:tanggal] = Date.today
+			params[:report][:detailreports_attributes]["0"][:jam] = if_not_breaking_time[1]
+			params[:report][:detailreports_attributes]["0"][:jam_end] = if_not_breaking_time[2]
 
 			@report = current_user.line.reports.new(my_sanitizer)
 		    @status = @report.save

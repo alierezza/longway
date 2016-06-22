@@ -9,6 +9,9 @@ class Detailreport < ActiveRecord::Base
 	validates :article, presence: true, on: :create
 	validates :opr, presence: true, on: :create
 
+	validates :jam, presence: true
+	validates :jam_end, presence: true
+
 
 	 validate :check_article
 
