@@ -47,11 +47,19 @@ ActiveRecord::Base.transaction do
       working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Overtime")
     end
   end
+
+
+
+  Language.create(:message=>"Logout",:description=>"Showing on Tablet",:foreign_language=>"Logout")
+  Language.create(:message=>"Dont Forget To Logout Before Leaving",:description=>"Showing on Tablet",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
+  Language.create(:message=>"Enter Correct Article Code",:description=>"Showing on Tablet",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
+  Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"LONGWAY VIETNAM")
+  Language.create(:message=>"Machine Problem",:description=>"Showing on Tablet", :foreign_language=>"Machine Problem")
+
+
+
+  
 end
 
-Language.create(:message=>"Logout",:description=>"Showing on Tablet",:foreign_language=>"Logout")
-Language.create(:message=>"Dont Forget To Logout Before Leaving",:description=>"Showing on Tablet",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
-Language.create(:message=>"Enter Correct Article Code",:description=>"Showing on Tablet",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
-Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"LONGWAY VIETNAM")
 
 
