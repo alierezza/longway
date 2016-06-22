@@ -21,7 +21,7 @@ class Report < ActiveRecord::Base
 				break
 			end
 		end
-		return [false,nil]
+		return [false,"23:59"]
 	end
 
 

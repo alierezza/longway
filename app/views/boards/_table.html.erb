@@ -29,7 +29,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.where("no >= 1 and no <= 8").order("no").each_with_index do |line,index| %>
+		<% @boards.where("no >= 1 and no <= 9").order("no").each_with_index do |line,index| %>
 			<% line.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
 				<tr id="<%= line.id %>" style="<%= line.status == false ? 'background-color:yellow' : 'background-color:white' %>">
 					<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>

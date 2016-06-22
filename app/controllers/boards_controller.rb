@@ -32,6 +32,7 @@ class BoardsController < ApplicationController
 			sum_def_ext = 0
 
 			arr_line = []
+	
 			arr_target = []
 			arr_act = []
 			arr_def_int = []
@@ -39,17 +40,20 @@ class BoardsController < ApplicationController
 
 			arr_empty = []
 
+			arr_target.push(0)
+			arr_act.push(0)
+
 
 			report = line.reports.find_by("tanggal = ?",DateTime.now.to_date) # <--------------------- uncomment
 			#reports = lines.reports.find_by("tanggal = ?","2015-08-13".to_date)
 
 				if report.present?
-					14.times do |jam|
+					WorkingDay.find_by(:name=>Time.now.strftime("%A")).working_hours.pluck(:start).push( ( WorkingDay.find_by(:name=>Time.now.strftime("%A")).working_hours.last.end.to_time + 1.hour ).strftime("%H:%M") ).each do |working_hour|
 						@temp = false # <--------------------- uncomment
-						@jam = jam + 6 # <--------------------- uncomment
+						@jam = working_hour # <--------------------- uncomment
 						report.detailreports.order("created_at ASC").each_with_index do |report,index|
 
-							if report.jam.to_i == @jam # <--------------------- uncomment
+							if report.jam == @jam # <--------------------- uncomment
 
 								sum_target = report.target.to_i
 								sum_act = report.act.to_i
@@ -59,6 +63,7 @@ class BoardsController < ApplicationController
 								# arr_act << report.id.to_s+"-"+sum_act.to_s
 								arr_target << sum_target
 								arr_act << sum_act
+					
 								#arr_def_int << sum_def_int
 								#arr_def_ext << sum_def_ext
 
@@ -66,7 +71,7 @@ class BoardsController < ApplicationController
 							end # <--------------------- uncomment
 
 						end
-						if @temp == false and Time.now.strftime("%H").to_i >= @jam
+						if @temp == false and Report.if_not_breaking_time(report,Time.now.strftime("%H:%M"))[1] >= @jam
 							arr_target << 0
 							arr_act << 0
 							#arr_def_int << 0
@@ -76,6 +81,7 @@ class BoardsController < ApplicationController
 					end # <--------------------- uncomment
 					arr_line << arr_target
 					arr_line << arr_act
+					
 					#arr_line << arr_def_int
 					#arr_line << arr_def_ext
 

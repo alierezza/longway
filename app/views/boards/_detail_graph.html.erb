@@ -51,7 +51,7 @@
 
       <%= "graph_" + big.first.to_s %> = {
           //labels : ["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00", "15:00", "16:00", "17:00", "18:00","19:00","20:00"],
-          labels : <%=raw @working_hour.pluck(:start).push(@working_hour.last.end) %>,
+          labels : <%=raw @working_hour.pluck(:start).push(@working_hour.last.end).push( (@working_hour.last.end.to_time+1.hour ).strftime("%H:%M")) %>,
           datasets : [
             {
               label: "Target",

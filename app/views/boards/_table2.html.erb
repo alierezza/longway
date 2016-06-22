@@ -29,7 +29,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.where("no > 8 and no <= 17").order("no").each_with_index do |board,line| %>
+		<% @boards.where("no > 9 and no <= 18").order("no").each_with_index do |board,line| %>
 			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
 				<tr>
 					<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>
@@ -55,7 +55,7 @@
 					<td><b><font size="6"><%#= report.detailreports.sum("act") %></font></b></td>
 					<td><b><font size="6"><%#= Report.percent(report, report.detailreports.last.jam) %></font></b></td>
 					<td><b><font size="6"><%#= Report.pph(report, report.detailreports.last.jam) %></font></b></td>
-					<!-- efficiency -->
+					efficiency -->
 					<!-- <td>
 						<b>
 							<font size="6">
