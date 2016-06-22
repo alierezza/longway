@@ -21,7 +21,7 @@ class Report < ActiveRecord::Base
 				break
 			end
 		end
-		return [false,"23:59"]
+		return [false,nil]
 	end
 
 
@@ -134,7 +134,7 @@ class Report < ActiveRecord::Base
 
 	def self.article(detailreport)
 		begin
-			if detailreport.detailreportarticles != [] && Report.if_not_breaking_time(report,hour)[0] #detailreport.jam != 12
+			if detailreport.detailreportarticles != [] && Report.if_not_breaking_time(detailreport.report,detailreport.jam)[0] #detailreport.jam != 12
 				return detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join(", <br>").html_safe 
 			else 
 				return '-'
