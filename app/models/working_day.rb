@@ -1,5 +1,5 @@
 class WorkingDay < ActiveRecord::Base
-	has_many :working_hours
+	has_many :working_hours, :dependent=>:destroy
 
 	validates_uniqueness_of :name
 
