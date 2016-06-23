@@ -8,9 +8,9 @@ class Masteremail < ActiveRecord::Base
 
 	    book = Spreadsheet::Workbook.new
 	    sheet1 = book.create_worksheet
-	    sheet1.name = 'LongWay Vietnam Daily Report'
+	    sheet1.name = Language.find_by(:message=>"Company Title").foreign_language+' Daily Report'
 
-	    sheet1.row(0).push "LongWay Vietnam - Production result on #{tanggal.to_date.strftime('%d %B %Y')} taken at 8:00 PM"
+	    sheet1.row(0).push(Language.find_by(:message=>"Company Title").foreign_language+" - Production result on #{tanggal.to_date.strftime('%d %B %Y')} taken at 9:00 PM")
 	    baris = 0
 	    Line.all.where("visible=?",true).order("no").each_with_index do |board,index|
 
