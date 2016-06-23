@@ -37,7 +37,11 @@ module ApplicationHelper
 		end
 	end
 
-	def sum_defect(detailreport)
+	def sum_defect_ext(detailreport)
 		JSON.parse(detailreport.object.defect_ext.to_s).map{ |k,v| v }.sum
+	end
+
+	def sum_defect_int(detailreport)
+		JSON.parse(detailreport.object.defect_int.to_s).map{ |k,v| v }.sum
 	end
 end

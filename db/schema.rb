@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623022350) do
+ActiveRecord::Schema.define(version: 20160623091343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,13 +71,13 @@ ActiveRecord::Schema.define(version: 20160623022350) do
     t.integer  "act",             default: 0
     t.float    "percent",         default: 0.0
     t.float    "pph",             default: 0.0
-    t.integer  "defect_int",      default: 0
-    t.integer  "defect_ext",      default: 0
+    t.string   "defect_int",      default: "{}"
+    t.string   "defect_ext",      default: "{}"
     t.float    "rft",             default: 0.0
     t.text     "remark"
     t.string   "jam"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "article"
     t.string   "po"
     t.string   "mfg"
@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 20160623022350) do
     t.integer  "defect_ext_bs13", default: 0
     t.integer  "defect_ext_bs15", default: 0
     t.integer  "defect_ext_bs17", default: 0
-    t.string   "country",                       null: false
-    t.string   "category",                      null: false
+    t.string   "country",                        null: false
+    t.string   "category",                       null: false
     t.string   "jam_end"
   end
 

@@ -40,7 +40,7 @@
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_int %>
               <div id="defect_int">
-                <%= sum_defect(detailreport) %>
+                <%= sum_defect_int(detailreport) %>
                 <%#= detailreport.object.defect_int + detailreport.object.defect_int_11b + detailreport.object.defect_int_11c + detailreport.object.defect_int_11j + detailreport.object.defect_int_11l + detailreport.object.defect_int_13d %>
               </div>
               <%= hidden_field_tag :status, "int_defect" %>
@@ -87,7 +87,7 @@
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_ext %>
               <div id="defect_ext">
-                <%= sum_defect(detailreport) %>
+                <%= sum_defect_ext(detailreport) %>
                 <%#= detailreport.object.defect_ext + detailreport.object.defect_ext_bs3 + detailreport.object.defect_ext_bs7 + detailreport.object.defect_ext_bs13 + detailreport.object.defect_ext_bs15 + detailreport.object.defect_ext_bs17 %>
               </div>
               <%= hidden_field_tag :status, "ext_defect" %>
