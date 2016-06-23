@@ -3,7 +3,7 @@ class WorkingHour < ActiveRecord::Base
 
   belongs_to :working_day
 
-  validates_uniqueness_of :start, :scope => :end
+  validates_uniqueness_of :start, :scope => [:end,:working_day_id]
   validate :check_validation, :duration, :start_must_be_before_end_time, :end_must_be_before_start_time
 
   def self.state

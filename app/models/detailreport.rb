@@ -69,7 +69,7 @@ class Detailreport < ActiveRecord::Base
 	end
 
 	def self.accumulation_on_that_hour(hour)
-		where("jam <= ?",hour.to_i)
+		where("jam <= ?",hour).where.not(:jam=>WorkingDay.find_by(:name=>Time.now.strftime("%A")).working_hours.where(:working_state=>"Break").pluck(:start))
 	end
 
 	

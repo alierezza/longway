@@ -7,6 +7,25 @@ class Report < ActiveRecord::Base
 
 	accepts_nested_attributes_for :detailreports, allow_destroy: true
 
+
+	def self.if_not_breaking_time(report,hour)
+		if report == nil
+			report = Time.now.strftime("%A")
+		else
+			report = report.tanggal.strftime("%A")
+		end
+		WorkingDay.find_by(:name=>report).working_hours.where.not(:working_state=>"Break").each do |master_hour|
+		
+			if hour.to_time.between?(master_hour.start.to_time,master_hour.end.to_time-1)
+				return [true,master_hour.start]
+				break
+			end
+		end
+		return [false,"23:59"]
+	end
+
+
+
 	#### PERHITUNGAN #########
 
 	def self.total_working_time_in_minutes(report,hour)
@@ -15,18 +34,21 @@ class Report < ActiveRecord::Base
 			if detailreport.detailreportarticles != [] 
 				detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
 				
-					if Article.find_by_name(data[0]) != nil && data[5].strftime("%H").to_i != 12
-						if data[5].strftime("%H").to_i >= 16
-							if data[5].strftime("%M").to_i < 30 
-								minutes = 30 
-							else
-								minutes = 60 
-							end
-						elsif data[5].strftime("%H").to_i == 11 && Time.now.friday?
-							minutes = 30
-						else 
-							minutes = 60 
-						end
+					if Article.find_by_name(data[0]) != nil && Report.if_not_breaking_time(report,hour)[0] #data[5].strftime("%H").to_i != 12
+						# if data[5].strftime("%H").to_i >= 16
+						# 	if data[5].strftime("%M").to_i < 30 
+						# 		minutes = 30 
+						# 	else
+						# 		minutes = 60 
+						# 	end
+						# elsif data[5].strftime("%H").to_i == 11 && Time.now.friday?
+						# 	minutes = 30
+						# else 
+						# 	minutes = 60 
+						# end
+
+						minutes = WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where.not(:working_state=>"Break").where(:start=>hour).map{|i|  (i.end.to_time-i.start.to_time )/ 60}.first.to_i
+
 						total_working_time.push(  minutes ) 
 					end
 				end 
@@ -41,7 +63,7 @@ class Report < ActiveRecord::Base
 			if detailreport.detailreportarticles != [] 
 				detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
 				
-					if Article.find_by_name(data[0]) != nil && data[5].strftime("%H").to_i != 12
+					if Article.find_by_name(data[0]) != nil && Report.if_not_breaking_time(report,hour)[0] #data[5].strftime("%H").to_i != 12
 						article = Article.find_by_name(data[0])
 						article_x_duration.push(  data[2] * article.duration )
 					end
@@ -56,7 +78,7 @@ class Report < ActiveRecord::Base
 			total_working_time = Report.total_working_time_in_minutes(report,hour)
 			article_x_duration = Report.article_x_duration(report,hour)
 
-			if total_working_time != nil && article_x_duration != nil && hour.to_i != 12
+			if total_working_time != nil && article_x_duration != nil && Report.if_not_breaking_time(report,hour)[0] #hour.to_i != 12
 				return "#{ ((article_x_duration.sum / ( total_working_time.sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe 
 			else
 				return '-'
@@ -68,7 +90,8 @@ class Report < ActiveRecord::Base
 
 	def self.percent(report,hour)
 		begin
-			if hour.to_i != 12
+			#if hour.to_i != 12
+			if Report.if_not_breaking_time(report,hour)[0]
 				return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / report.detailreports.accumulation_on_that_hour(hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
 			else
 				return '-'
@@ -81,7 +104,8 @@ class Report < ActiveRecord::Base
 	def self.pph(report,hour)
 		begin
 			total_working_time = Report.total_working_time_in_minutes(report,hour)
-			if hour.to_i != 12
+			#if hour.to_i != 12
+			if Report.if_not_breaking_time(report,hour)[0]
 				return (report.detailreports.accumulation_on_that_hour(hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
 			else
 				return '-'
@@ -93,7 +117,8 @@ class Report < ActiveRecord::Base
 
 	def self.rft(report,hour)
 		begin
-			if hour.to_i != 12
+			#if hour.to_i != 12
+			if Report.if_not_breaking_time(report,hour)[0]
 				return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / ( report.detailreports.accumulation_on_that_hour(hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
 			else
 				return '-'
@@ -105,7 +130,7 @@ class Report < ActiveRecord::Base
 
 	def self.article(detailreport)
 		begin
-			if detailreport.detailreportarticles != [] && detailreport.jam != 12
+			if detailreport.detailreportarticles != [] && Report.if_not_breaking_time(report,hour)[0] #detailreport.jam != 12
 				return detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join(", <br>").html_safe 
 			else 
 				return '-'
@@ -118,7 +143,7 @@ class Report < ActiveRecord::Base
 
 	############### OTOMATISASI SETIAP JAM ##########
 
-	def self.get_data(user,hour)
+	def self.get_data(user)
 		data = user.line.reports.find_by("tanggal = ?",Date.today)
 
 		@opr = data.detailreports.last.opr
@@ -128,26 +153,34 @@ class Report < ActiveRecord::Base
 		@mfg = data.detailreports.last.mfg
 		@category = data.detailreports.last.category
 		@country = data.detailreports.last.country
-
-		if [12,16,17,18,19,20].include? hour.to_i  #jam dimana target set ke 0
+		
+		if if_not_breaking_time(data,Time.now)[0] == true #jika bukan break time
+				@target = data.detailreports.where("target != ?",0).last.target
+		else #jika break time
 			@target = 0
-		elsif hour.to_i == 13
-			if data.detailreports.offset(1).last == nil 
-				@target = 0
-			else
-				@target = data.detailreports.offset(1).last.target
-			end
-		else
-			@target = data.detailreports.last.target
 		end
+
+		# if [12,16,17,18,19,20].include? hour.to_i  #jam dimana target set ke 0
+		# 	@target = 0
+		# elsif hour.to_i == 13
+		# 	if data.detailreports.offset(1).last == nil 
+		# 		@target = 0
+		# 	else
+		# 		@target = data.detailreports.offset(1).last.target
+		# 	end
+		# else
+		# 	@target = data.detailreports.last.target
+		# end
 	end
 
 	
-	def self.hourly_per_user(user_id,hour) #dari tablet setiap jam manggil
+	def self.hourly_per_user(user_id) #dari tablet setiap jam manggil
 		begin
 			user = User.find(user_id)
 
-			Report.get_data(user,hour)
+			Report.get_data(user)
+
+			hour = Report.check_working_hour
 
 		rescue
 			puts "still empty"
@@ -163,14 +196,16 @@ class Report < ActiveRecord::Base
 
 		User.where("status = ? and role = ?",true,"User").each_with_index do |user,index|
 			begin
-				if user.line.reports.find_by("tanggal = ?",Date.today).detailreports.last.jam.to_i >= Time.now.strftime("%H").to_i
+				report = user.line.reports.find_by("tanggal = ?",Date.today)
+
+				if report.detailreports.last.jam.to_i >= Time.now.strftime("%H").to_i
 					puts "Sudah ada!(user aktif) user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				else
-					hour = Time.now.strftime("%H").to_i
-					
-					Report.get_data(user,hour)
+					Report.get_data(user)
 
-					user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create!(:jam=>hour, :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
+					hour = Report.check_working_hour
+
+					report.detailreports.create!(:jam=>hour, :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
 					
 					puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				end
@@ -181,6 +216,20 @@ class Report < ActiveRecord::Base
 	end
 
 	private
+
+	def self.check_working_hour
+
+		WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.each_with_index do |hour, index|
+		
+			if Time.now.between?(hour.start.to_time,hour.end.to_time-1) 
+				return hour.start
+				break
+			end
+		end
+
+		raise "diluar jam kerja.."
+
+	end
 
 	def self.total_defect(report,hour)
 		return Report.total_defect_int(report,hour)+ Report.total_defect_ext(report,hour)

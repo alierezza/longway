@@ -6,4 +6,17 @@
 	$("#remark").html("<%= escape_javascript(render 'form_remark') %>");
 
 	$("#line_and_clock").html("<%= escape_javascript(render 'clock') %>");
+
+	// check breaktime or not..
+
+	  var break_time = <%=raw WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.where(:working_state=>"Break").pluck(:start) %>
+	  var from_report = "<%=raw current_user.line.reports.last.detailreports.last.jam %>";
+
+	  if(break_time.indexOf(from_report) != -1){
+
+	    $("[type='submit']").attr("disabled",true);
+	  }else{
+	    $("[type='submit']").attr("disabled",false);
+	  }
+	  
 <% end %>

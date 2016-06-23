@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621021622) do
+ActiveRecord::Schema.define(version: 20160621123037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20160621021622) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "defects", force: :cascade do |t|
+    t.string   "name"
+    t.string   "defect_type"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "detailreportarticles", force: :cascade do |t|
     t.integer  "detailreport_id"
     t.string   "article"
@@ -67,7 +75,7 @@ ActiveRecord::Schema.define(version: 20160621021622) do
     t.integer  "defect_ext",      default: 0
     t.float    "rft",             default: 0.0
     t.text     "remark"
-    t.integer  "jam"
+    t.string   "jam"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.string   "article"
@@ -88,6 +96,15 @@ ActiveRecord::Schema.define(version: 20160621021622) do
   end
 
   add_index "detailreports", ["report_id", "jam"], name: "index_detailreports_on_report_id_and_jam", unique: true, using: :btree
+
+  create_table "header_boards", force: :cascade do |t|
+    t.string   "name"
+    t.string   "name_vietnam"
+    t.boolean  "visible",      default: true
+    t.integer  "order_no"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
 
   create_table "homes", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -166,4 +183,22 @@ ActiveRecord::Schema.define(version: 20160621021622) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "working_days", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "working_hours", force: :cascade do |t|
+    t.integer  "working_day_id"
+    t.string   "start"
+    t.string   "end"
+    t.string   "working_state"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "working_hours", ["working_day_id"], name: "index_working_hours_on_working_day_id", using: :btree
+
+  add_foreign_key "working_hours", "working_days"
 end

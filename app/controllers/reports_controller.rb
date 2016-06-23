@@ -42,14 +42,16 @@ class ReportsController < ApplicationController
 
 	def new
 		if params[:from_tablet]
-			@status = Report.hourly_per_user(params[:user_id],params[:record])
+			@status = Report.hourly_per_user(params[:user_id])
 		end
 	end
 
 	def create #first time when line baru dipake pada hari tsb
-		if Time.now.strftime("%H").to_i != 12 
+		#if Time.now.strftime("%H").to_i != 12 
+
+		if Report.if_not_breaking_time(nil,Time.now.strftime("%H:%M"))[0]
 			params[:report][:tanggal] = Date.today
-			params[:report][:detailreports_attributes]["0"][:jam] = Time.now.strftime("%H")
+			params[:report][:detailreports_attributes]["0"][:jam] = Report.if_not_breaking_time(nil,Time.now.strftime("%H:%M"))[1]
 
 
 			@report = current_user.line.reports.new(my_sanitizer)
@@ -61,12 +63,13 @@ class ReportsController < ApplicationController
 	end
 
 	def update
-		jam = Time.now.strftime("%H").to_i
+		#jam = Time.now.strftime("%H").to_i
 		detailreport_id = params[:report][:detailreports_attributes]["0"][:id].to_i
 
 		defect_fly = 0
 
-		if jam != 12 and Detailreport.find(detailreport_id).jam >= Time.now.strftime("%H").to_i
+		#if jam != 12 and Detailreport.find(detailreport_id).jam >= Time.now.strftime("%H").to_i
+		if Report.if_not_breaking_time(Detailreport.find(detailreport_id).report,Time.now.strftime("%H:%M"))[0] && Detailreport.find(detailreport_id).jam >= Report.if_not_breaking_time(Detailreport.find(detailreport_id).report,Time.now.strftime("%H:%M"))[1]
 		 	@report = Report.find(params[:id])
 
 			if params[:status] == "actual"
