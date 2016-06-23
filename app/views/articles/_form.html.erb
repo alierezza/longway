@@ -8,7 +8,11 @@
 
         <div class='form-group'>
             <label class='control-label'>Article Name</label>
-            <%= f.text_field :name, :Class=>"form-control", required: true %>
+            <% if Detailreportarticle.find_by(:article=>@article.name) == nil %>
+                <%= f.text_field :name, :Class=>"form-control", required: true %>
+            <% else %>
+                <%= f.text_field :name, :Class=>"form-control", disabled: true %>
+            <% end %>
         </div>
 
         <div class='form-group'>

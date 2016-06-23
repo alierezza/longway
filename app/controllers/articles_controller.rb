@@ -52,9 +52,16 @@ class ArticlesController < ApplicationController
 
 	def destroy
 		@article = Article.find(params[:id])
-		@article.destroy!
-		redirect_to articles_path
-		flash[:notice] = "Article has been deleted"
+		if Detailreportarticle.find_by(:article=>@article.name) == nil
+			@article.destroy!
+			redirect_to articles_path
+			flash[:notice] = "Article has been deleted"
+		else
+			redirect_to articles_path
+			flash[:alert] = "Article already used and cant be deleted"
+		end
+		
+		
 	end
 
 	private
