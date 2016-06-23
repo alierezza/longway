@@ -9,9 +9,9 @@ class BoardsController < ApplicationController
 		@working_hour = WorkingDay.find_by(:name=>Time.now.strftime("%A")).working_hours
 
 		if params[:line_no] == "table1"
-			@data = Line.where("no >= 1 and no <= 8")
+			@data = Line.where("no >= 1 and no <= 9")
 		elsif params[:line_no] == "table2"
-			@data = Line.where("no >= 8 and no <= 17")
+			@data = Line.where("no >= 10 and no <= 18")
 		elsif params[:line_no].to_i != 0
 			#binding.pry
 			@data = Line.where("no = ?",params[:line_no].to_i)

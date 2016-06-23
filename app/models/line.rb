@@ -9,7 +9,7 @@ class Line < ActiveRecord::Base
 
 	def defect_count_within_limit
 	    if Line.all.count >= 18
-	      	errors.add(:base, 'Exceeded line limit')
+	      	errors.add(:base, 'Exceeded line limit (max 18 lines)')
 	    end
 	end
 end
