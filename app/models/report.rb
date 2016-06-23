@@ -30,7 +30,7 @@ class Report < ActiveRecord::Base
 
 	def self.total_working_time_in_minutes(report,hour)
 		total_working_time = Array.new{}
-		report.detailreports.accumulation_on_that_hour(hour).order("created_at ASC").each_with_index do |detailreport, index|
+		report.detailreports.accumulation_on_that_hour(report,hour).order("created_at ASC").each_with_index do |detailreport, index|
 			if detailreport.detailreportarticles != [] 
 				detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
 				
@@ -59,7 +59,7 @@ class Report < ActiveRecord::Base
 
 	def self.article_x_duration(report,hour)
 		article_x_duration = Array.new{}
-		report.detailreports.accumulation_on_that_hour(hour).order("created_at ASC").each_with_index do |detailreport, index|
+		report.detailreports.accumulation_on_that_hour(report,hour).order("created_at ASC").each_with_index do |detailreport, index|
 			if detailreport.detailreportarticles != [] 
 				detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
 				
@@ -92,7 +92,7 @@ class Report < ActiveRecord::Base
 		begin
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
-				return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / report.detailreports.accumulation_on_that_hour(hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
+				return ((report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / report.detailreports.accumulation_on_that_hour(report,hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
 			else
 				return '-'
 			end
@@ -106,7 +106,7 @@ class Report < ActiveRecord::Base
 			total_working_time = Report.total_working_time_in_minutes(report,hour)
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
-				return (report.detailreports.accumulation_on_that_hour(hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
+				return (report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(report,hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
 			else
 				return '-'
 			end
@@ -119,7 +119,7 @@ class Report < ActiveRecord::Base
 		begin
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
-				return ((report.detailreports.accumulation_on_that_hour(hour).sum(:act) / ( report.detailreports.accumulation_on_that_hour(hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
+				return ((report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / ( report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
 			else
 				return '-'
 			end
@@ -236,11 +236,11 @@ class Report < ActiveRecord::Base
 	end
 
 	def self.total_defect_int(report,hour)
-		return report.detailreports.accumulation_on_that_hour(hour).sum("defect_int + defect_int_11b + defect_int_11c + defect_int_11j + defect_int_11l + defect_int_13d").to_i
+		return report.detailreports.accumulation_on_that_hour(report,hour).sum("defect_int + defect_int_11b + defect_int_11c + defect_int_11j + defect_int_11l + defect_int_13d").to_i
 	end
 
 	def self.total_defect_ext(report,hour)
-		return report.detailreports.accumulation_on_that_hour(hour).sum("defect_ext + defect_ext_bs3 + defect_ext_bs7 + defect_ext_bs13 + defect_ext_bs15 + defect_ext_bs17").to_i
+		return report.detailreports.accumulation_on_that_hour(report,hour).sum("defect_ext + defect_ext_bs3 + defect_ext_bs7 + defect_ext_bs13 + defect_ext_bs15 + defect_ext_bs17").to_i
 	end
 
 end

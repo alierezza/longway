@@ -6,6 +6,7 @@ class BoardsController < ApplicationController
 		# GC::Profiler.enable
 		# # GC.start()
 		# GC::Profiler.clear
+		@working_hour = WorkingDay.find_by(:name=>Time.now.strftime("%A")).working_hours
 
 		if params[:line_no] == "table1"
 			@data = Line.where("no >= 1 and no <= 8")

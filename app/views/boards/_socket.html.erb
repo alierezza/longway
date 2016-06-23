@@ -33,9 +33,7 @@
         if(msg == 'Run'){
           clearTimeout(time);
         }else {
-          var time = setTimeout(function(){
-             window.location.reload(1);
-          }, 1000);
+          alert("Make sure your socket server is running, or restart your server")
         }
 
       }
