@@ -1,100 +1,134 @@
 <% if params[:search] and @data != [] %>
+
+	<%
+		defect_int = Report.merge_defect(@data.first.detailreports, "Internal")
+		defect_ext = Report.merge_defect(@data.first.detailreports, "External")
+	%>
+
 	<b>Line :</b> <%= @data.first.line.nama %><br>
 	<b>Tanggal :</b> <%= @data.first.tanggal.strftime("%d %B %Y") %><br><br>
-	<table class="table table-bordered table-stripped" id="data">
-		<thead>
-			<tr>
-				<th rowspan=2>HOUR</th>
-				<th rowspan=2>OPR</th>
-				<th rowspan=2>TARGET</th>
-				<th rowspan=2>TARGET (SUM)</th>
-				<th rowspan=2>ACT</th>
-				<th rowspan=2>ACT (SUM)</th>
-				<th rowspan=2  width="7%">%</th>
-				<th rowspan=2>PPH</th>
-				<th rowspan=2 >ARTICLE</th>
-				<th rowspan=2>EFISIENSI (Akumulasi)</th>
-				<th colspan=14>DEFECT</th>
-				<th rowspan=2>RFT</th>
-				<th rowspan=2  width="25%">REMARK</th>
-				<th rowspan=2>P/O</th>
-				<th rowspan=2>MFG No</th>
-				<th rowspan=2>Category</th>
-				<th rowspan=2>Country</th>
-			</tr>
-			<tr>
-				<th>INT 11A</th>
-				<th>INT 11B</th>
-				<th>INT 11C</th>
-				<th>INT 11J</th>
-				<th>INT 11L</th>
-				<th>INT 13D</th>
-				<th>INT (SUM)</th>
-				<th>EXT BS2</th>
-				<th>EXT BS3</th>
-				<th>EXT BS7</th>
-				<th>EXT BS13</th>
-				<th>EXT BS15</th>
-				<th>EXT BS17</th>
-				<th>EXT (SUM)</th>
-			</tr>
-		</thead>
-		<% @article_x_duration = Array.new{} %>
-		<% @total_working_time = Array.new{} %>
-		<tbody>
-			<% sum_target = 0 %>
-			<% sum_act = 0 %>
-			
-				<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
-		
-					<% sum_target += detailreport.target.to_i  %>
-					<% sum_act += detailreport.act.to_i  %>
-					<tr>
-						<td><%= WorkingDay.working_duration(detailreport) %></td>
-						<td><%= detailreport.opr %></td>
-						<td><%= detailreport.target %></td>
-						<td><%= sum_target %></td>
-						<td><%= detailreport.act %></td>
-						<td><%= sum_act %></td>
-						<td><%= Report.percent(detailreport.report, detailreport.jam) %></td>
-						<td><%= Report.pph(detailreport.report,detailreport.jam) %></td>
-						<td>
-							<%= Report.article(detailreport) %>
-						</td>
-						<td>
-							<font color=blue>
-								(<%= Report.efficiency(detailreport.report,detailreport.jam) %>)					
-							</font>
-						</td>
-						<td><%= detailreport.defect_int %></td>
-						<td><%= detailreport.defect_int_11b %></td>
-						<td><%= detailreport.defect_int_11c %></td>
-						<td><%= detailreport.defect_int_11j %></td>
-						<td><%= detailreport.defect_int_11l %></td>
-						<td><%= detailreport.defect_int_13d %></td>
-						<td><%= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
-						<td><%= detailreport.defect_ext %></td>
-						<td><%= detailreport.defect_ext_bs3 %></td>
-						<td><%= detailreport.defect_ext_bs7 %></td>
-						<td><%= detailreport.defect_ext_bs13 %></td>
-						<td><%= detailreport.defect_ext_bs15 %></td>
-						<td><%= detailreport.defect_ext_bs17 %></td>
-						<td><%= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td>
-						<td><%= Report.rft(detailreport.report, detailreport.jam) %></td>
-						<td><%= detailreport.remark %></td>
-						<td><%= detailreport.po %></td>
-						<td><%= detailreport.mfg %></td>
-						<td><%= detailreport.category %></td>
-						<td><%= detailreport.country %></td>
-					</tr>
-				<% end %>
-					<tr>
-						<td colspan=15>Total <%= @data.first.detailreports.count %> Jam</td>
-					</tr>
+	<div class="table-responsive">
+		<table class="table table-bordered table-stripped" id="data">
+			<thead>
+				<tr>
+					<th rowspan=2>HOUR</th>
+					<th rowspan=2>OPR</th>
+					<th rowspan=2>TARGET</th>
+					<th rowspan=2>TARGET (SUM)</th>
+					<th rowspan=2>ACT</th>
+					<th rowspan=2>ACT (SUM)</th>
+					<th rowspan=2  width="7%">%</th>
+					<th rowspan=2>PPH</th>
+					<th rowspan=2 >ARTICLE</th>
+					<th rowspan=2>EFISIENSI (Akumulasi)</th>
+					<th colspan=<%= defect_int.map{ |k,v| k }.length + defect_ext.map{ |k,v| k }.length + 2 %>>DEFECT</th>
+					<!-- <th colspan=14>DEFECT</th> -->
+					<th rowspan=2>RFT</th>
+					<th rowspan=2  width="25%">REMARK</th>
+					<th rowspan=2>P/O</th>
+					<th rowspan=2>MFG No</th>
+					<th rowspan=2>Category</th>
+					<th rowspan=2>Country</th>
+				</tr>
+				<tr>
+					<% defect_int.each_with_index do |(key, val), index| %>
+						<th>INT <%= key %></th>
+						<% if (index+1) == defect_int.map{ |k,v| k }.length %>
+							<th>INT (SUM)</th>
+						<% end %>
+					<% end %>
 
-		</tbody>
-	</table>
+					<% defect_ext.each_with_index do |(key, val), index| %>
+						<th>EXT <%= key %></th>
+						<% if (index+1) == defect_ext.map{ |k,v| k }.length %>
+							<th>EXT (SUM)</th>
+						<% end %>
+					<% end %>
+	<!-- 				<th>INT 11A</th>
+					<th>INT 11B</th>
+					<th>INT 11C</th>
+					<th>INT 11J</th>
+					<th>INT 11L</th>
+					<th>INT 13D</th>
+					<th>INT (SUM)</th>
+					<th>EXT BS2</th>
+					<th>EXT BS3</th>
+					<th>EXT BS7</th>
+					<th>EXT BS13</th>
+					<th>EXT BS15</th>
+					<th>EXT BS17</th>
+					<th>EXT (SUM)</th> -->
+				</tr>
+			</thead>
+			<% @article_x_duration = Array.new{} %>
+			<% @total_working_time = Array.new{} %>
+			<tbody>
+				<% sum_target = 0 %>
+				<% sum_act = 0 %>
 
+					<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
+
+						<% sum_target += detailreport.target.to_i  %>
+						<% sum_act += detailreport.act.to_i  %>
+						<tr>
+							<td><%= WorkingDay.working_duration(detailreport) %></td>
+							<td><%= detailreport.opr %></td>
+							<td><%= detailreport.target %></td>
+							<td><%= sum_target %></td>
+							<td><%= detailreport.act %></td>
+							<td><%= sum_act %></td>
+							<td><%= Report.percent(detailreport.report, detailreport.jam) %></td>
+							<td><%= Report.pph(detailreport.report,detailreport.jam) %></td>
+							<td>
+								<%= Report.article(detailreport) %>
+							</td>
+							<td>
+								<font color=blue>
+									(<%= Report.efficiency(detailreport.report,detailreport.jam) %>)
+								</font>
+							</td>
+							<% JSON.parse(detailreport.defect_int).each_with_index do |(key, val), index| %>
+								<td><%= val %></td>
+								<% if (index+1) == JSON.parse(detailreport.defect_int).map{ |k,v| k }.length %>
+									<td><%= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
+								<% end %>
+							<% end %>
+
+							<% JSON.parse(detailreport.defect_ext).each_with_index do |(key, val), index| %>
+								<td><%= val %></td>
+								<% if (index+1) == JSON.parse(detailreport.defect_ext).map{ |k,v| k }.length %>
+									<td><%= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td>
+								<% end %>
+							<% end %>
+	<!-- 						<td><%#= detailreport.defect_int %></td>
+							<td><%#= detailreport.defect_int_11b %></td>
+							<td><%#= detailreport.defect_int_11c %></td>
+							<td><%#= detailreport.defect_int_11j %></td>
+							<td><%#= detailreport.defect_int_11l %></td>
+							<td><%#= detailreport.defect_int_13d %></td>
+							<td><%#= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
+							<td><%#= detailreport.defect_ext %></td>
+							<td><%#= detailreport.defect_ext_bs3 %></td>
+							<td><%#= detailreport.defect_ext_bs7 %></td>
+							<td><%#= detailreport.defect_ext_bs13 %></td>
+							<td><%#= detailreport.defect_ext_bs15 %></td>
+							<td><%#= detailreport.defect_ext_bs17 %></td>
+							<td><%#= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td> -->
+							<td><%= Report.rft(detailreport.report, detailreport.jam) %></td>
+							<td><%= detailreport.remark %></td>
+							<td><%= detailreport.po %></td>
+							<td><%= detailreport.mfg %></td>
+							<td><%= detailreport.category %></td>
+							<td><%= detailreport.country %></td>
+						</tr>
+					<% end %>
+						<tr>
+							<td colspan=<%= defect_int.map{ |k,v| k }.length + defect_ext.map{ |k,v| k }.length + 18 %>>Total <%= @data.first.detailreports.count %> Jam</td>
+						</tr>
+
+			</tbody>
+		</table>
+	</div>
 <% else %>
 <h5>
 	No data recorded

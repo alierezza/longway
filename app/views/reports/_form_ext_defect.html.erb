@@ -7,7 +7,8 @@
     <div class="counter_number">
       <%= detailreport.hidden_field :defect_ext %>
       <div id="defect_ext">
-        <%= detailreport.object.defect_ext + detailreport.object.defect_ext_bs3 + detailreport.object.defect_ext_bs7 + detailreport.object.defect_ext_bs13 + detailreport.object.defect_ext_bs15 + detailreport.object.defect_ext_bs17 %>
+        <%= sum_defect(detailreport) %>
+        <%#= detailreport.object.defect_ext + detailreport.object.defect_ext_bs3 + detailreport.object.defect_ext_bs7 + detailreport.object.defect_ext_bs13 + detailreport.object.defect_ext_bs15 + detailreport.object.defect_ext_bs17 %>
       </div>
       <%= hidden_field_tag :status, "ext_defect" %>
     </div>
@@ -17,18 +18,27 @@
     <div>EXTERNAL</div>
   </div>
   <div class="">
-    <div class="row">
-      <%= f.button "BS2", class: "btn btn-danger btn-md" , :name=>"BS2", :value=>true %>
-      <%= f.button "BS3", class: "btn btn-danger btn-md" , :name=>"BS3", :value=>true %>
+    <% Defect.where(defect_type: 'External').each_with_index do |defect, index| %>
+      <% if index%2 == 0 %>
+        <div class="row">
+      <% end %>
+      <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
+      <% if index%2 == 0 %>
+        </div><br>
+      <% end %>
+    <% end %>
+<!--     <div class="row">
+      <%#= f.button "BS2", class: "btn btn-danger btn-md" , :name=>"BS2", :value=>true %>
+      <%#= f.button "BS3", class: "btn btn-danger btn-md" , :name=>"BS3", :value=>true %>
     </div><br>
     <div class="row">
-      <%= f.button "BS7", class: "btn btn-danger btn-md", :name=>"BS7", :value=>true %>
-      <%= f.button "BS13", class: "btn btn-danger btn-md", :name=>"BS13", :value=>true %>
+      <%#= f.button "BS7", class: "btn btn-danger btn-md", :name=>"BS7", :value=>true %>
+      <%#= f.button "BS13", class: "btn btn-danger btn-md", :name=>"BS13", :value=>true %>
     </div><br>
     <div class="row">
-      <%= f.button "BS15", class: "btn btn-danger btn-md", :name=>"BS15", :value=>true %>
-      <%= f.button "BS17", class: "btn btn-danger btn-md", :name=>"BS17", :value=>true %>
-    </div>
+      <%#= f.button "BS15", class: "btn btn-danger btn-md", :name=>"BS15", :value=>true %>
+      <%#= f.button "BS17", class: "btn btn-danger btn-md", :name=>"BS17", :value=>true %>
+    </div> -->
 
   </div>
   <% end %>

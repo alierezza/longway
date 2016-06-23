@@ -4,24 +4,31 @@ class WorkingHour < ActiveRecord::Base
   belongs_to :working_day
 
   validates_uniqueness_of :start, :scope => [:end,:working_day_id]
-  validate :check_validation, :duration, :start_must_be_before_end_time, :end_must_be_before_start_time
+  validate :check_validation, :duration, :start_must_be_before_end_time
 
   def self.state
   	["Work", "Break", "Overtime"]
   end
 
   def check_validation
-    self.working_day.working_hours.where.not(id: nil).each do |hour|
-    	if self.start.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
-    		errors.add(:base, 'Wrong start and end time 1.')
+    query = "id <> #{id}" if id != nil
+    self.working_day.working_hours.where.not(id: nil).where(query).each do |hour|
+      if self.start.to_time == hour.start.to_time
+        errors.add(:base, 'Start should not be the same with another scheduled time.')
+        break
+      elsif self.start.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
+    		errors.add(:base, 'Start should not be between another scheduled time.')
     		break
-    	end
+    	elsif self.end.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
+        errors.add(:base, 'End should not be between another scheduled time.')
+        break
+      end
     end
 	end
 
 	def start_must_be_before_end_time
 		if self.end.to_time <= self.start.to_time
-			errors.add(:base, 'Wrong start and end time 2.')
+			errors.add(:base, 'Wrong time.')
 		end
 	end
 
@@ -30,14 +37,5 @@ class WorkingHour < ActiveRecord::Base
 			((self.end.to_time - self.start.to_time) / 60 ).to_i < 30
 			errors.add(:base, 'Time duration should be 30 - 60 minutes.')
 		end
-	end
-
-	def end_must_be_before_start_time
-		self.working_day.working_hours.where.not(id: nil).each do |hour|
-    	if self.end.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
-    		errors.add(:base, 'Wrong start and end time 3.')
-    		break
-    	end
-    end
 	end
 end

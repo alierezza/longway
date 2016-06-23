@@ -36,4 +36,8 @@ module ApplicationHelper
 			return (template % ["", "#{Report.efficiency(report, report.detailreports.last.jam)}"]).html_safe
 		end
 	end
+
+	def sum_defect(detailreport)
+		JSON.parse(detailreport.object.defect_ext.to_s).map{ |k,v| v }.sum
+	end
 end
