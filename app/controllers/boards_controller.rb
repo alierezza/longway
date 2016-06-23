@@ -1,5 +1,6 @@
 class BoardsController < ApplicationController
 	load_and_authorize_resource
+	include ApplicationHelper
 	# require 'rdoc/rdoc'
 
 	def index
@@ -15,7 +16,7 @@ class BoardsController < ApplicationController
 		elsif params[:line_no].to_i != 0
 			#binding.pry
 			@data = Line.where("no = ?",params[:line_no].to_i)
-			
+
 		else
 			@data = Line.all
 		end
@@ -32,7 +33,7 @@ class BoardsController < ApplicationController
 			sum_def_ext = 0
 
 			arr_line = []
-	
+
 			arr_target = []
 			arr_act = []
 			arr_def_int = []
@@ -63,7 +64,7 @@ class BoardsController < ApplicationController
 								# arr_act << report.id.to_s+"-"+sum_act.to_s
 								arr_target << sum_target
 								arr_act << sum_act
-					
+
 								#arr_def_int << sum_def_int
 								#arr_def_ext << sum_def_ext
 
@@ -81,7 +82,7 @@ class BoardsController < ApplicationController
 					end # <--------------------- uncomment
 					arr_line << arr_target
 					arr_line << arr_act
-					
+
 					#arr_line << arr_def_int
 					#arr_line << arr_def_ext
 
@@ -114,25 +115,33 @@ class BoardsController < ApplicationController
 
 			if report.present?
 
-				defect_int = Array.new
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"11A", :message=>"JAHIT TANGAN BURUK/ULANGI DIJAHIT"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"11B", :message=>"KERUT/JAHITAN ROBEK"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11c"),:data=>"11C", :message=>"JAHITAN LONGGAR"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"11J", :message=>"PELOMPAT/TAK TERJAHIT"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11l"),:data=>"11L", :message=>"TAK TEPAT POSISI/DISLOKASI"})
-				defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_13d"),:data=>"13D", :message=>"LUBANG KATUB DEFECT/MASALAH"})
-
+				defect_int = Report.merge_defect(report.detailreports, "Internal")
+				defect_int = defect_int.map{ |k,v| {data: k, value: v, message: Defect.find_by_name(k).description} }
 				top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
 
-				defect_ext = Array.new
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext"),:data=>"BS2", :message=>"SABLON POLA TAK PENUH"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs3"),:data=>"BS3", :message=>"SABLON TERKENA HAMBATAN BENDA"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs7"),:data=>"BS7", :message=>"BAYANGAN GANDA"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs13"),:data=>"BS13", :message=>"TAK TEPAT POSISI/TIDAK AKURAT/MIRING"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs15"),:data=>"BS15", :message=>"KONTAMINASI TINTA"})
-				defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs17"),:data=>"BS17", :message=>"SABLON FARIASI BEDA WARNA"})
+				# defect_int = Array.new
+				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"11A", :message=>"JAHIT TANGAN BURUK/ULANGI DIJAHIT"})
+				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"11B", :message=>"KERUT/JAHITAN ROBEK"})
+				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11c"),:data=>"11C", :message=>"JAHITAN LONGGAR"})
+				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11j"),:data=>"11J", :message=>"PELOMPAT/TAK TERJAHIT"})
+				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11l"),:data=>"11L", :message=>"TAK TEPAT POSISI/DISLOKASI"})
+				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_13d"),:data=>"13D", :message=>"LUBANG KATUB DEFECT/MASALAH"})
 
+				# top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
+
+				defect_ext = Report.merge_defect(report.detailreports, "External")
+				defect_ext = defect_ext.map{ |k,v| {data: k, value: v, message: Defect.find_by_name(k).description} }
 				top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
+
+				# defect_ext = Array.new
+				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext"),:data=>"BS2", :message=>"SABLON POLA TAK PENUH"})
+				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs3"),:data=>"BS3", :message=>"SABLON TERKENA HAMBATAN BENDA"})
+				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs7"),:data=>"BS7", :message=>"BAYANGAN GANDA"})
+				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs13"),:data=>"BS13", :message=>"TAK TEPAT POSISI/TIDAK AKURAT/MIRING"})
+				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs15"),:data=>"BS15", :message=>"KONTAMINASI TINTA"})
+				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext_bs17"),:data=>"BS17", :message=>"SABLON FARIASI BEDA WARNA"})
+
+				# top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
 
 				@big_data[line.no].push(top_3_int.map{|i| i[:value]})
 				@big_data[line.no].push(top_3_int.map{|i| i[:data]})
@@ -152,8 +161,8 @@ class BoardsController < ApplicationController
 
 
 		end
-		
-						
+
+
 	end
 
 	def show

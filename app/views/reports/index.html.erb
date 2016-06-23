@@ -40,7 +40,8 @@
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_int %>
               <div id="defect_int">
-                <%= detailreport.object.defect_int + detailreport.object.defect_int_11b + detailreport.object.defect_int_11c + detailreport.object.defect_int_11j + detailreport.object.defect_int_11l + detailreport.object.defect_int_13d %>
+                <%= sum_defect(detailreport) %>
+                <%#= detailreport.object.defect_int + detailreport.object.defect_int_11b + detailreport.object.defect_int_11c + detailreport.object.defect_int_11j + detailreport.object.defect_int_11l + detailreport.object.defect_int_13d %>
               </div>
               <%= hidden_field_tag :status, "int_defect" %>
             </div>
@@ -50,18 +51,27 @@
             <div>INTERNAL</div>
           </div>
           <div class="">
-            <div class="row">
-              <%= f.button "11A", class: "btn btn-danger btn-md" , :name=>"11A", :value=>true %>
-              <%= f.button "11B", class: "btn btn-danger btn-md" , :name=>"11B", :value=>true %>
+            <% Defect.where(defect_type: 'Internal').each_with_index do |defect, index| %>
+              <% if index%2 == 0 %>
+                <div class="row">
+              <% end %>
+              <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
+              <% if index%2 == 0 %>
+                </div><br>
+              <% end %>
+            <% end %>
+<!--             <div class="row">
+              <%#= f.button "11A", class: "btn btn-danger btn-md" , :name=>"11A", :value=>true %>
+              <%#= f.button "11B", class: "btn btn-danger btn-md" , :name=>"11B", :value=>true %>
             </div><br>
             <div class="row">
-              <%= f.button "11C", class: "btn btn-danger btn-md", :name=>"11C", :value=>true %>
-              <%= f.button "11J", class: "btn btn-danger btn-md", :name=>"11J", :value=>true %>
+              <%#= f.button "11C", class: "btn btn-danger btn-md", :name=>"11C", :value=>true %>
+              <%#= f.button "11J", class: "btn btn-danger btn-md", :name=>"11J", :value=>true %>
             </div><br>
             <div class="row">
-              <%= f.button "11L", class: "btn btn-danger btn-md", :name=>"11L", :value=>true %>
-              <%= f.button "13D", class: "btn btn-danger btn-md", :name=>"13D", :value=>true %>
-            </div>
+              <%#= f.button "11L", class: "btn btn-danger btn-md", :name=>"11L", :value=>true %>
+              <%#= f.button "13D", class: "btn btn-danger btn-md", :name=>"13D", :value=>true %>
+            </div> -->
           </div>
           <% end %>
         <% end %>
@@ -77,7 +87,8 @@
             <div class="counter_number">
               <%= detailreport.hidden_field :defect_ext %>
               <div id="defect_ext">
-                <%= detailreport.object.defect_ext + detailreport.object.defect_ext_bs3 + detailreport.object.defect_ext_bs7 + detailreport.object.defect_ext_bs13 + detailreport.object.defect_ext_bs15 + detailreport.object.defect_ext_bs17 %>
+                <%= sum_defect(detailreport) %>
+                <%#= detailreport.object.defect_ext + detailreport.object.defect_ext_bs3 + detailreport.object.defect_ext_bs7 + detailreport.object.defect_ext_bs13 + detailreport.object.defect_ext_bs15 + detailreport.object.defect_ext_bs17 %>
               </div>
               <%= hidden_field_tag :status, "ext_defect" %>
             </div>
@@ -87,18 +98,27 @@
             <div>EXTERNAL</div>
           </div>
           <div class="">
-            <div class="row">
-              <%= f.button "BS2", class: "btn btn-danger btn-md" , :name=>"BS2", :value=>true %>
-              <%= f.button "BS3", class: "btn btn-danger btn-md" , :name=>"BS3", :value=>true %>
+            <% Defect.where(defect_type: 'External').each_with_index do |defect, index| %>
+              <% if index%2 == 0 %>
+                <div class="row">
+              <% end %>
+              <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
+              <% if index%2 == 0 %>
+                </div><br>
+              <% end %>
+            <% end %>
+<!--             <div class="row">
+              <%#= f.button "BS2", class: "btn btn-danger btn-md" , :name=>"BS2", :value=>true %>
+              <%#= f.button "BS3", class: "btn btn-danger btn-md" , :name=>"BS3", :value=>true %>
             </div><br>
             <div class="row">
-              <%= f.button "BS7", class: "btn btn-danger btn-md", :name=>"BS7", :value=>true %>
-              <%= f.button "BS13", class: "btn btn-danger btn-md", :name=>"BS13", :value=>true %>
+              <%#= f.button "BS7", class: "btn btn-danger btn-md", :name=>"BS7", :value=>true %>
+              <%#= f.button "BS13", class: "btn btn-danger btn-md", :name=>"BS13", :value=>true %>
             </div><br>
             <div class="row">
-              <%= f.button "BS15", class: "btn btn-danger btn-md", :name=>"BS15", :value=>true %>
-              <%= f.button "BS17", class: "btn btn-danger btn-md", :name=>"BS17", :value=>true %>
-            </div>
+              <%#= f.button "BS15", class: "btn btn-danger btn-md", :name=>"BS15", :value=>true %>
+              <%#= f.button "BS17", class: "btn btn-danger btn-md", :name=>"BS17", :value=>true %>
+            </div> -->
           </div>
           <% end %>
         <% end %>
@@ -107,7 +127,7 @@
   </div>
   </div>
     <div id="line_and_clock">
-      <%= render "clock" %>  
+      <%= render "clock" %>
     </div>
 
   </div>
@@ -123,7 +143,7 @@
     <div id="target_and_opr">
       <%= form_for(@target_and_opr, :remote=>true) do |f| %>
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-     
+
         <div class="row">
           <div class='col-xs-2'>
             <label style="margin-top:7px">Category</label>
@@ -194,10 +214,10 @@
     <div id="remark">
       <%= form_for(@target_and_opr, :remote=>true) do |f| %>
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
-        
+
           <label>Remark</label>
           <%= detailreport.text_area :remark, class: "form-control", rows: 2 %>
-        
+
         <div class="row">
           <div class="col-xs-12">
              <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>
@@ -302,12 +322,12 @@
 
           var schedule = <%=raw WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.pluck(:start) %>
           server_time = hours+":"+mins;
-        
+
           if(schedule.indexOf(server_time) != -1 && secs == "00" ){
             //alert("masuk");
             $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
           }
-  
+
           // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18" || hours == "19" || hours == "20")){
           // //if(secs == "0"){
           //     //$("#report_detailreports_attributes_0_act").val(0);
@@ -319,10 +339,10 @@
           //     //$("#defect_int").html(0);
           //     //$("#defect_ext").html(0);
 
-              
+
           //  }
 
-          
+
 
 
 
@@ -343,5 +363,5 @@
 
       //var hours = d.getHours();
       $.get("/reports/new", { user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
-      
+
     </script>

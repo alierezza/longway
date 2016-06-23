@@ -47,7 +47,7 @@ class ReportsController < ApplicationController
 	end
 
 	def create #first time when line baru dipake pada hari tsb
-		#if Time.now.strftime("%H").to_i != 12 
+		#if Time.now.strftime("%H").to_i != 12
 
 		if_not_breaking_time = Report.if_not_breaking_time(nil,Time.now.strftime("%H:%M"))
 
@@ -75,55 +75,85 @@ class ReportsController < ApplicationController
 		 	@report = Report.find(params[:id])
 
 			if params[:status] == "actual"
-				
+
 				params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.find(detailreport_id).act.to_i + 1
 
 			elsif params[:status] == "int_defect"
-				if params["11A"]
-					params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.find(detailreport_id).defect_int.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["11B"]
-					params[:report][:detailreports_attributes]["0"][:defect_int_11b] = @report.detailreports.find(detailreport_id).defect_int_11b.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["11C"]
-					params[:report][:detailreports_attributes]["0"][:defect_int_11c] = @report.detailreports.find(detailreport_id).defect_int_11c.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["11J"]
-					params[:report][:detailreports_attributes]["0"][:defect_int_11j] = @report.detailreports.find(detailreport_id).defect_int_11j.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["11L"]
-					params[:report][:detailreports_attributes]["0"][:defect_int_11l] = @report.detailreports.find(detailreport_id).defect_int_11l.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["13D"]
-					params[:report][:detailreports_attributes]["0"][:defect_int_13d] = @report.detailreports.find(detailreport_id).defect_int_13d.to_i + 1
-					defect_fly = defect_fly + 1
+				begin
+					old_defect = JSON.parse(Detailreport.find(detailreport_id).defect_int.to_s)
+				rescue
 				end
 
-			elsif params[:status] == "ext_defect"
-				if params["BS2"]
-					params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.find(detailreport_id).defect_ext.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["BS3"]
-					params[:report][:detailreports_attributes]["0"][:defect_ext_bs3] = @report.detailreports.find(detailreport_id).defect_ext_bs3.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["BS7"]
-					params[:report][:detailreports_attributes]["0"][:defect_ext_bs7] = @report.detailreports.find(detailreport_id).defect_ext_bs7.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["BS13"]
-					params[:report][:detailreports_attributes]["0"][:defect_ext_bs13] = @report.detailreports.find(detailreport_id).defect_ext_bs13.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["BS15"]
-					params[:report][:detailreports_attributes]["0"][:defect_ext_bs15] = @report.detailreports.find(detailreport_id).defect_ext_bs15.to_i + 1
-					defect_fly = defect_fly + 1
-				elsif params["BS17"]
-					params[:report][:detailreports_attributes]["0"][:defect_ext_bs17] = @report.detailreports.find(detailreport_id).defect_ext_bs17.to_i + 1
-					defect_fly = defect_fly + 1
+				defect = Defect.where(defect_type: "Internal").pluck(:name)
+				new_defect = defect.map{ |a| params[a] ? [a, 1] : [a, 0] }.to_h
+
+				if old_defect.present?
+					data = old_defect.merge(new_defect){ |key, oldval, newval| oldval+newval }
+					params[:report][:detailreports_attributes]["0"][:defect_int] = data.to_json
+				else
+					params[:report][:detailreports_attributes]["0"][:defect_int] = new_defect.to_json
 				end
+
+				# if params["11A"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_int] = @report.detailreports.find(detailreport_id).defect_int.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["11B"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_int_11b] = @report.detailreports.find(detailreport_id).defect_int_11b.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["11C"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_int_11c] = @report.detailreports.find(detailreport_id).defect_int_11c.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["11J"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_int_11j] = @report.detailreports.find(detailreport_id).defect_int_11j.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["11L"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_int_11l] = @report.detailreports.find(detailreport_id).defect_int_11l.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["13D"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_int_13d] = @report.detailreports.find(detailreport_id).defect_int_13d.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# end
+
+			elsif params[:status] == "ext_defect"
+				begin
+					old_defect = JSON.parse(Detailreport.find(detailreport_id).defect_ext.to_s)
+				rescue
+				end
+
+				defect = Defect.where(defect_type: "External").pluck(:name)
+				new_defect = defect.map{ |a| params[a] ? [a, 1] : [a, 0] }.to_h
+
+				if old_defect.present?
+					data = old_defect.merge(new_defect){ |key, oldval, newval| oldval+newval }
+					params[:report][:detailreports_attributes]["0"][:defect_ext] = data.to_json
+				else
+					params[:report][:detailreports_attributes]["0"][:defect_ext] = new_defect.to_json
+				end
+
+				# if params["BS2"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_ext] = @report.detailreports.find(detailreport_id).defect_ext.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["BS3"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_ext_bs3] = @report.detailreports.find(detailreport_id).defect_ext_bs3.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["BS7"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_ext_bs7] = @report.detailreports.find(detailreport_id).defect_ext_bs7.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["BS13"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_ext_bs13] = @report.detailreports.find(detailreport_id).defect_ext_bs13.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["BS15"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_ext_bs15] = @report.detailreports.find(detailreport_id).defect_ext_bs15.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# elsif params["BS17"]
+				# 	params[:report][:detailreports_attributes]["0"][:defect_ext_bs17] = @report.detailreports.find(detailreport_id).defect_ext_bs17.to_i + 1
+				# 	defect_fly = defect_fly + 1
+				# end
 
 			end
 
 		    if @report.update(my_sanitizer)
-			
+
 			else #jika ada error karena validasi
 
 			end

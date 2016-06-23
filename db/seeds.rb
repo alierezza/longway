@@ -36,19 +36,29 @@ ActiveRecord::Base.transaction do
 
   ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].each do |day|
     working_day = WorkingDay.create(name: day)
-    [["07:30", "08:30"], ["08:30", "09:30"], ["09:30", "10:30"], ["10:30", "11:30"],
-    ["12:30", "13:30"], ["13:30", "14:30"], ["14:30", "15:30"], ["15:30", "16:30"]].each do |hour|
-      working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Work")
-    end
-    [["11:30", "12:30"], ["16:30", "17:00"]].each do |hour|
-      working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Break")
-    end
-    [["17:00", "18:00"], ["18:00", "19:00"], ["19:00", "20:00"]].each do |hour|
-      working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Overtime")
+    if working_day.id != nil
+      [["07:30", "08:30"], ["08:30", "09:30"], ["09:30", "10:30"], ["10:30", "11:30"],
+      ["12:30", "13:30"], ["13:30", "14:30"], ["14:30", "15:30"], ["15:30", "16:30"]].each do |hour|
+        working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Work")
+      end
+      [["11:30", "12:30"], ["16:30", "17:00"]].each do |hour|
+        working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Break")
+      end
+      [["17:00", "18:00"], ["18:00", "19:00"], ["19:00", "20:00"]].each do |hour|
+        working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Overtime")
+      end
     end
   end
 
+  [["11A", "JAHIT TANGAN BURUK/ULANGI DIJAHIT"], ["11B", "KERUT/JAHITAN ROBEK"], ["11C", "JAHITAN LONGGAR"],
+  ["11J", "PELOMPAT/TAK TERJAHIT"], ["11L", "TAK TEPAT POSISI/DISLOKASI"], ["13D", "LUBANG KATUB DEFECT/MASALAH"]].each do |defect|
+    Defect.create(name: defect[0], defect_type: "Internal", description: defect[1])
+  end
 
+  [["BS2", "SABLON POLA TAK PENUH"], ["BS3", "SABLON TERKENA HAMBATAN BENDA"], ["BS7", "BAYANGAN GANDA"],
+  ["BS13", "TAK TEPAT POSISI/TIDAK AKURAT/MIRING"], ["BS15", "KONTAMINASI TINTA"], ["BS17", "SABLON FARIASI BEDA WARNA"]].each do |defect|
+    Defect.create(name: defect[0], defect_type: "External", description: defect[1])
+  end
 
   Language.create(:message=>"Logout",:description=>"Showing on Tablet",:foreign_language=>"Logout")
   Language.create(:message=>"Dont Forget To Logout Before Leaving",:description=>"Showing on Tablet",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
@@ -58,7 +68,7 @@ ActiveRecord::Base.transaction do
 
 
 
-  
+
 end
 
 
