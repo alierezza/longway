@@ -28,37 +28,38 @@ class Report < ActiveRecord::Base
 
 	#### PERHITUNGAN #########
 
-	def self.total_working_time_in_minutes(report,hour)
-		total_working_time = Array.new{}
-		report.detailreports.accumulation_on_that_hour(report,hour).order("created_at ASC").each_with_index do |detailreport, index|
-			if detailreport.detailreportarticles != [] 
-				detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
+	# def self.total_working_time_in_minutes(report,hour)
+	# 	total_working_time = Array.new{}
+	# 	report.detailreports.accumulation_on_that_hour(report,hour).order("created_at ASC").each_with_index do |detailreport, index|
+	# 		if detailreport.detailreportarticles != [] 
+	# 			detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
 				
-					if Article.find_by_name(data[0]) != nil && Report.if_not_breaking_time(report,hour)[0] #data[5].strftime("%H").to_i != 12
-						# if data[5].strftime("%H").to_i >= 16
-						# 	if data[5].strftime("%M").to_i < 30 
-						# 		minutes = 30 
-						# 	else
-						# 		minutes = 60 
-						# 	end
-						# elsif data[5].strftime("%H").to_i == 11 && Time.now.friday?
-						# 	minutes = 30
-						# else 
-						# 	minutes = 60 
-						# end
+	# 				if Article.find_by_name(data[0]) != nil && Report.if_not_breaking_time(report,hour)[0] #data[5].strftime("%H").to_i != 12
+	# 					# if data[5].strftime("%H").to_i >= 16
+	# 					# 	if data[5].strftime("%M").to_i < 30 
+	# 					# 		minutes = 30 
+	# 					# 	else
+	# 					# 		minutes = 60 
+	# 					# 	end
+	# 					# elsif data[5].strftime("%H").to_i == 11 && Time.now.friday?
+	# 					# 	minutes = 30
+	# 					# else 
+	# 					# 	minutes = 60 
+	# 					# end
 
-						minutes = WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where.not(:working_state=>"Break").where(:start=>hour).map{|i|  (i.end.to_time-i.start.to_time )/ 60}.first.to_i
+	# 					minutes = WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where.not(:working_state=>"Break").where(:start=>hour).map{|i|  (i.end.to_time-i.start.to_time )/ 60}.first.to_i
 
-						total_working_time.push(  minutes ) 
-					end
-				end 
-			end
-		end
-		return total_working_time
-	end
+	# 					total_working_time.push(  minutes ) 
+	# 				end
+	# 			end 
+	# 		end
+	# 	end
+	# 	return total_working_time
+	# end
 
-	def self.article_x_duration(report,hour)
+	def self.article_x_duration_dibagi_total_working_time(report,hour)
 		article_x_duration = Array.new{}
+		total_working_time = Array.new{}
 		report.detailreports.accumulation_on_that_hour(report,hour).order("created_at ASC").each_with_index do |detailreport, index|
 			if detailreport.detailreportarticles != [] 
 				detailreport.detailreportarticles.map{|i| [i.article, i.operator, i.output , i.created_at, i.updated_at, i.updated_at ] }.each do |data| 
@@ -66,20 +67,23 @@ class Report < ActiveRecord::Base
 					if Article.find_by_name(data[0]) != nil && Report.if_not_breaking_time(report,hour)[0] #data[5].strftime("%H").to_i != 12
 						article = Article.find_by_name(data[0])
 						article_x_duration.push(  data[2] * article.duration )
+
+						minutes = WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where.not(:working_state=>"Break").where(:start=>hour).map{|i|  (i.end.to_time-i.start.to_time )/ 60}.first.to_i
+						total_working_time.push(  minutes ) 
 					end
 				end 
 			end
 		end
-		return article_x_duration
+		return [article_x_duration,total_working_time]
 	end
 
 	def self.efficiency(report,hour) 
 		begin
-			total_working_time = Report.total_working_time_in_minutes(report,hour)
-			article_x_duration = Report.article_x_duration(report,hour)
+			
+			article_x_duration_dibagi_total_working_time = Report.article_x_duration_dibagi_total_working_time(report,hour)
 
-			if total_working_time != nil && article_x_duration != nil && Report.if_not_breaking_time(report,hour)[0] #hour.to_i != 12
-				return "#{ ((article_x_duration.sum / ( total_working_time.sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe 
+			if article_x_duration_dibagi_total_working_time[1] != nil && article_x_duration_dibagi_total_working_time[0] != nil && Report.if_not_breaking_time(report,hour)[0] #hour.to_i != 12
+				return "#{ ((article_x_duration_dibagi_total_working_time[0].sum / ( article_x_duration_dibagi_total_working_time[1].sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe 
 			else
 				return '-'
 			end
