@@ -2,7 +2,7 @@
 <div class="col-md-7">
   <div class="col-md-4">
     <h2><b>Production</b></h2>
-    <strong><h2><b>Line <%= big.first %></b></h2></strong>
+    <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b></h2></strong>
   </div>
   <div class="col-md-8">
     <span id="legendDiv_<%= big.first.to_s %>"></span>
@@ -16,7 +16,7 @@
   <div class="col-md-12">
     <div class="col-md-4">
       <h2><b>Defect Int</b></h2>
-      <strong><h2><b>Line <%= big.first %></b><h2></strong>
+      <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b><h2></strong>
     </div>
     <div class="col-md-8">
       <span id="legendDiv_def_int_<%= big.first.to_s %>"></span>
@@ -28,7 +28,7 @@
   <div class="col-md-12">
     <div class="col-md-4" >
       <h2><b>Defect Ext</b></h2>
-      <strong><h2><b>Line <%= big.first %></b><h2></strong>
+      <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b><h2></strong>
     </div>
     <div class="col-md-8">
       <span id="legendDiv_def_ext_<%= big.first.to_s %>"></span>
