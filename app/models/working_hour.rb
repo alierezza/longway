@@ -11,8 +11,12 @@ class WorkingHour < ActiveRecord::Base
   end
 
   def check_validation
-    self.working_day.working_hours.where.not(id: nil).each do |hour|
-    	if self.start.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
+    query = "id <> #{id}" if id != nil
+    self.working_day.working_hours.where.not(id: nil).where(query).each do |hour|
+      if self.start.to_time == hour.start.to_time
+        errors.add(:base, 'Start should not be the same with another scheduled time.')
+        break
+      elsif self.start.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
     		errors.add(:base, 'Start should not be between another scheduled time.')
     		break
     	elsif self.end.to_time.between?(hour.start.to_time+1, hour.end.to_time-1)
