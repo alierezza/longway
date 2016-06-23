@@ -6,8 +6,9 @@
 		<div class="form-group">
 			<%= form_tag data_path, :method=>"GET", :remote=>true do %>
 			<div class="form-group">
-				<%= label_tag :no_line, "No. Line" , class: "control-label" %>
-				<%= text_field_tag :no, nil, :required=>true, class: "form-control" %>
+				<%= label_tag :no_line, "Line Name" , class: "control-label" %>
+				<%= select_tag :no, options_from_collection_for_select(Line.all, :no, :nama), :class=>"form-control" %>
+				<%#= text_field_tag :no, nil, :required=>true, class: "form-control" %>
 			</div>
 
 			<div class="form-group">
@@ -38,5 +39,6 @@
     $('#datetimepicker1').datetimepicker({
       format: "DD/MM/YYYY", showClear: true, showTodayButton: true
     });
+    $("#no").select2();
   });
 </script>
