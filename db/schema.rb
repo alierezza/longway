@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20160624055834) do
     t.string   "banner_content_type"
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
-    t.integer  "slide_duration",      default: 5000
+    t.integer  "slide_duration",      default: 5
   end
 
   create_table "languages", force: :cascade do |t|
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 20160624055834) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.boolean  "visible",        default: true
-    t.integer  "slide_duration", default: 5000
+    t.integer  "slide_duration", default: 5
   end
 
   create_table "masteremails", force: :cascade do |t|

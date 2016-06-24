@@ -46,7 +46,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem 'em-websocket'
   gem 'whenever', :require => false
   gem 'devise_security_extension'
-  gem "bootstrap-switch-rails"
+  gem "bootstrap-switch-rails", "3.0.0"
   gem "spreadsheet"
   gem "paperclip", "~> 4.3"
   gem 'jquery-datatables-rails'
