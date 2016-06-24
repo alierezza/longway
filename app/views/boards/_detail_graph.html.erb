@@ -1,19 +1,24 @@
+<script>
+var height = $(window).height();
+$(".height_graph").css("height",height * 70/100);
+</script>
 
-<div class="col-md-7">
-  <div class="col-md-4">
+
+<div class="col-md-7 height_graph">
+  <div class="col-md-4" >
     <h2><b>Production</b></h2>
     <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b></h2></strong>
   </div>
   <div class="col-md-8">
     <span id="legendDiv_<%= big.first.to_s %>"></span>
   </div>
-  <div class="col-md-12">
-    <canvas id="canvas_<%= big.first.to_s %>" height="450" width="700" ></canvas>
+  <div class="col-md-12" style="height:80%">
+    <canvas id="canvas_<%= big.first.to_s %>" style="width:100%;height:100%;" ></canvas>
   </div>
 </div>
 
-<div class="col-md-5" >
-  <div class="col-md-12">
+<div class="col-md-5 height_graph" >
+  <div class="col-md-12" style="height:50%;width:100%;">
     <div class="col-md-4">
       <h2><b>Defect Int</b></h2>
       <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b><h2></strong>
@@ -21,11 +26,11 @@
     <div class="col-md-8">
       <span id="legendDiv_def_int_<%= big.first.to_s %>"></span>
     </div>
-    <div class="col-md-12" >
-      <canvas id="canvas_def_int_<%= big.first.to_s %>" height="240" width="600" ></canvas>
+    <div class="col-md-12" style="height:60%;width:100%;">
+      <canvas id="canvas_def_int_<%= big.first.to_s %>"  ></canvas>
     </div>
   </div>
-  <div class="col-md-12">
+  <div class="col-md-12" style="height:50%;width:100%;">
     <div class="col-md-4" >
       <h2><b>Defect Ext</b></h2>
       <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b><h2></strong>
@@ -33,13 +38,13 @@
     <div class="col-md-8">
       <span id="legendDiv_def_ext_<%= big.first.to_s %>"></span>
     </div>
-    <div class="col-md-12">
-      <canvas id="canvas_def_ext_<%= big.first.to_s %>" height="240" width="600" ></canvas>
+    <div class="col-md-12" style="height:60%;width:100%;">
+      <canvas id="canvas_def_ext_<%= big.first.to_s %>"  ></canvas>
     </div>
   </div>
 </div>
 
-<div class="col-md-12" style="text-align:center">
+<div class="col-md-12" >
   <div class="col-md-4"><b><font size=6 color='darkblue'>P/O: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.po rescue "" end %></font></b></div>
   <div class="col-md-4"><b><font size=6  color='darkblue'>MFG No: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
   <div class="col-md-4"><b><font size=6  color='darkblue'>Article: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.article rescue "" end %></font></b></div>
@@ -119,6 +124,7 @@
         ctx = document.getElementById("canvas_def_int_<%= big.first.to_s %>").getContext("2d");
         window.mybar1 = new Chart(ctx).Bar(<%= "graph_def_int" + big.first.to_s %>, {
           responsive: true,
+              maintainAspectRatio: false,
           showTooltips: true,
           animation : false,
           scaleShowHorizontalLines: true,
@@ -173,6 +179,7 @@
         ctx = document.getElementById("canvas_def_ext_<%= big.first.to_s %>").getContext("2d");
         window.mybar2 = new Chart(ctx).Bar(<%= "graph_def_ext" + big.first.to_s %>, {
           responsive: true,
+              maintainAspectRatio: false,
           showTooltips: true,
           animation : false,
           scaleShowHorizontalLines: true,
