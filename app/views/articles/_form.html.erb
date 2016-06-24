@@ -7,7 +7,7 @@
         </div>
 
         <div class='form-group'>
-            <label class='control-label'>Article Name</label>
+            <label class='control-label'>Article Code</label>
             <% if Detailreportarticle.find_by(:article=>@article.name) == nil %>
                 <%= f.text_field :name, :Class=>"form-control", required: true %>
             <% else %>
