@@ -31,19 +31,8 @@
 					<th rowspan=2>Country</th>
 				</tr>
 				<tr>
-					<% defect_int.each_with_index do |(key, val), index| %>
-						<th>INT <%= key %></th>
-						<% if (index+1) == defect_int.map{ |k,v| k }.length %>
-							<th>INT (SUM)</th>
-						<% end %>
-					<% end %>
-
-					<% defect_ext.each_with_index do |(key, val), index| %>
-						<th>EXT <%= key %></th>
-						<% if (index+1) == defect_ext.map{ |k,v| k }.length %>
-							<th>EXT (SUM)</th>
-						<% end %>
-					<% end %>
+					<%= show_defect_header(defect_int, "Internal") %>
+					<%= show_defect_header(defect_ext, "External") %>
 	<!-- 				<th>INT 11A</th>
 					<th>INT 11B</th>
 					<th>INT 11C</th>
@@ -87,19 +76,8 @@
 									(<%= Report.efficiency(detailreport.report,detailreport.jam) %>)
 								</font>
 							</td>
-							<% JSON.parse(detailreport.defect_int).each_with_index do |(key, val), index| %>
-								<td><%= val %></td>
-								<% if (index+1) == JSON.parse(detailreport.defect_int).map{ |k,v| k }.length %>
-									<td><%= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
-								<% end %>
-							<% end %>
-
-							<% JSON.parse(detailreport.defect_ext).each_with_index do |(key, val), index| %>
-								<td><%= val %></td>
-								<% if (index+1) == JSON.parse(detailreport.defect_ext).map{ |k,v| k }.length %>
-									<td><%= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td>
-								<% end %>
-							<% end %>
+							<%= show_defect_body(detailreport, "Internal", defect_int) %>
+							<%= show_defect_body(detailreport, "External", defect_ext) %>
 	<!-- 						<td><%#= detailreport.defect_int %></td>
 							<td><%#= detailreport.defect_int_11b %></td>
 							<td><%#= detailreport.defect_int_11c %></td>

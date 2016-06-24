@@ -44,4 +44,49 @@ module ApplicationHelper
 	def sum_defect_int(detailreport)
 		JSON.parse(detailreport.object.defect_int.to_s).map{ |k,v| v }.sum
 	end
+
+	def show_defect_header(data, type)
+		html = ""
+		defects = Defect.where(defect_type: type)
+
+		if type == "Internal"
+			head = "INT"
+		else
+			head = "EXT"
+		end
+
+		if data.present?
+			data.each{ |k,v| html += "<th>#{head + ' ' + k}</th>" }
+			html += "<th>#{head} (SUM)</th>"
+		else
+			defects.each{ |o| html += "<th>#{head + ' ' + o.name}</th>" }
+			html += "<th>#{head} (SUM)</th>"
+		end
+
+		html.html_safe
+	end
+
+	def show_defect_body(detailreport, type, alternative)
+		html = ""
+		defects = Defect.where(defect_type: type)
+
+		if type == "Internal"
+			data = [detailreport.defect_int, "total_defect_int"]
+		else
+			data = [detailreport.defect_ext, "total_defect_ext"]
+		end
+
+		if JSON.parse(data[0]).present? && alternative.present?
+			alternative.each{ |k,v| html += "<td>#{JSON.parse(data[0])[k]}</td>" }
+		elsif JSON.parse(data[0]).present?
+			JSON.parse(data[0]).each{ |k,v| html += "<td>#{v}</td>" }
+		elsif alternative.present?
+			alternative.each{ |k,v| html += "<td>0</td>" }
+		else
+			defects.each{ |o| html += "<td>0</td>" }
+		end
+
+		html += "<td>#{Report.send data[1], detailreport.report, detailreport.jam}</td>"
+		html.html_safe
+	end
 end

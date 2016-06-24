@@ -2,13 +2,13 @@
 <thead>
 	<% Line.where(visible: true).order(:no).limit(3).offset(0).each_with_index do |line, index| %>
 		<% count = Line.where(visible: true).order(:no).limit(3).offset(0).count %>
-		<% if index%5 == 0 %>
+		<% if index == 0 %>
 			<tr>
 		<% end %>
 
 		<th id="<%= line.no %>" style="<%= line.status == true ? '' : 'background-color:yellow' %>"><%= line.no %></th>
 
-		<% if (index != 0 && index%5 == 0) || count == index+1 %>
+		<% if count == index+1 %>
 			<th colspan=<%= 5-count %> style="font-size: 60px;vertical-align: middle;"><u><font color="darkblue">Machine Problem</font></u></th>
 			</tr>
 		<% end %>
@@ -16,15 +16,15 @@
 
 	<% Line.where(visible: true).order(:no).offset(3).each_with_index do |line, index| %>
 		<% count = Line.where(visible: true).order(:no).offset(3).count %>
-		<% if index%5 == 0 %>
+		<% if index == 0 || (index != 0 && index%5 == 0) %>
 			<tr>
 		<% end %>
 
 		<th id="<%= line.no %>" style="<%= line.status == true ? '' : 'background-color:yellow' %>"><%= line.no %></th>
 
-		<% if (index != 0 && index%5 == 0) || count == index+1 %>
-			<% if count%5 != 0 %>
-				<th colspan=<%= 5-count %>></th>
+		<% if (index != 0 && (index+1)%5 == 0) || count == index+1 %>
+			<% if count == index+1 && count%5 != 0 %>
+				<th colspan=<%= 5-(count%5) %>></th>
 			<% end %>
 			</tr>
 		<% end %>

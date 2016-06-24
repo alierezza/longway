@@ -52,11 +52,12 @@
           </div>
           <div class="">
             <% Defect.where(defect_type: 'Internal').each_with_index do |defect, index| %>
-              <% if index%2 == 0 %>
+              <% count = Defect.where(defect_type: 'Internal').count %>
+              <% if index == 0 || (index != 0 && index%2 == 0) %>
                 <div class="row">
               <% end %>
               <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
-              <% if index%2 == 0 %>
+              <% if index != 0 && (index+1)%2 == 0 || count == index+1 %>
                 </div><br>
               <% end %>
             <% end %>
@@ -99,11 +100,12 @@
           </div>
           <div class="">
             <% Defect.where(defect_type: 'External').each_with_index do |defect, index| %>
-              <% if index%2 == 0 %>
+              <% count = Defect.where(defect_type: 'External').count %>
+              <% if index == 0 || (index != 0 && index%2 == 0) %>
                 <div class="row">
               <% end %>
               <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
-              <% if index%2 == 0 %>
+              <% if index != 0 && (index+1)%2 == 0 || count == index+1 %>
                 </div><br>
               <% end %>
             <% end %>
