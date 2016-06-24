@@ -9,6 +9,7 @@
     <table class="table table-stripped table-bordered">
 			<thead>
 				<th>Image</th>
+				<th>Slide Duration</th>
 				<th>Status</th>
 				<th>Action</th>
 			</thead>
@@ -16,6 +17,7 @@
 				<% @images.all.each_with_index do |image, index| %>
 					<tr>
 						<td><%= image_tag image.banner.url(:medium) %></td>
+						<td><%= image.slide_duration %> second</td>
 						<td>
 							<% if image.status == true %>
 								<input type="checkbox" name="show_<%= index.to_s %>" id="<%= image.id.to_s %>" data-size="mini" checked >

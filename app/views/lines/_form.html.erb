@@ -19,6 +19,11 @@
         <%= f.select :user_id, options_from_collection_for_select(User.where("role != ?","Admin").all, 'id', 'nama', :selected=>@line.user_id),{:include_blank => '-- Select One --'}, class: 'form-control' %>
     </div>
 
+    <div class='form-group'>
+        <label class='control-label'>Slide Duration (in second)</label>
+        <%= f.number_field :slide_duration, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1 %>
+    </div>
+
     <hr>
 
     <div class='form-actions pull-right' style='margin-bottom:0'>

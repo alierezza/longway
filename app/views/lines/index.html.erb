@@ -11,6 +11,7 @@
 				<th>Nama Mesin</th>
 				<th>No Line</th>
 				<th>Operator</th>
+				<th>Slide Duration</th>
 				<th>Status</th>
 				<th width="5%">Show</th>
 				<th>Action</th>
@@ -21,6 +22,7 @@
 						<td><%= line.nama %></td>
 						<td><%= line.no %></td>
 						<td><%= line.user == nil ? "-" : line.user.nama %></td>
+						<td><%= line.slide_duration %> second</td>
 						<td><%= line.status == true ? "Normal" : "<font color=red>Problem</font>".html_safe %></td>
 						<td>
 							<% if line.visible == true %>
