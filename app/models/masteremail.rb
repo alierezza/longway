@@ -93,10 +93,11 @@ class Masteremail < ActiveRecord::Base
 					sheet1.column(col6).width = 20
 
 					sheet1.merge_cells(baris, init_col+1, baris, col)
-					init_col+1.times do |y|
+					10.times do |y|
 						sheet1.merge_cells(baris, y, baris+1, y)
 					end
-					sheet1.merge_cells(baris, col1, baris+1, col1)
+
+					sheet1.merge_cells(baris, col1, baris+1, col1) #berge rft kolom
 					sheet1.merge_cells(baris, col2, baris+1, col2)
 					sheet1.merge_cells(baris, col3, baris+1, col3)
 					sheet1.merge_cells(baris, col4, baris+1, col4)
