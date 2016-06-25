@@ -196,7 +196,7 @@ class Report < ActiveRecord::Base
 			return false
 		end
 
-			user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
+			user.line.reports.find_by("tanggal = ?",Date.today).detailreports.create(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country, :defect_int=>Detailreport.empty_defect[0],:defect_ext=>Detailreport.empty_defect[1])
 			return true
 
 	end
@@ -214,7 +214,7 @@ class Report < ActiveRecord::Base
 
 					hour = Report.check_working_hour
 
-					report.detailreports.create!(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country)
+					report.detailreports.create!(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country, :defect_int=>Detailreport.empty_defect[0],:defect_ext=>Detailreport.empty_defect[1])
 
 					puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				end

@@ -75,5 +75,16 @@ class Detailreport < ActiveRecord::Base
 		where("jam <= ?",hour).where.not(:jam=>WorkingDay.find_by(:name=>report.tanggal.strftime("%A")).working_hours.where(:working_state=>"Break").pluck(:start))
 	end
 
+	def self.empty_defect
+		defect_int = Defect.where(defect_type: "Internal").pluck(:name)
+		defect_int = defect_int.map{ |a| [a, 0] }.to_h
+
+		defect_ext = Defect.where(defect_type: "External").pluck(:name)
+		defect_ext = defect_ext.map{ |a| [a, 0] }.to_h
+
+
+    	return [defect_int.to_json,defect_ext.to_json]
+	end
+
 	
 end

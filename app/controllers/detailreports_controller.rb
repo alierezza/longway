@@ -1,2 +1,5 @@
 class DetailreportsController < ApplicationController
+
+		
+  
 end

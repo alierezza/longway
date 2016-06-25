@@ -55,6 +55,8 @@ class ReportsController < ApplicationController
 			params[:report][:tanggal] = Date.today
 			params[:report][:detailreports_attributes]["0"][:jam] = if_not_breaking_time[1]
 			params[:report][:detailreports_attributes]["0"][:jam_end] = if_not_breaking_time[2]
+			params[:report][:detailreports_attributes]["0"][:defect_int] = Detailreport.empty_defect[0]
+			params[:report][:detailreports_attributes]["0"][:defect_ext] = Detailreport.empty_defect[1]
 
 			@report = current_user.line.reports.new(my_sanitizer)
 		    @status = @report.save
