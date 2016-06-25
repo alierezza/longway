@@ -1,4 +1,5 @@
 
+
 <div class="carousel-inner" style="width:100%;height:100%">
 
   <% if @boards.where("no >= 1 and no <= 9") != [] and @boards.where("no >= 10 and no <= 18") == [] %>
@@ -49,13 +50,19 @@
     <div class="item" data-interval="<%= image.slide_duration %>000">
       <input type="hidden" value="<%= image.id.to_s %>" class="hidden" />
       <div id="image_<%= image.id.to_s %>">
-        <%= image_tag image.banner.url(:original), :width=>"100%", :height=>"710px" %>
+        <%= image_tag image.banner.url(:original), :class=>"image_banner", :style=>"width:100%" %>
       </div>
     </div>
   <% end %>
 
 
 </div>
+
+
+<script>
+var height = $(window).height();
+$(".image_banner").css("height",height * 70/100 );
+</script>
 
 <script>
 $(function(){

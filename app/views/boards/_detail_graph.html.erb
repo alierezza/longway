@@ -1,6 +1,6 @@
 <script>
 var height = $(window).height();
-$(".height_graph").css("height",height * 70/100);
+$(".height_graph").css("height",height * 70/100 );
 </script>
 
 
@@ -44,10 +44,10 @@ $(".height_graph").css("height",height * 70/100);
   </div>
 </div>
 
-<div class="col-md-12" >
-  <div class="col-md-4"><b><font size=6 color='darkblue'>P/O: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.po rescue "" end %></font></b></div>
-  <div class="col-md-4"><b><font size=6  color='darkblue'>MFG No: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
-  <div class="col-md-4"><b><font size=6  color='darkblue'>Article: </font><font size=6 color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.article rescue "" end %></font></b></div>
+<div class="col-md-12 board_bottom" >
+  <div class="col-md-4"><b><font color='darkblue'>P/O: </font><font color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.po rescue "" end %></font></b></div>
+  <div class="col-md-4"><b><font  color='darkblue'>MFG No: </font><font  color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
+  <div class="col-md-4"><b><font  color='darkblue'>Article: </font><font color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.article rescue "" end %></font></b></div>
 </div>
 
 
@@ -91,10 +91,10 @@ $(".height_graph").css("height",height * 70/100);
           scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="target">'
-                        +' <font size=6>Target</font>'
+                        +' Target'
                         +'</li>'
                         +'<li class="actual">'
-                        +' <font size=6>Actual</font>'
+                        +' Actual'
                         +'</li>'
 
                   +'</ul>'
@@ -132,13 +132,13 @@ $(".height_graph").css("height",height * 70/100);
           scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="satu">'
-                        +' <font size=4 style="font-weight:bold">1. <%=raw big[1][4][0] %> &nbsp;</font>'
+                        +' 1. <%=raw big[1][4][0] %> &nbsp;'
                         +'</li>'
                         +'<li class="dua">'
-                        +' <font size=4 style="font-weight:bold">2. <%=raw big[1][4][1] %> &nbsp;</font>'
+                        +' 2. <%=raw big[1][4][1] %> &nbsp;'
                         +'</li>'
                         +'<li class="tiga">'
-                        +' <font size=4 style="font-weight:bold">3. <%=raw big[1][4][2] %> &nbsp;</font>'
+                        +' 3. <%=raw big[1][4][2] %> &nbsp;'
                         +'</li>'
 
                   +'</ul>'
@@ -187,13 +187,13 @@ $(".height_graph").css("height",height * 70/100);
           scaleFontStyle: "bold",
           legendTemplate : '<ul class="graph-legend">'
                         +'<li class="satu">'
-                        +' <font size=4 style="font-weight:bold">1. <%=raw big[1][7][0] %> &nbsp;</font>'
+                        +' 1. <%=raw big[1][7][0] %> &nbsp;'
                         +'</li>'
                         +'<li class="dua">'
-                        +' <font size=4 style="font-weight:bold">2. <%=raw big[1][7][1] %> &nbsp;</font>'
+                        +' 2. <%=raw big[1][7][1] %> &nbsp;'
                         +'</li>'
                         +'<li class="tiga">'
-                        +' <font size=4 style="font-weight:bold">3. <%=raw big[1][7][2] %> &nbsp;</font>'
+                        +' 3. <%=raw big[1][7][2] %> &nbsp;'
                         +'</li>'
 
                   +'</ul>'

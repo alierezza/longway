@@ -135,8 +135,7 @@ button#connect {
 ///////// board
 
 .header_board {
-  font-size: 50px;
-  margin-bottom: -18px;
+  font-size: 4.0vh;
 }
 
 #board1, #board2 {
@@ -147,11 +146,11 @@ button#connect {
   th {
     color: white;
     text-align: center;
-    font-size: 23px;
+    font-size: 2.0vh;
     vertical-align: middle;
   }
   tbody {
-    font-size: 30px;
+    font-size: 4.0vh;
     font-weight: bold;
     td {
       padding: 0px 10px 0px 10px;
@@ -308,8 +307,8 @@ button#connect {
     li:before {
       margin-right: 10px;
       content: " ";
-      height: 35px;
-      width: 35px;
+      height: 20px;
+      width: 20px;
       display: block;
       float: left;
     }
@@ -345,6 +344,13 @@ button#connect {
       }
     }
   }
+
+.height_graph div h2, .target, .actual, .satu, .dua, .tiga{
+  font-weight:bold;
+  font-size: 1.75vh;
+}
+
+
 
 /* Carousel Control */
 .control-box {
@@ -610,10 +616,10 @@ div.carousel .fill {
     position:absolute;
    bottom:0;
    width:100%;
-   height:6%;   /* Height of the footer */
+   height:5%;   /* Height of the footer */
    background:darkred;
    color: white;
-   font-size: 35pt;
+   font-size: 4.0vh;
    margin-left:-30px;
    overflow: hidden;
 }
@@ -625,7 +631,6 @@ div[id^='target_']{
   }
 }
 
-.visual-board {
-  font-size: 40px;
-  font-weight: 700;
+.board_bottom{
+  font-size: 3vh;
 }
