@@ -1,5 +1,6 @@
 class LinesController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Lines", :lines_path
 
 	def index
 		if params[:visible]

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  add_breadcrumb "Home", :root_path
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
@@ -15,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    homes_path 
+    homes_path
   end
 
 

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-load_and_authorize_resource param_method: :my_sanitizer
+	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Users", :users_path
 
-	
 	def index
 		@users = User.all.order("created_at ASC")
 	end

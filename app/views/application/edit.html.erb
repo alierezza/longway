@@ -1,0 +1,16 @@
+<%
+	if params[:controller] == "ads"
+		title = "Running Text"
+	else
+		title = params[:controller].titleize.singularize
+	end
+%>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Edit <%= title %></h3>
+  </div>
+  <div class="panel-body">
+		<%= render "form" %>
+  </div>
+</div>

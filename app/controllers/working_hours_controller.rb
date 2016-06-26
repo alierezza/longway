@@ -1,6 +1,7 @@
 class WorkingHoursController < ApplicationController
   load_and_authorize_resource except: :show
   before_action :set_working_hour, only: [:edit, :update, :destroy]
+  add_breadcrumb "Working List", :working_hours_path
 
   # GET /working_hours
   # GET /working_hours.json
@@ -19,10 +20,13 @@ class WorkingHoursController < ApplicationController
   def new
     @working_day = WorkingDay.find(params[:working_day_id])
     @working_hour = @working_day.working_hours.new
+
+    add_breadcrumb "Working Hours", working_hour_url(@working_day)
   end
 
   # GET /working_hours/1/edit
   def edit
+    add_breadcrumb "Working Hours", working_hour_url(@working_day)
   end
 
   # POST /working_hours

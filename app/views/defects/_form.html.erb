@@ -1,29 +1,27 @@
-<div class='panel-body'>
-  <%= form_for(@defect) do |f| %>
-    <div class='form-group'>
-        <label class='control-label'>Defect Code</label>
-        <%= f.text_field :name, "data-rule-required"=>true, :Class=>"form-control", required: true %>
-    </div>
+<%= form_for(@defect) do |f| %>
+  <div class='form-group'>
+      <label class='control-label'>Defect Code</label>
+      <%= f.text_field :name, "data-rule-required"=>true, :Class=>"form-control", required: true %>
+  </div>
 
-    <div class='form-group'>
-        <label class='control-label'>Operator</label>
-        <%= f.select :defect_type, options_for_select(Defect.type, :selected=>@defect.defect_type),{:include_blank => '-- Select Type --'}, class: 'form-control', required: true %>
-    </div>
+  <div class='form-group'>
+      <label class='control-label'>Operator</label>
+      <%= f.select :defect_type, options_for_select(Defect.type, :selected=>@defect.defect_type),{:include_blank => '-- Select Type --'}, class: 'form-control', required: true %>
+  </div>
 
-    <div class='form-group'>
-        <label class='control-label'>Description</label>
-        <%= f.text_area :description, :class=>"form-control", rows: 10, required: true %>
-    </div>
+  <div class='form-group'>
+      <label class='control-label'>Description</label>
+      <%= f.text_area :description, :class=>"form-control", rows: 10, required: true %>
+  </div>
 
-    <hr>
+  <hr>
 
-    <div class='form-actions pull-right' style='margin-bottom:0'>
-      <%= link_to defects_path, style: "margin-right: 15px;" do %> Cancel <% end %>
-      <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
-    </div>
+  <div class='form-actions pull-right' style='margin-bottom:0'>
+    <%= link_to defects_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+    <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
+  </div>
 
-  <% end %>
-</div>
+<% end %>
 
 <script>
 $("#defect_defect_type").select2();

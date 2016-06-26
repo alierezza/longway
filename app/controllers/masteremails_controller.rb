@@ -1,5 +1,6 @@
 class MasteremailsController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Email", :masteremails_path
 
 	def index
 		@emails = Masteremail.all
@@ -34,12 +35,12 @@ class MasteremailsController < ApplicationController
 				end
 
 			end
-				
 
-			
 
-			
-		end	
+
+
+
+		end
 	end
 
 	def show

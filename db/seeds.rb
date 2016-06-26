@@ -49,6 +49,7 @@ ActiveRecord::Base.transaction do
       end
     end
   end
+  WorkingDay.create(name: "Sunday")
 
   [["11A", "JAHIT TANGAN BURUK/ULANGI DIJAHIT"], ["11B", "KERUT/JAHITAN ROBEK"], ["11C", "JAHITAN LONGGAR"],
   ["11J", "PELOMPAT/TAK TERJAHIT"], ["11L", "TAK TEPAT POSISI/DISLOKASI"], ["13D", "LUBANG KATUB DEFECT/MASALAH"]].each do |defect|

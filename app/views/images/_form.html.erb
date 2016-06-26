@@ -1,27 +1,24 @@
-<div class='panel-body'>
-    <%= form_for(@image) do |f| %>
+<%= form_for(@image) do |f| %>
+    <div class='form-group'>
+        <label class='control-label'>Image (max: 4Mb)</label>
+        <%= f.file_field :banner, :class=>"avatar", required: true,:accept=>"image/*" %>
+          <div id="target_image_banner">
+            <%= image_tag @image.banner.url(:medium) %>
+          </div>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Image (max: 4Mb)</label>
-            <%= f.file_field :banner, :class=>"avatar", required: true,:accept=>"image/*" %>
-              <div id="target_image_banner">
-                <%= image_tag @image.banner.url(:medium) %>
-              </div>
-        </div>
+    <div class='form-group'>
+        <label class='control-label'>Slide Duration (in second)</label>
+        <%= f.number_field :slide_duration, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1 %>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Slide Duration (in second)</label>
-            <%= f.number_field :slide_duration, "data-rule-required"=>true, :Class=>"form-control", required: true, :min=>1 %>
-        </div>
+    <hr>
 
-        <hr>
-
-        <div class='form-actions pull-right' style='margin-bottom:0'>
-        <%= link_to images_path, style: "margin-right: 15px;" do %> Cancel <% end %>
-        <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
-        </div>
-    <% end %>
-</div>
+    <div class='form-actions pull-right' style='margin-bottom:0'>
+    <%= link_to images_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+    <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
+    </div>
+<% end %>
 
 <script>
 

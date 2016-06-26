@@ -33,6 +33,7 @@ class ReportsController < ApplicationController
 			end
 		end
 
+  		add_breadcrumb "History Data"
 		authorize! :data, current_user
 	end
 

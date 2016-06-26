@@ -1,16 +1,13 @@
-<div class='panel-body'>
-    <%= form_for(@category) do |f| %>
+<%= form_for(@category) do |f| %>
+    <div class='form-group'>
+        <label class='control-label'>Category Name</label>
+        <%= f.text_field :name, :Class=>"form-control", required: true %>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Category Name</label>
-            <%= f.text_field :name, :Class=>"form-control", required: true %>
-        </div>
+    <hr>
 
-        <hr>
-
-        <div class='form-actions pull-right' style='margin-bottom:0'>
-        <%= link_to categories_path, style: "margin-right: 15px;" do %> Cancel <% end %>
-        <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
-        </div>
-    <% end %>
-</div>
+    <div class='form-actions pull-right' style='margin-bottom:0'>
+    <%= link_to categories_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+    <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
+    </div>
+<% end %>

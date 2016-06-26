@@ -1,6 +1,7 @@
 class HeaderBoardsController < ApplicationController
   load_and_authorize_resource
   before_action :set_header_board, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Header Boards", :header_boards_path
 
   # GET /header_boards
   # GET /header_boards.json

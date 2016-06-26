@@ -53,6 +53,7 @@ GEM
       railties (>= 3.0)
     bootstrap3-datetimepicker-rails (4.17.37)
       momentjs-rails (>= 2.8.1)
+    breadcrumbs_on_rails (2.3.1)
     builder (3.2.2)
     byebug (9.0.5)
     cancancan (1.15.0)
@@ -257,6 +258,7 @@ DEPENDENCIES
   bootstrap-switch-rails (= 3.0.0)
   bootstrap-wysihtml5-rails
   bootstrap3-datetimepicker-rails (~> 4.17.37)
+  breadcrumbs_on_rails
   byebug
   cancancan
   capistrano (= 3.4.0)
@@ -294,4 +296,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.12.4
+   1.12.5

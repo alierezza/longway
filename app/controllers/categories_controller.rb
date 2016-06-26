@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
-load_and_authorize_resource param_method: :my_sanitizer
+	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Categories", :categories_path
 
 	def index
 		respond_to do |format|
@@ -17,7 +18,7 @@ load_and_authorize_resource param_method: :my_sanitizer
 		@category = Category.new
 	end
 
-	def create	
+	def create
 		@category = Category.new(my_sanitizer)
 		respond_to do |format|
 	      if @category.save!

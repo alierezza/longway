@@ -1,5 +1,6 @@
 class AdsController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Running Text"
 
 	def index
 		if Ad.count == 0
