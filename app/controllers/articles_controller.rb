@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Articles", :articles_path
 
 	def index
 		#@articles = Article.all
@@ -18,7 +19,7 @@ class ArticlesController < ApplicationController
 		@article = Article.new
 	end
 
-	def create	
+	def create
 		@article = Article.new(my_sanitizer)
 		respond_to do |format|
 	      if @article.save!
@@ -60,8 +61,8 @@ class ArticlesController < ApplicationController
 			redirect_to articles_path
 			flash[:alert] = "Article already used and cant be deleted"
 		end
-		
-		
+
+
 	end
 
 	private

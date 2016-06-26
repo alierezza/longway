@@ -1,6 +1,7 @@
 class DefectsController < ApplicationController
   load_and_authorize_resource
   before_action :set_defect, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Defects", :defects_path
 
   # GET /defects
   # GET /defects.json

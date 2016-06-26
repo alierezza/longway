@@ -1,31 +1,28 @@
-<div class='panel-body'>
-    <%= form_for(@article) do |f| %>
-        
-        <div class='form-group'>
-            <label class='control-label'>Session</label>
-            <%= f.text_field :session, :Class=>"form-control", required: true %>
-        </div>
+<%= form_for(@article) do |f| %>
+    <div class='form-group'>
+        <label class='control-label'>Session</label>
+        <%= f.text_field :session, :Class=>"form-control", required: true %>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Article Code</label>
-            <% if Detailreportarticle.find_by(:article=>@article.name) == nil %>
-                <%= f.text_field :name, :Class=>"form-control", required: true %>
-            <% else %>
-                <%= f.text_field :name, :Class=>"form-control", disabled: true %>
-            <% end %>
-        </div>
+    <div class='form-group'>
+        <label class='control-label'>Article Code</label>
+        <% if Detailreportarticle.find_by(:article=>@article.name) == nil %>
+            <%= f.text_field :name, :Class=>"form-control", required: true %>
+        <% else %>
+            <%= f.text_field :name, :Class=>"form-control", disabled: true %>
+        <% end %>
+    </div>
 
-        <div class='form-group'>
-            <label class='control-label'>Article Duration</label>
-            <%= f.number_field :duration, :Class=>"form-control",:step=>0.01, required: true %>
-        </div>
-        
+    <div class='form-group'>
+        <label class='control-label'>Article Duration</label>
+        <%= f.number_field :duration, :Class=>"form-control",:step=>0.01, required: true %>
+    </div>
 
-        <hr>
 
-        <div class='form-actions pull-right' style='margin-bottom:0'>
-        <%= link_to articles_path, style: "margin-right: 15px;" do %> Cancel <% end %>
-        <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
-        </div>
-    <% end %>
-</div>
+    <hr>
+
+    <div class='form-actions pull-right' style='margin-bottom:0'>
+    <%= link_to articles_path, style: "margin-right: 15px;" do %> Cancel <% end %>
+    <%= f.submit  class: 'btn btn-success', data: { disable_with: "Please wait..." } %>
+    </div>
+<% end %>

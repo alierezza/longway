@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Banners", :images_path
 
 	def index
 		if params[:id] && (Image.where(:status=>true).count < 5 && params[:status] == "true") || Image.where(:status=>true).count <= 5 && params[:status] == "false"

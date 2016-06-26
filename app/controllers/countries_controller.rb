@@ -1,5 +1,6 @@
 class CountriesController < ApplicationController
-load_and_authorize_resource param_method: :my_sanitizer
+	load_and_authorize_resource param_method: :my_sanitizer
+	add_breadcrumb "Countries", :countries_path
 
 	def index
 		#@articles = Article.all
@@ -18,7 +19,7 @@ load_and_authorize_resource param_method: :my_sanitizer
 		@country = Country.new
 	end
 
-	def create	
+	def create
 		@country = Country.new(my_sanitizer)
 		respond_to do |format|
 	      if @country.save!
