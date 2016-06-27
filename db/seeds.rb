@@ -21,14 +21,14 @@ end
 
 
 ActiveRecord::Base.transaction do
-  spreadsheet = Roo::Excelx.new("public/SMV.xlsx")
-  header = spreadsheet.row(1)
-  (6..spreadsheet.last_row).each do |i|
+  # spreadsheet = Roo::Excelx.new("public/SMV.xlsx")
+  # header = spreadsheet.row(1)
+  # (6..spreadsheet.last_row).each do |i|
 
-  	row = spreadsheet.row(i)
-  	Article.create(:session=>row[0] ,:name=>row[1],:duration=>row[2].round(2))
+  # 	row = spreadsheet.row(i)
+  # 	Article.create(:session=>row[0] ,:name=>row[1],:duration=>row[2].round(2))
 
-  end
+  # end
 
   ["LINE", "OPR", "TRGT", "TRGT SUM", "ACT", "ACT SUM", "%", "PPH", "DEFECT", "RFT", "REMARK", "ARTICLE", "EFFICIENT"].each do |header|
   	HeaderBoard.create(name: header, name_vietnam: "")
@@ -51,13 +51,13 @@ ActiveRecord::Base.transaction do
   end
   WorkingDay.create(name: "Sunday")
 
-  [["11A", "JAHIT TANGAN BURUK/ULANGI DIJAHIT"], ["11B", "KERUT/JAHITAN ROBEK"], ["11C", "JAHITAN LONGGAR"],
-  ["11J", "PELOMPAT/TAK TERJAHIT"], ["11L", "TAK TEPAT POSISI/DISLOKASI"], ["13D", "LUBANG KATUB DEFECT/MASALAH"]].each do |defect|
-    Defect.create(name: defect[0], defect_type: "Internal", description: defect[1])
+  [["MT06", "Color Deviations"], ["MT03", "Pilling"], ["MT11", "Wrinkle"],
+  ["AS13", "Wrong Specification parts"], ["AS21", "Install / Assembly wrong direction"], ["CT07", "Any visible soiling"],["PR02","Inaccurate print"],["PR05","Burrs"],["PR07","Printing peeling off",["PR11","Hole on surface"]]].each do |defect|
+     Defect.create(name: defect[0], defect_type: "Internal", description: defect[1])
   end
 
-  [["BS2", "SABLON POLA TAK PENUH"], ["BS3", "SABLON TERKENA HAMBATAN BENDA"], ["BS7", "BAYANGAN GANDA"],
-  ["BS13", "TAK TEPAT POSISI/TIDAK AKURAT/MIRING"], ["BS15", "KONTAMINASI TINTA"], ["BS17", "SABLON FARIASI BEDA WARNA"]].each do |defect|
+  [["10A", "Tearing"], ["11A", "Uneven stitching"], ["11B", "Tearing"],
+  ["10F", "Wrinkle"], ["12L", "Functional parts not workable"], ["14A", "Main Material"],["14B","Print"],["15B","Visible soiling except of ink soiling"],["16A","Tearing",["19F","Print is dropping off"]]].each do |defect|
     Defect.create(name: defect[0], defect_type: "External", description: defect[1])
   end
 

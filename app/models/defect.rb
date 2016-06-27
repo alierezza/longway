@@ -7,7 +7,7 @@ class Defect < ActiveRecord::Base
 	end
 
 	def defect_count_within_limit
-	    if Defect.where(defect_type: self.defect_type).count >= 6
+	    if Defect.where(defect_type: self.defect_type).count >= 10
 	      	errors.add(:base, 'Exceeded defect limit')
 	    end
 	end
