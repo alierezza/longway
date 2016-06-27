@@ -26,14 +26,12 @@
           </div>
           <br>
           <div><b>TOTAL : <%= @target_and_opr.detailreports.sum("act") == nil ? 0 : @target_and_opr.detailreports.sum("act") %></b></div>
-
-          <div id="line_and_clock" style="border:1px solid black">
-            <%= render "clock" %>
-          </div>
-
           <% end %>
         <% end %>
       </div> <!-- end id="actual" -->
+      <div id="line_and_clock" style="border:1px solid black;height:75px">
+        <%= render "clock" %>
+      </div>
     </div>
 
     <div class="col-xs-4">
