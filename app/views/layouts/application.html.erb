@@ -21,7 +21,7 @@
     	<%= render 'layouts/menu' %>
     <% end %>
     <div class="inner_body">
-      <% if !["homes", "boards", "problems", "reports"].include?(params[:controller]) || params[:action] == "data" %>
+      <% if !["homes", "boards", "problems", "reports","devise/sessions"].include?(params[:controller]) || params[:action] == "data" %>
         <ol class="breadcrumb">
           <%= render_breadcrumbs :tag => :li, :separator => "" %>
         </ol>
