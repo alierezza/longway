@@ -25,6 +25,18 @@ class Masteremail < ActiveRecord::Base
 					defect_int = Report.merge_defect(report.detailreports, "Internal")
 					defect_ext = Report.merge_defect(report.detailreports, "External")
 
+					if defect_int.present?
+						length_int = defect_int.length
+					else
+						length_int = Defect.where(defect_type: "Internal").length
+					end
+
+					if defect_ext.present?
+						length_ext = defect_ext.length
+					else
+						length_ext = Defect.where(defect_type: "External").length
+					end
+
 	    			sheet1.row(baris = baris+1).replace Masteremail.generate_header(defect_int, defect_ext, "header")
 	    			# sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT","","","","","","","","","","","","","", "RFT", "REMARK", "P/O", "MFG No","CATEGORY","COUNTRY"]
 	    			sheet1.row(baris).height = 16
@@ -32,7 +44,7 @@ class Masteremail < ActiveRecord::Base
 	    			format = Spreadsheet::Format.new :color => :black,
                                  :weight => :bold,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-                    30.times do |x| row.set_format(x,format) end
+                    (18+length_int+length_ext).times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
 					sheet1.column(0).width = 25
 					sheet1.column(1).width = 10
@@ -50,7 +62,7 @@ class Masteremail < ActiveRecord::Base
 					if defect_int.present?
 						defect_int.each_with_index do |(key, val), index|
 							sheet1.column(col += 1).width = 10
-							if (index+1) == defect_int.map{ |k,v| k }.length
+							if (index+1) == defect_int.length
 								sheet1.column(col += 1).width = 15
 							end
 						end
@@ -66,7 +78,7 @@ class Masteremail < ActiveRecord::Base
 					if defect_ext.present?
 						defect_ext.each_with_index do |(key, val), index|
 							sheet1.column(col += 1).width = 10
-							if (index+1) == defect_ext.map{ |k,v| k }.length
+							if (index+1) == defect_ext.length
 								sheet1.column(col += 1).width = 15
 							end
 						end
@@ -141,7 +153,7 @@ class Masteremail < ActiveRecord::Base
 	    			# sheet1.row(baris = baris+1).replace ["","","","","","","","","","","11A","11B","11C","11J","11L","13D","INT (SUM)","BS2","BS3","BS7","BS13","BS15","BS17","EXT (SUM)"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
-	    			30.times do |x|
+	    			(18+length_int+length_ext).times do |x|
 	    				row.set_format(x,format)
 	    			end
 
@@ -185,7 +197,7 @@ class Masteremail < ActiveRecord::Base
                     	format_red = Spreadsheet::Format.new :color => :red,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
 
-	    				30.times do |x|
+	    				(18+length_int+length_ext).times do |x|
 	    					if x == 4 and detailreport.act < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else
@@ -209,13 +221,13 @@ class Masteremail < ActiveRecord::Base
 	def self.generate_header(defect_int, defect_ext, type, init_col = 0)
 		if type == "header"
 			if defect_int.present?
-				int_length = defect_int.map{ |k,v| k }.length
+				int_length = defect_int.length
 			else
 				int_length = Defect.where(defect_type: "Internal").length
 			end
 
 			if defect_ext.present?
-				ext_length = defect_ext.map{ |k,v| k }.length
+				ext_length = defect_ext.length
 			else
 				ext_length = Defect.where(defect_type: "External").length
 			end

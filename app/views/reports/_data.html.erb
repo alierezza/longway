@@ -3,6 +3,18 @@
 	<%
 		defect_int = Report.merge_defect(@data.first.detailreports, "Internal")
 		defect_ext = Report.merge_defect(@data.first.detailreports, "External")
+
+		if defect_int.present?
+			length_int = defect_int.length
+		else
+			length_int = Defect.where(defect_type: "Internal").length
+		end
+
+		if defect_ext.present?
+			length_ext = defect_ext.length
+		else
+			length_ext = Defect.where(defect_type: "External").length
+		end
 	%>
 
 	<b>Line :</b> <%= @data.first.line.nama %><br>
@@ -21,7 +33,7 @@
 					<th rowspan=2>PPH</th>
 					<th rowspan=2 >ARTICLE</th>
 					<th rowspan=2>EFISIENSI (Akumulasi)</th>
-					<th colspan=<%= defect_int.map{ |k,v| k }.length + defect_ext.map{ |k,v| k }.length + 2 %>>DEFECT</th>
+					<th colspan=<%= length_int + length_ext + 2 %>>DEFECT</th>
 					<!-- <th colspan=14>DEFECT</th> -->
 					<th rowspan=2>RFT</th>
 					<th rowspan=2  width="25%">REMARK</th>
@@ -101,7 +113,7 @@
 						</tr>
 					<% end %>
 						<tr>
-							<td colspan=<%= defect_int.map{ |k,v| k }.length + defect_ext.map{ |k,v| k }.length + 18 %>>Total <%= @data.first.detailreports.count %> Jam</td>
+							<td colspan=<%= length_int + length_ext + 18 %>>Total <%= @data.first.detailreports.count %> Jam</td>
 						</tr>
 
 			</tbody>
