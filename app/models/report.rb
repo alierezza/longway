@@ -214,9 +214,14 @@ class Report < ActiveRecord::Base
 
 					hour = Report.check_working_hour
 
-					report.detailreports.create!(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country, :defect_int=>Detailreport.empty_defect[0],:defect_ext=>Detailreport.empty_defect[1])
+					if hour[2] != "Overtime"
+						report.detailreports.create!(:jam=>hour[0], :jam_end=>hour[1] , :opr=>@opr, :remark=>@remark, :target=>@target, :article=>@article, :po=>@po, :mfg=>@mfg, :category=>@category, :country=>@country, :defect_int=>Detailreport.empty_defect[0],:defect_ext=>Detailreport.empty_defect[1])
 
-					puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
+						puts "Sukses ! user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
+					else
+						puts "Overtime... user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
+					end
+
 				end
 			rescue Exception => e
 				puts "errornya: #{e.message}, user: #{user.email}"
@@ -231,7 +236,7 @@ class Report < ActiveRecord::Base
 		WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.each_with_index do |hour, index|
 
 			if Time.now.between?(hour.start.to_time,hour.end.to_time-1)
-				return [hour.start,hour.end]
+				return [hour.start,hour.end,hour.working_state]
 				break
 			end
 		end
