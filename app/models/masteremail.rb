@@ -10,7 +10,7 @@ class Masteremail < ActiveRecord::Base
 	    sheet1 = book.create_worksheet
 	    sheet1.name = Language.find_by(:message=>"Company Title").foreign_language+' Daily Report'
 
-	    sheet1.row(0).push(Language.find_by(:message=>"Company Title").foreign_language+" - Production result on #{tanggal.to_date.strftime('%d %B %Y')} taken at 9:00 PM")
+	    sheet1.row(0).push(Language.find_by(:message=>"Company Title").foreign_language+" - Production result on #{tanggal.to_date.strftime('%d %B %Y')} taken at #{Time.now.strftime('%H:%M')}")
 	    baris = 0
 	    total_length = 0
 	    Line.all.where("visible=?",true).order("no").each_with_index do |board,index|

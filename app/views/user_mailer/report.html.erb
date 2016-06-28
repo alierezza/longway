@@ -3,7 +3,7 @@
 <head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></head>
 <body>
 
-	Please Find attached file as final production on (<%= tanggal.strftime("%d %B %Y") %>) taken at 9:00 PM
+	Please Find attached file as final production on (<%= tanggal.strftime("%d %B %Y") %>) taken at <%= Time.now.strftime("%H:%M") %>
 
 </body>
 </html>
