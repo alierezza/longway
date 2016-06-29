@@ -205,7 +205,7 @@ class Masteremail < ActiveRecord::Base
 						rft = Report.rft(detailreport.report, detailreport.jam)
 
 
-						sheet1.row(baris = baris+1).replace Masteremail.generate_value(detailreport, defect_int, defect_ext, sum_target, sum_act, percent, pph, article_detail, efisiensi_akumulasi, rft, total_length)
+						sheet1.row(baris = baris+1).replace Masteremail.generate_value(report.detailreports, detailreport, defect_int, defect_ext, sum_target, sum_act, percent, pph, article_detail, efisiensi_akumulasi, rft, total_length)
 						# sheet1.row(baris = baris+1).replace [WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,Report.total_defect_int(detailreport.report, detailreport.jam),detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,Report.total_defect_ext(detailreport.report, detailreport.jam), rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg, detailreport.category, detailreport.country]
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
@@ -281,7 +281,7 @@ class Masteremail < ActiveRecord::Base
 		end
 	end
 
-	def self.generate_value(detailreport, defect_int, defect_ext, sum_target, sum_act, percent, pph, article_detail, efisiensi_akumulasi, rft, total_length)
+	def self.generate_value(detailreports, detailreport, defect_int, defect_ext, sum_target, sum_act, percent, pph, article_detail, efisiensi_akumulasi, rft, total_length)
 		if JSON.parse(detailreport.defect_int).present? && defect_int.present?
 			int_value = defect_int.map{ |k,v| JSON.parse(detailreport.defect_int)[k] }
 		elsif JSON.parse(detailreport.defect_int).present?
@@ -305,7 +305,6 @@ class Masteremail < ActiveRecord::Base
 		ext_value += [Report.total_defect_ext(detailreport.report, detailreport.jam)]
 
 		visible = []
-		detailreports = detailreport.report.detailreports
 		if check_visibility(detailreports)[0] && check_visibility(detailreports)[1]
 			visible = [detailreport.category, detailreport.country]
 		elsif check_visibility(detailreports)[0]
