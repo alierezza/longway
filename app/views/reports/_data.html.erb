@@ -15,6 +15,8 @@
 		else
 			length_ext = Defect.where(defect_type: "External").length
 		end
+
+		visible = Masteremail.check_visibility(@data.first.detailreports)
 	%>
 
 	<b>Line :</b> <%= @data.first.line.nama %><br>
@@ -39,8 +41,12 @@
 					<th rowspan=2  width="25%">REMARK</th>
 					<th rowspan=2>P/O</th>
 					<th rowspan=2>MFG No</th>
-					<th rowspan=2>Category</th>
-					<th rowspan=2>Country</th>
+					<% if visible[0] %>
+						<th rowspan=2>Category</th>
+					<% end %>
+					<% if visible[1] %>
+						<th rowspan=2>Country</th>
+					<% end %>
 				</tr>
 				<tr>
 					<%= show_defect_header(defect_int, "Internal") %>
@@ -108,8 +114,12 @@
 							<td><%= detailreport.remark %></td>
 							<td><%= detailreport.po %></td>
 							<td><%= detailreport.mfg %></td>
-							<td><%= detailreport.category %></td>
-							<td><%= detailreport.country %></td>
+							<% if visible[0] %>
+								<td><%= detailreport.category %></td>
+							<% end %>
+							<% if visible[1] %>
+								<td><%= detailreport.country %></td>
+							<% end %>
 						</tr>
 					<% end %>
 						<tr>

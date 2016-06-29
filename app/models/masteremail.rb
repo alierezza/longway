@@ -39,14 +39,23 @@ class Masteremail < ActiveRecord::Base
 						length_ext = Defect.where(defect_type: "External").length
 					end
 
-	    			sheet1.row(baris = baris+1).replace Masteremail.generate_header(defect_int, defect_ext, "header", total_length)
+					visible = 2
+					if check_visibility(report.detailreports)[0] && check_visibility(report.detailreports)[1]
+						visible = 0
+					elsif check_visibility(report.detailreports)[0]
+						visible = 1
+					elsif check_visibility(report.detailreports)[1]
+						visible = 1
+					end
+
+	    			sheet1.row(baris = baris+1).replace Masteremail.generate_header(defect_int, defect_ext, "header", total_length, 0, report.detailreports)
 	    			# sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT","","","","","","","","","","","","","", "RFT", "REMARK", "P/O", "MFG No","CATEGORY","COUNTRY"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
 	    			format = Spreadsheet::Format.new :color => :black,
                                  :weight => :bold,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-                    (18+total_length).times do |x| row.set_format(x,format) end
+                    (18+total_length-visible).times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
 					sheet1.column(0).width = 25
 					sheet1.column(1).width = 10
@@ -116,10 +125,16 @@ class Masteremail < ActiveRecord::Base
 					sheet1.merge_cells(baris, col2, baris+1, col2)
 					sheet1.merge_cells(baris, col3, baris+1, col3)
 					sheet1.merge_cells(baris, col4, baris+1, col4)
-					sheet1.merge_cells(baris, col5, baris+1, col5)
-					sheet1.merge_cells(baris, col6, baris+1, col6)
+					if check_visibility(report.detailreports)[0] && check_visibility(report.detailreports)[1]
+						sheet1.merge_cells(baris, col5, baris+1, col5)
+						sheet1.merge_cells(baris, col6, baris+1, col6)
+					elsif check_visibility(report.detailreports)[0]
+						sheet1.merge_cells(baris, col5, baris+1, col5)
+					elsif check_visibility(report.detailreports)[1]
+						sheet1.merge_cells(baris, col5, baris+1, col5)
+					end
 
-	    			sheet1.row(baris = baris+1).replace Masteremail.generate_header(defect_int, defect_ext, "defect_header", total_length, init_col+1)
+	    			sheet1.row(baris = baris+1).replace Masteremail.generate_header(defect_int, defect_ext, "defect_header", total_length, init_col+1, report.detailreports)
 
 					# sheet1.column(10).width = 10
 					# sheet1.column(11).width = 10
@@ -156,7 +171,7 @@ class Masteremail < ActiveRecord::Base
 	    			# sheet1.row(baris = baris+1).replace ["","","","","","","","","","","11A","11B","11C","11J","11L","13D","INT (SUM)","BS2","BS3","BS7","BS13","BS15","BS17","EXT (SUM)"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
-	    			(18+total_length).times do |x|
+	    			(18+total_length-visible).times do |x|
 	    				row.set_format(x,format)
 	    			end
 
@@ -200,7 +215,7 @@ class Masteremail < ActiveRecord::Base
                     	format_red = Spreadsheet::Format.new :color => :red,
                                  :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
 
-	    				(18+total_length).times do |x|
+	    				(18+total_length-visible).times do |x|
 	    					if x == 4 and detailreport.act < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else
@@ -221,7 +236,7 @@ class Masteremail < ActiveRecord::Base
 
 	end
 
-	def self.generate_header(defect_int, defect_ext, type, total_length, init_col = 0)
+	def self.generate_header(defect_int, defect_ext, type, total_length, init_col = 0, detailreports)
 		if type == "header"
 			if defect_int.present?
 				int_length = defect_int.length
@@ -235,10 +250,19 @@ class Masteremail < ActiveRecord::Base
 				ext_length = Defect.where(defect_type: "External").length
 			end
 
+			visible = []
+			if check_visibility(detailreports)[0] && check_visibility(detailreports)[1]
+				visible = ["CATEGORY","COUNTRY"]
+			elsif check_visibility(detailreports)[0]
+				visible = ["CATEGORY"]
+			elsif check_visibility(detailreports)[1]
+				visible = ["COUNTRY"]
+			end
+
 			header = ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT"]
 			header += (total_length + 1).times.map{ |a| "" }
 			# header += (int_length + ext_length + 1).times.map{ |a| "" }
-			header += ["RFT", "REMARK", "P/O", "MFG No","CATEGORY","COUNTRY"]
+			header += ["RFT", "REMARK", "P/O", "MFG No"] + visible
 		else
 			if defect_int.present?
 				int_header = defect_int.map{ |key, val| key } + ["INT (SUM)"]
@@ -280,9 +304,19 @@ class Masteremail < ActiveRecord::Base
 		end
 		ext_value += [Report.total_defect_ext(detailreport.report, detailreport.jam)]
 
+		visible = []
+		detailreports = detailreport.report.detailreports
+		if check_visibility(detailreports)[0] && check_visibility(detailreports)[1]
+			visible = [detailreport.category, detailreport.country]
+		elsif check_visibility(detailreports)[0]
+			visible = [detailreport.category]
+		elsif check_visibility(detailreports)[1]
+			visible = [detailreport.country]
+		end
+
 		value = [WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe]
 		value += int_value + ext_value + (total_length-(int_value.length+ext_value.length-2)).times.map{ |o| "-" }
-		value += [rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg, detailreport.category, detailreport.country]
+		value += [rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg] + visible
 	end
 
 	def self.get_all_json_length(reports, total_length)
@@ -300,5 +334,9 @@ class Masteremail < ActiveRecord::Base
 		else
 			0
 		end
+	end
+
+	def self.check_visibility(detailreports)
+		[detailreports.where("category is not null").count > 0, detailreports.where("country is not null").count > 0]
 	end
 end
