@@ -86,7 +86,7 @@
 
 
     <% if Defect.where(defect_type: 'External') != [] %>
-    <div class="col-xs-4">
+    <div class="<%=raw Defect.where(defect_type: 'Internal') == [] ? 'col-xs-8' : 'col-xs-4' %>">
       <div id="ext_defect">
         <%= form_for(@target_and_opr, :remote=>true) do |f| %>
           <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
