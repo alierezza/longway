@@ -115,10 +115,18 @@ class BoardsController < ApplicationController
 
 			if report.present?
 
-				defect_int = Report.merge_defect(report.detailreports, "Internal")
-				defect_int = defect_int.map{ |k,v| {data: k, value: v, message: Defect.find_by_name(k).description} }
-				top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
+				if Defect.where(defect_type: 'Internal') != []
 
+					defect_int = Report.merge_defect(report.detailreports, "Internal")
+					defect_int = defect_int.map{ |k,v| {data: k, value: v, message: Defect.find_by_name(k).description} }
+					top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
+
+					@big_data[line.no].push(top_3_int.map{|i| i[:value]})
+					@big_data[line.no].push(top_3_int.map{|i| i[:data]})
+					@big_data[line.no].push(top_3_int.map{|i| i[:message]})
+				end
+
+				#Defect.where(defect_type: 'External') == []
 				# defect_int = Array.new
 				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int"),:data=>"11A", :message=>"JAHIT TANGAN BURUK/ULANGI DIJAHIT"})
 				# defect_int.push({:value=>report.detailreports.sum("detailreports.defect_int_11b"),:data=>"11B", :message=>"KERUT/JAHITAN ROBEK"})
@@ -129,9 +137,17 @@ class BoardsController < ApplicationController
 
 				# top_3_int = defect_int.sort_by{|data| data[:value]}.pop(3).reverse!
 
-				defect_ext = Report.merge_defect(report.detailreports, "External")
-				defect_ext = defect_ext.map{ |k,v| {data: k, value: v, message: Defect.find_by_name(k).description} }
-				top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
+				if Defect.where(defect_type: 'External') != []
+
+					defect_ext = Report.merge_defect(report.detailreports, "External")
+					defect_ext = defect_ext.map{ |k,v| {data: k, value: v, message: Defect.find_by_name(k).description} }
+					top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
+
+					@big_data[line.no].push(top_3_ext.map{|i| i[:value]})
+					@big_data[line.no].push(top_3_ext.map{|i| i[:data]})
+					@big_data[line.no].push(top_3_ext.map{|i| i[:message]})
+
+				end
 
 				# defect_ext = Array.new
 				# defect_ext.push({:value=>report.detailreports.sum("detailreports.defect_ext"),:data=>"BS2", :message=>"SABLON POLA TAK PENUH"})
@@ -143,20 +159,24 @@ class BoardsController < ApplicationController
 
 				# top_3_ext = defect_ext.sort_by{|data| data[:value]}.pop(3).reverse!
 
-				@big_data[line.no].push(top_3_int.map{|i| i[:value]})
-				@big_data[line.no].push(top_3_int.map{|i| i[:data]})
-				@big_data[line.no].push(top_3_int.map{|i| i[:message]})
-				@big_data[line.no].push(top_3_ext.map{|i| i[:value]})
-				@big_data[line.no].push(top_3_ext.map{|i| i[:data]})
-				@big_data[line.no].push(top_3_ext.map{|i| i[:message]})
+				
+				
 
 			else
+				if Defect.where(defect_type: 'Internal') != []
+				#int
 				@big_data[line.no].push([0,0,0])
 				@big_data[line.no].push(["-","-","-"])
 				@big_data[line.no].push(["-","-","-"])
+				end
+
+				if Defect.where(defect_type: 'External') != []
+				#ext
 				@big_data[line.no].push([0,0,0])
 				@big_data[line.no].push(["-","-","-"])
 				@big_data[line.no].push(["-","-","-"])
+
+				end
 			end
 
 

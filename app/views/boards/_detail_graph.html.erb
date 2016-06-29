@@ -24,6 +24,9 @@
 </div>
 
 <div class="col-md-5 height_graph" >
+
+<% if Defect.where(defect_type: 'Internal') != [] && Defect.where(defect_type: 'External') != [] %>
+
   <div class="col-md-12" style="height:50%;width:100%;">
     <div class="col-md-4">
       <h2><b>DEFECT INT</b></h2>
@@ -36,6 +39,9 @@
       <canvas id="canvas_def_int_<%= big.first.to_s %>"  ></canvas>
     </div>
   </div>
+
+
+
   <div class="col-md-12" style="height:50%;width:100%;">
     <div class="col-md-4" >
       <h2><b>DEFECT EXT</b></h2>
@@ -48,6 +54,39 @@
       <canvas id="canvas_def_ext_<%= big.first.to_s %>"  ></canvas>
     </div>
   </div>
+
+<% elsif Defect.where(defect_type: 'Internal') == [] && Defect.where(defect_type: 'External') != [] %>
+
+  <div class="col-md-12" style="height:100%;width:100%;">
+    <div class="col-md-4" >
+      <h2><b>DEFECT EXT</b></h2>
+      <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b><h2></strong>
+    </div>
+    <div class="col-md-8">
+      <span id="legendDiv_def_ext_<%= big.first.to_s %>"></span>
+    </div>
+    <div class="col-md-12" style="height:80%;width:100%;">
+      <canvas id="canvas_def_ext_<%= big.first.to_s %>"  ></canvas>
+    </div>
+  </div>
+
+<% elsif Defect.where(defect_type: 'Internal') != [] && Defect.where(defect_type: 'External') == [] %>
+  
+  <div class="col-md-12" style="height:100%;width:100%;">
+    <div class="col-md-4">
+      <h2><b>DEFECT INT</b></h2>
+      <strong><h2><b><%= Line.find_by(:no=>big.first).nama %></b><h2></strong>
+    </div>
+    <div class="col-md-8">
+      <span id="legendDiv_def_int_<%= big.first.to_s %>"></span>
+    </div>
+    <div class="col-md-12" style="height:80%;width:100%;">
+      <canvas id="canvas_def_int_<%= big.first.to_s %>"  ></canvas>
+    </div>
+  </div>
+
+<% end %>
+
 </div>
 
 <div class="col-md-12 board_bottom" >
@@ -107,8 +146,12 @@
         });
         document.getElementById("legendDiv_<%= big.first.to_s %>").innerHTML = myLine.generateLegend();
 
-        //defect INT
 
+
+
+
+        //defect INT
+  <% if Defect.where(defect_type: 'Internal') != [] %>
     <%= "graph_def_int" + big.first.to_s %> = {
           labels : <%=raw big[1][3] %> ,
           datasets : [
@@ -161,9 +204,11 @@
 
         document.getElementById("legendDiv_def_int_<%= big.first.to_s %>").innerHTML = mybar1.generateLegend();
 
+  <% end %>
+
 
         // defect EXT
-
+    <% if Defect.where(defect_type: 'External') != [] %>
 
         <%= "graph_def_ext" + big.first.to_s %> = {
           labels : <%=raw big[1][6] %>,
@@ -216,7 +261,7 @@
 
          document.getElementById("legendDiv_def_ext_<%= big.first.to_s %>").innerHTML = mybar2.generateLegend();
 
-
+    <% end %>
         // defect
 
     // <%#= "graph_def_" + big.first.to_s %> = {
