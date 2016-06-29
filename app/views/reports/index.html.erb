@@ -34,7 +34,8 @@
       </div>
     </div>
 
-    <div class="col-xs-4">
+    <% if Defect.where(defect_type: 'Internal') != [] %>
+    <div class="<%=raw Defect.where(defect_type: 'External') == [] ? 'col-xs-8' : 'col-xs-4' %>">
       <div id="int_defect">
         <%= form_for(@target_and_opr, :remote=>true) do |f| %>
           <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
@@ -81,7 +82,10 @@
         <% end %>
       </div> <!-- end id="int" -->
     </div>
+    <% end %>
 
+
+    <% if Defect.where(defect_type: 'External') != [] %>
     <div class="col-xs-4">
       <div id="ext_defect">
         <%= form_for(@target_and_opr, :remote=>true) do |f| %>
@@ -129,6 +133,9 @@
         <% end %>
       </div> <!-- end id="ext" -->
     </div>
+    <% end %>
+
+
   </div>
   </div>
     
