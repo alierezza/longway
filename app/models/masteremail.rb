@@ -78,11 +78,15 @@ class Masteremail < ActiveRecord::Base
 							end
 						end
 					else
-						Defect.where(defect_type: "Internal").each_with_index do |defect, index|
-							sheet1.column(col += 1).width = 10
-							if (index+1) == Defect.where(defect_type: "Internal").length
-								sheet1.column(col += 1).width = 15
+						if Defect.where(defect_type: "Internal").present?
+							Defect.where(defect_type: "Internal").each_with_index do |defect, index|
+								sheet1.column(col += 1).width = 10
+								if (index+1) == Defect.where(defect_type: "Internal").length
+									sheet1.column(col += 1).width = 15
+								end
 							end
+						else
+							sheet1.column(col += 1).width = 15
 						end
 					end
 
@@ -94,11 +98,15 @@ class Masteremail < ActiveRecord::Base
 							end
 						end
 					else
-						Defect.where(defect_type: "External").each_with_index do |defect, index|
-							sheet1.column(col += 1).width = 10
-							if (index+1) == Defect.where(defect_type: "External").length
-								sheet1.column(col += 1).width = 15
+						if Defect.where(defect_type: "External").present?
+							Defect.where(defect_type: "External").each_with_index do |defect, index|
+								sheet1.column(col += 1).width = 10
+								if (index+1) == Defect.where(defect_type: "External").length
+									sheet1.column(col += 1).width = 15
+								end
 							end
+						else
+							sheet1.column(col += 1).width = 15
 						end
 					end
 					col = col+(total_length-length_int-length_ext)
@@ -265,16 +273,21 @@ class Masteremail < ActiveRecord::Base
 			header += ["RFT", "REMARK", "P/O", "MFG No"] + visible
 		else
 			if defect_int.present?
-				int_header = defect_int.map{ |key, val| key } + ["INT (SUM)"]
+				int_header = defect_int.map{ |key, val| key }
 			else
-				int_header = Defect.where(defect_type: "Internal").map{ |o| o.name } + ["INT (SUM)"]
+				int_header = Defect.where(defect_type: "Internal").map{ |o| o.name }
 			end
 
 			if defect_ext.present?
-				ext_header = defect_ext.map{ |key, val| key } + ["EXT (SUM)"]
+				ext_header = defect_ext.map{ |key, val| key }
 			else
-				ext_header = Defect.where(defect_type: "External").map{ |o| o.name } + ["EXT (SUM)"]
+				ext_header = Defect.where(defect_type: "External").map{ |o| o.name }
 			end
+
+			int_header = int_header + ["INT (SUM)"] if int_header.present?
+			int_header = int_header + [""] if !int_header.present?
+			ext_header = ext_header + ["EXT (SUM)"] if ext_header.present?
+			ext_header = ext_header + [""] if !ext_header.present?
 
 			header = init_col.times.map{ |o| "" }
 			header += int_header + ext_header
@@ -291,7 +304,8 @@ class Masteremail < ActiveRecord::Base
 		else
 			int_value = Defect.where(defect_type: "Internal").map{ |o| 0 }
 		end
-		int_value += [Report.total_defect_int(detailreport.report, detailreport.jam)]
+		int_value += [Report.total_defect_int(detailreport.report, detailreport.jam)] if int_value.present?
+		int_value += ["-"] if !int_value.present?
 
 		if JSON.parse(detailreport.defect_ext).present? && defect_ext.present?
 			ext_value = defect_ext.map{ |k,v| JSON.parse(detailreport.defect_ext)[k] }
@@ -302,7 +316,8 @@ class Masteremail < ActiveRecord::Base
 		else
 			ext_value = Defect.where(defect_type: "External").map{ |o| 0 }
 		end
-		ext_value += [Report.total_defect_ext(detailreport.report, detailreport.jam)]
+		ext_value += [Report.total_defect_ext(detailreport.report, detailreport.jam)] if ext_value.present?
+		ext_value += ["-"] if !ext_value.present?
 
 		visible = []
 		if check_visibility(detailreports)[0] && check_visibility(detailreports)[1]
