@@ -51,20 +51,20 @@ ActiveRecord::Base.transaction do
   end
   WorkingDay.create(name: "Sunday")
 
-  [["MT06", "Color Deviations"], ["MT03", "Pilling"], ["MT11", "Wrinkle"],
-  ["AS13", "Wrong Specification parts"], ["AS21", "Install / Assembly wrong direction"], ["CT07", "Any visible soiling"],["PR02","Inaccurate print"],["PR05","Burrs"],["PR07","Printing peeling off"],["PR11","Hole on surface"]].each do |defect|
-     Defect.create(name: defect[0], defect_type: "Internal", description: defect[1])
-  end
+  # [["MT06", "Color Deviations"], ["MT03", "Pilling"], ["MT11", "Wrinkle"],
+  # ["AS13", "Wrong Specification parts"], ["AS21", "Install / Assembly wrong direction"], ["CT07", "Any visible soiling"],["PR02","Inaccurate print"],["PR05","Burrs"],["PR07","Printing peeling off",["PR11","Hole on surface"]]].each do |defect|
+  #    Defect.create(name: defect[0], defect_type: "Internal", description: defect[1])
+  # end
 
-  [["10A", "Tearing"], ["11A", "Uneven stitching"], ["11B", "Tearing"],
-  ["10F", "Wrinkle"], ["12L", "Functional parts not workable"], ["14A", "Main Material"],["14B","Print"],["15B","Visible soiling except of ink soiling"],["16A","Tearing"],["19F","Print is dropping off"]].each do |defect|
-    Defect.create(name: defect[0], defect_type: "External", description: defect[1])
-  end
+  # [["10A", "Tearing"], ["11A", "Uneven stitching"], ["11B", "Tearing"],
+  # ["10F", "Wrinkle"], ["12L", "Functional parts not workable"], ["14A", "Main Material"],["14B","Print"],["15B","Visible soiling except of ink soiling"],["16A","Tearing",["19F","Print is dropping off"]]].each do |defect|
+  #   Defect.create(name: defect[0], defect_type: "External", description: defect[1])
+  # end
 
   Language.create(:message=>"Logout",:description=>"Showing on Tablet",:foreign_language=>"Logout")
   Language.create(:message=>"Dont Forget To Logout Before Leaving",:description=>"Showing on Tablet",:foreign_language=>"<font size=4>Dont Forget to <b><font color=red>log out</font></b> Before you are leaving</font>")
   Language.create(:message=>"Enter Correct Article Code",:description=>"Showing on Tablet",:foreign_language=>"<font color=red><b>Enter Correct Article Code</b></font>")
-  Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"LONGWAY VIETNAM")
+  Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"CCM FACTORY VIETNAM")
   Language.create(:message=>"Machine Problem",:description=>"Showing on Tablet", :foreign_language=>"Machine Problem")
 
   Setting.create(name: "Country")
