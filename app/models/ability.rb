@@ -5,7 +5,7 @@ class Ability
 
     if user.role == "Admin"
 
-        if user.email == "visualboard@longway.vn"
+        if user.email == "visualboard@longway.vn" || user.email == "visualboard@globalwayindonesia.com"
             #menu
             can :home, User
             can :visual_board, User
@@ -15,14 +15,14 @@ class Ability
             can :read, Ad
 
 
-        elsif user.email == "machineproblem@longway.vn"
+        elsif user.email == "machineproblem@longway.vn" || user.email == "machineproblem@globalwayindonesia.com"
             #menu
             can :home, User
             can :visual_problem, User
 
             can :manage, Home
             can :manage, Problem
-        else #admin
+        elsif user.email == "admin@longway.vn" || user.email == "admin@globalwayindonesia.com" #admin
 
             #menu
             can :home, User
