@@ -160,7 +160,7 @@
               <label style="margin-top:7px">Category</label>
             </div>
             <div class='col-xs-10'>
-              <%= detailreport.select :category, options_from_collection_for_select(Category.all, 'name', 'name',:selected=>detailreport.object.category),{:include_blank => '-- Select One --'}, class: 'form-control' %>
+              <%= detailreport.select :category, options_from_collection_for_select(Category.all, 'name', 'name',:selected=>detailreport.object.category),{:include_blank => '-- Select One --'}, :required=>true, class: 'form-control' %>
             </div>
           </div>
         <% end %>
