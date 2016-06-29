@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624055834) do
+ActiveRecord::Schema.define(version: 20160629024945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 20160624055834) do
     t.integer  "defect_ext_bs13", default: 0
     t.integer  "defect_ext_bs15", default: 0
     t.integer  "defect_ext_bs17", default: 0
-    t.string   "country",                        null: false
-    t.string   "category",                       null: false
+    t.string   "country"
+    t.string   "category"
     t.string   "jam_end"
   end
 
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20160624055834) do
     t.string   "banner_content_type"
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
-    t.integer  "slide_duration",      default: 5
+    t.integer  "slide_duration",      default: 15
   end
 
   create_table "languages", force: :cascade do |t|
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 20160624055834) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.boolean  "visible",        default: true
-    t.integer  "slide_duration", default: 5
+    t.integer  "slide_duration", default: 15
   end
 
   create_table "masteremails", force: :cascade do |t|
@@ -161,6 +161,13 @@ ActiveRecord::Schema.define(version: 20160624055834) do
   end
 
   add_index "reports", ["line_id", "tanggal"], name: "index_reports_on_line_id_and_tanggal", unique: true, using: :btree
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "visible",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                             default: "",     null: false
