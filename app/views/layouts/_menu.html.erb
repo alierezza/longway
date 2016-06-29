@@ -91,6 +91,10 @@
 			<% if can? :manage, Language %>
 				<li> <%= link_to "Language", languages_path %></li>
 			<% end %>
+
+			<% if can? :manage, Setting %>
+				<li> <%= link_to "Setting", settings_path %></li>
+			<% end %>
 		</ul>
 	</nav>
 </header>

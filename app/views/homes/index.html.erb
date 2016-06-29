@@ -94,3 +94,9 @@
 		<%= link_to languages_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>  Language <% end %>
 	</div>
 <% end %>
+
+<% if can? :manage, Setting %>
+	<div class="col-md-4 big_icon">
+		<%= link_to settings_path, class: "btn btn-default btn-block" do %><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Setting <% end %>
+	</div>
+<% end %>
