@@ -54,6 +54,7 @@ class Ability
             can :manage, WorkingDay
             can :manage, WorkingHour
             can :manage, Language
+            can :manage, Setting
         end
 
 

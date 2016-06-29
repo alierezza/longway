@@ -67,7 +67,8 @@ ActiveRecord::Base.transaction do
   Language.create(:message=>"Company Title",:description=>"Showing on Visual Board, excel, etc", :foreign_language=>"LONGWAY VIETNAM")
   Language.create(:message=>"Machine Problem",:description=>"Showing on Tablet", :foreign_language=>"Machine Problem")
 
-
+  Setting.create(name: "Country")
+  Setting.create(name: "Category")
 
 
 end

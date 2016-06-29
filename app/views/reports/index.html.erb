@@ -138,7 +138,7 @@
 
   </div>
   </div>
-    
+
 
   </div>
 
@@ -154,14 +154,16 @@
       <%= form_for(@target_and_opr, :remote=>true) do |f| %>
       <%= f.fields_for :detailreports, @target_and_opr.detailreports.last do |detailreport| %>
 
-        <div class="row">
-          <div class='col-xs-2'>
-            <label style="margin-top:7px">Category</label>
+        <% if Setting.find_by_name("Category").visible %>
+          <div class="row">
+            <div class='col-xs-2'>
+              <label style="margin-top:7px">Category</label>
+            </div>
+            <div class='col-xs-10'>
+              <%= detailreport.select :category, options_from_collection_for_select(Category.all, 'name', 'name',:selected=>detailreport.object.category),{:include_blank => '-- Select One --'}, class: 'form-control' %>
+            </div>
           </div>
-          <div class='col-xs-10'>
-            <%= detailreport.select :category, options_from_collection_for_select(Category.all, 'name', 'name',:selected=>detailreport.object.category),{:include_blank => '-- Select One --'}, class: 'form-control' %>
-          </div>
-        </div>
+        <% end %>
         <div class="row">
           <div class='col-xs-2'>
             <label style="margin-top:7px">Article</label>
@@ -203,14 +205,16 @@
             <%= detailreport.text_field :mfg, class: 'form-control' %>
           </div>
         </div>
-        <div class="row">
-          <div class='col-xs-2'>
-            <label style="margin-top:7px">Country</label>
+        <% if Setting.find_by_name("Country").visible %>
+          <div class="row">
+            <div class='col-xs-2'>
+              <label style="margin-top:7px">Country</label>
+            </div>
+            <div class='col-xs-10'>
+              <%= detailreport.select :country, options_from_collection_for_select(Country.all, 'name', 'name', :selected=>detailreport.object.country),{:include_blank => '-- Select One --'}, class: 'form-control', :required=>true %>
+            </div>
           </div>
-          <div class='col-xs-10'>
-            <%= detailreport.select :country, options_from_collection_for_select(Country.all, 'name', 'name', :selected=>detailreport.object.country),{:include_blank => '-- Select One --'}, class: 'form-control', :required=>true %>
-          </div>
-        </div>
+        <% end %>
       <div class="row">
         <div class="col-xs-12">
            <div class="pull-right"><%= f.button :enter, class: "btn btn-success" %></div>

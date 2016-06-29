@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Setting List</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <!-- <%#= link_to new_setting_path, class: "btn btn-primary" do %><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Setting <%# end %> -->
+    </div>
+    <table class="table table-stripped table-bordered" id="sortable">
+      <thead>
+        <th>Name</th>
+        <th>Visible</th>
+        <!-- <th>Action</th> -->
+      </thead>
+      <tbody>
+        <% @settings.order('id asc').each_with_index do |setting, index| %>
+          <tr>
+            <td><%= setting.name %></td>
+            <td>
+              <% if setting.visible == true %>
+                <input type="checkbox" name="show_<%= index.to_s %>" id="<%= setting.id.to_s %>" data-size="mini" checked >
+              <% else %>
+                <input type="checkbox" name="show_<%= index.to_s %>" id="<%= setting.id.to_s %>" data-size="mini" >
+              <% end %>
+            </td>
+            <!-- <td>
+              <%#= link_to "Update", edit_setting_path(setting), :method=>"GET",:class=>"btn btn-xs btn-default" %>
+              <%#= link_to "Delete", setting_path(setting), :method=>"DELETE","data-disable-with"=> "Wait..", "data-confirm"=>"delete this setting ?", :class=>
+            "btn btn-xs btn-danger" %>
+            </td> -->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+$("[name^='show']").bootstrapSwitch();
+
+$('input[name^="show"]').on('switchChange.bootstrapSwitch', function(event, state) {
+  $.get("/settings", {visible: state, id: this.id}, null, "script");
+});
+
+
+</script>
