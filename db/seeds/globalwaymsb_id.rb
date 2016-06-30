@@ -38,13 +38,13 @@ ActiveRecord::Base.transaction do
     working_day = WorkingDay.create(name: day)
     if working_day.id != nil
       [["07:00", "08:00"], ["08:00", "09:00"], ["09:00", "10:00"], ["10:00", "11:00"],
-      ["11:00", "12:00"], ["13:00", "14:00"], ["14:00", "15:00"], ["15:00", "16:00"],["16:00","17:00"]].each do |hour|
+      ["11:00", "12:00"], ["13:00", "14:00"], ["14:00", "15:00"], ["15:00", "16:00"]].each do |hour|
         working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Work")
       end
       [["12:00", "13:00"]].each do |hour|
         working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Break")
       end
-      [["17:00", "18:00"], ["18:00", "19:00"]].each do |hour|
+      [["16:00","17:00"],["17:00", "18:00"], ["18:00", "19:00"]].each do |hour|
         working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Overtime")
       end
     end
@@ -54,13 +54,13 @@ ActiveRecord::Base.transaction do
     working_day = WorkingDay.create(name: day)
     if working_day.id != nil
       [["07:00", "08:00"], ["08:00", "09:00"], ["09:00", "10:00"], ["10:00", "11:00"],
-      ["11:00", "11:30"], ["13:00", "14:00"], ["14:00", "15:00"], ["15:00", "16:00"],["16:00","17:00"]].each do |hour|
+      ["11:00", "11:30"], ["13:00", "14:00"], ["14:00", "15:00"], ["15:00", "16:00"]].each do |hour|
         working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Work")
       end
       [["11:30", "12:00"],["12:00","13:00"]].each do |hour|
         working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Break")
       end
-      [["17:00", "18:00"], ["18:00", "19:00"]].each do |hour|
+      [["16:00","17:00"],["17:00", "18:00"], ["18:00", "19:00"]].each do |hour|
         working_day.working_hours.create(start: hour[0], end: hour[1], working_state: "Overtime")
       end
     end
