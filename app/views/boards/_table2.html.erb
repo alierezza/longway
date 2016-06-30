@@ -29,9 +29,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @boards.where("no > 9 and no <= 18").order("no").each_with_index do |board,line| %>
+		<% @boards.where("no >= 10 and no <= 18").order("no").each_with_index do |board,line| %>
 			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
-				<tr id="<%= line.id %>" style="<%= line.status == false ? 'background-color:yellow' : 'background-color:white' %>">
+				<tr id="<%= board.id %>" style="<%= board.status == false ? 'background-color:yellow' : 'background-color:white' %>">
 					<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>
 						<%= board_details(header.name, report) %>
 					<% end %>
