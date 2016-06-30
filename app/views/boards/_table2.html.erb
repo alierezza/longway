@@ -19,7 +19,7 @@
 				<% if header.name.upcase == "DEFECT" %>
 					<th colspan=2><%= header.name.upcase %></th>
 				<% else %>
-					<th rowspan=2><%= header.name.upcase %></th>
+					<th rowspan=2><u><%= header.name.upcase %></u> <br> <%= header.name_vietnam %></th>
 				<% end %>
 			<% end %>
 		</tr>
@@ -31,7 +31,7 @@
 	<tbody>
 		<% @boards.where("no > 9 and no <= 18").order("no").each_with_index do |board,line| %>
 			<% board.reports.where("tanggal = ?",Date.today).each_with_index do |report,index| %>
-				<tr>
+				<tr id="<%= line.id %>" style="<%= line.status == false ? 'background-color:yellow' : 'background-color:white' %>">
 					<% HeaderBoard.where(visible: true).rank(:order_no).each do |header| %>
 						<%= board_details(header.name, report) %>
 					<% end %>
