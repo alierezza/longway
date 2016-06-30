@@ -29,7 +29,7 @@ module ApplicationHelper
 		when "RFT"
 			return (template % ["", "#{Report.rft(report, report.detailreports.last.jam)}"]).html_safe
 		when "REMARK"
-			return (template % ["line-height:100%; font-size: 24px", "#{report.detailreports.last.remark}"]).html_safe
+			return (template % ["line-height:100%; font-size: 24px; width: 30%", "#{report.detailreports.last.remark}"]).html_safe
 		when "ARTICLE"
 			return (template % ["", "#{report.detailreports.last.detailreportarticles.last.article}"]).html_safe
 		when "EFFICIENT"
