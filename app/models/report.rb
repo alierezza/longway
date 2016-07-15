@@ -207,7 +207,7 @@ class Report < ActiveRecord::Base
 			begin
 				report = user.line.reports.find_by("tanggal = ?",Date.today)
 
-				if report.detailreports.last.jam.to_i >= Time.now.strftime("%H").to_i
+				if report.detailreports.last.jam >= Time.now.strftime("%H:%M")
 					puts "Sudah ada!(user aktif) user: #{user.email}, waktu: #{Time.now.strftime("%d %m %Y %H:%M:%S")}"
 				else
 					Report.get_data(user)

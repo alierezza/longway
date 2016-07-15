@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20160705221002) do
   end
 
   add_index "reports", ["line_id", "tanggal"], name: "index_reports_on_line_id_and_tanggal", unique: true, using: :btree
+  add_index "reports", ["line_id", "tanggal"], name: "reports_line_id_tanggal_key", unique: true, using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "name"
