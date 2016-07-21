@@ -122,9 +122,27 @@ $(document).ready(function(){
 });
 
 
-if( window.innerHeight != screen.height) {
-    // browser is fullscreen
-    alert("Please Press OK & F11 to make Fullscreen")
+// $(document).ready(function() {
+//   $(window).on('resize', function(){
+//     if(screen.width === window.innerWidth){
+//       // this is full screen
+     
+//     }else{
+//        alert("Please Press OK & F11 to make Fullscreen")
+//     }
+//   });
+// });
+
+// if((window.fullScreen) || (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+
+// } else {
+//   alert("Please Press OK & F11 to make Fullscreen")
+// }
+
+if (!window.screenTop && !window.screenY) {
+    
+}else{
+  alert("Please Press OK & F11 to make Fullscreen")
 }
 
 

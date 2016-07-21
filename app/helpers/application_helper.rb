@@ -4,7 +4,7 @@ module ApplicationHelper
 
 		case header.upcase
 		when "LINE"
-			return (template % ["", "#{report.line.nama}"]).html_safe
+			return (template % ["width: 10%", "#{report.line.nama}"]).html_safe
 		when "OPR"
 			return (template % ["", "#{report.detailreports.last.opr}"]).html_safe
 		when "TRGT"
