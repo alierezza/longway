@@ -144,7 +144,7 @@
 
  <div class='col-xs-5'>
     <div id="machine_problem" class="form-group">
-      <div class="machine_title"><%= Language.find_by(:message=>"Machine Problem").foreign_language %></div>
+      <div class="machine_title"><%= Language.find_by(:message=>"Machine Problem").foreign_language.html_safe %></div>
         <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
         <a class="btn btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
     </div>
