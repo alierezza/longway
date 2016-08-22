@@ -125,7 +125,35 @@
 						<tr>
 							<td colspan=<%= length_int + length_ext + 18 %>>Total <%= @data.first.detailreports.count %> Jam</td>
 						</tr>
-
+						<tr>
+							<td colspan=<%= length_int + length_ext + 18 %>>
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td colspan=2>Defect Description</td>
+										</tr>
+										<tr>
+											<% Defect.type.each do |type| %>
+												<td>
+													<table class="table table-bordered">
+														<tbody>
+															<tr><td colspan=3><%= type %></td></tr>
+															<% Defect.where(defect_type: type).each do |defect| %>
+																<tr style="text-align: left">
+																	<td style="width:4%"><%= defect.name %></td>
+																	<td style="width:1%">:</td>
+																	<td style="width:95%"><%= defect.description %></td>
+																</tr>
+															<% end %>
+														</tbody>
+													</table>
+												</td>
+											<% end %>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
 			</tbody>
 		</table>
 	</div>

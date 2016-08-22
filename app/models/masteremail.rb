@@ -236,6 +236,46 @@ class Masteremail < ActiveRecord::Base
 				end
 			end
 		end
+
+		# Defect Description
+		sheet2 = book.create_worksheet
+    sheet2.name = "Defect Description"
+    sheet2.row(0).push("Defect Description")
+		format = Spreadsheet::Format.new :color => :black,
+    		                             :weight => :bold,
+        		                         :size => 12, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
+		format_normal = Spreadsheet::Format.new :color => :black,
+                                 						:size => 11, :align=>:left, :border =>:thin, :vertical_align =>:justify,:text_wrap => true
+
+    baris = 0
+    sheet2.row(baris = baris + 2).replace ["Internal", "", ""]
+    sheet2.row(baris).height = 16
+    row = sheet2.row(baris)
+    3.times do |x| row.set_format(x,format) end
+    sheet2.merge_cells(baris, 0, baris, 2)
+    sheet2.column(0).width = 15
+    sheet2.column(1).width = 2
+    sheet2.column(2).width = 100
+    Defect.where(defect_type: "Internal").each do |defect|
+    	sheet2.row(baris = baris + 1).replace [defect.name, ":", defect.description]
+    	sheet2.row(baris).height = 16
+    	row = sheet2.row(baris)
+    	3.times do |x| row.set_format(x,format_normal) end
+    end
+
+    sheet2.row(baris = baris + 2).replace ["External", "", ""]
+    sheet2.row(baris).height = 16
+    row = sheet2.row(baris)
+    3.times do |x| row.set_format(x,format) end
+    sheet2.merge_cells(baris, 0, baris, 2)
+    Defect.where(defect_type: "External").each do |defect|
+    	sheet2.row(baris = baris + 1).replace [defect.name, ":", defect.description]
+    	sheet2.row(baris).height = 16
+    	row = sheet2.row(baris)
+    	3.times do |x| row.set_format(x,format_normal) end
+    end
+    # End defect description
+
 		path = "#{Rails.root}/data/#{ ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language) }_#{tanggal.to_date.strftime('%d-%m-%Y')}.xls"
 		book.write path
 
