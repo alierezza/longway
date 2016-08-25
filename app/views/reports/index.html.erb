@@ -339,6 +339,11 @@
 
           if(schedule.indexOf(server_time) != -1 && secs == "00" ){
             //alert("masuk");
+
+              $("#act").html(0);
+              $("#defect_int").html(0);
+              $("#defect_ext").html(0);
+
             $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
           }
 
