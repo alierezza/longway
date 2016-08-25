@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= Language.find_by(:message=>"Company Title").foreign_language %></title>
+  <title><%= ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language) %></title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
     <%= csrf_meta_tags %>
