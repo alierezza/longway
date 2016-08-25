@@ -23,7 +23,7 @@
       <% if index == 0 || (index != 0 && index%2 == 0) %>
         <div class="row">
       <% end %>
-      <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
+      <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true, 'data-disable-with'=>"<i class='fa fa-spinner fa-spin'></i>" %>
       <% if index != 0 && (index+1)%2 == 0 || count == index+1 %>
         </div><br>
       <% end %>
@@ -44,4 +44,3 @@
   </div>
   <% end %>
 <% end %>
-

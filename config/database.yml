@@ -12,7 +12,7 @@ default: &default
 development:
   <<: *default
   host: localhost
-  database: longway_development
+  database: longway_production
   username: sowo_user
   password: 123456
 

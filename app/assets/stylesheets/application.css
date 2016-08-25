@@ -1,3 +1,4 @@
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -16,8 +17,10 @@
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require bootstrap-wysihtml5
  *= require select2
+ *= require font-awesome
  *= require_self
  */
+
 
 
 @font-face {
@@ -25,3 +28,4 @@
   src: url('/assets/glyphicons-halflings-regular.eot');
   src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
+

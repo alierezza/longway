@@ -103,6 +103,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.0.1)
     execjs (2.7.0)
+    font-awesome-rails (4.6.3.0)
+      railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     http_parser.rb (0.6.0)
@@ -271,6 +273,7 @@ DEPENDENCIES
   devise
   devise_security_extension
   em-websocket
+  font-awesome-rails
   jbuilder (~> 2.0)
   jquery-datatables-rails
   jquery-rails

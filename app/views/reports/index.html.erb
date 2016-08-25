@@ -22,7 +22,7 @@
             <div>"OK"</div>
           </div>
           <div class="counter_button">
-            <%= f.button "", class: "actual", :id=>"btn_act"  %>
+            <%= f.button "", class: "actual", :id=>"btn_act", 'data-disable-with'=>"<i class='actual fa fa-4x fa-spinner fa-spin' style='position:fixed' ></i>"  %>
           </div>
           <br>
           <div><b>TOTAL : <%= @target_and_opr.detailreports.sum("act") == nil ? 0 : @target_and_opr.detailreports.sum("act") %></b></div>
@@ -60,7 +60,7 @@
               <% if index == 0 || (index != 0 && index%2 == 0) %>
                 <div class="row">
               <% end %>
-              <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
+              <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true, 'data-disable-with'=>"<i class='fa fa-spinner fa-spin'></i>" %>
               <% if index != 0 && (index+1)%2 == 0 || count == index+1 %>
                 </div><br>
               <% end %>
@@ -111,7 +111,7 @@
               <% if index == 0 || (index != 0 && index%2 == 0) %>
                 <div class="row">
               <% end %>
-              <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true %>
+              <%= f.button defect.name, class: "btn btn-danger btn-md" , :name=>defect.name, :value=>true, 'data-disable-with'=>"<i class='fa fa-spinner fa-spin'></i>" %>
               <% if index != 0 && (index+1)%2 == 0 || count == index+1 %>
                 </div><br>
               <% end %>
