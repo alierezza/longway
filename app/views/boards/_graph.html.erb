@@ -72,7 +72,7 @@
   <% Image.where("status=?",true).order("id").each_with_index do |image,index| %>
 
     <div class="item" data-interval="<%= image.slide_duration %>000">
-      <input type="hidden" value="<%= image.id.to_s %>" class="hidden" />
+      <input type="hidden" value="image_<%= image.id.to_s %>" class="hidden" />
       <div id="image_<%= image.id.to_s %>">
         <%= image_tag image.banner.url(:original), :class=>"image_banner", :style=>"width:100%" %>
       </div>
