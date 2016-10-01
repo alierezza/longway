@@ -2,29 +2,31 @@
 
 <div class="carousel-inner" style="width:100%;height:100%">
 
-  <% if @boards.where("no >= 1 and no <= 9") != [] and @boards.where("no >= 10 and no <= 18") == [] %>
 
-    <div class="item active" data-interval="15000">
+
+
+  <%# if @boards.where("no >= 1 and no <= 9") != [] and @boards.where("no >= 10 and no <= 18") == [] %> <!-- jika table ada isinya -->
+  <!--   <div class="item active" data-interval="15000">
       <input type="hidden" value="table1" class="hidden" />
       <div id="board1">
-        <%= render "table" %>
+        <%#= render "table" %>
       </div>
-    </div>
-  <% elsif @boards.where("no >= 1 and no <= 9") == [] and @boards.where("no >= 10 and no <= 18") != [] %>
-  <% @refresh = true %>
-    <div class="item active" data-interval="15000">
+    </div> -->
+  <%# elsif @boards.where("no >= 1 and no <= 9") == [] and @boards.where("no >= 10 and no <= 18") != [] %> <!-- jika table2 ada isinya -->
+  <%# @refresh = true %>
+   <!--  <div class="item active" data-interval="15000">
       <input type="hidden" value="table2" class="hidden" />
       <div id="board2">
-        <%= render "table2" %>
+        <%#= render "table2" %>
       </div>
-    </div>
-  <% elsif @boards.where("no >= 1 and no <= 9") == [] and @boards.where("no >= 10 and no <= 18") == [] %>
-    <font color=red size=8>Please turn on at least one line</font>
-  <% else %>
-    <div class="item active" data-interval="15000">
+    </div> -->
+  <%# elsif @boards.where("no >= 1 and no <= 9") == [] and @boards.where("no >= 10 and no <= 18") == [] %> <!-- jika table dan table2 kosong -->
+    <!-- <font color=red size=8>Please turn on at least one line</font> -->
+  <%# else %> <!-- jika table dan table2 ada isinya -->
+  <!--   <div class="item active" data-interval="15000">
       <input type="hidden" value="table1" class="hidden" />
       <div id="board1">
-        <%= render "table" %>
+        <%#= render "table" %>
       </div>
     </div>
     <div class="item" data-interval="15000">
@@ -32,9 +34,30 @@
       <div id="board2">
         <%#= render "table2" %>
       </div>
-    </div>
-  <% end %>
+    </div> -->
+  <%# end %>
 
+
+<!-- tablet semua line -->
+
+<% table_no = 0 %>
+<% (@boards.order("no DESC").first.no.to_i / @row_per_table .to_f ).ceil.times do  %>
+
+  <div class="item <%= table_no == 0 ? 'active' : '' %>" data-interval="15000">
+    <input type="hidden" value="table_<%= table_no %>" class="hidden" />
+    <div id="board<%= table_no %>"> 
+      <% if table_no == 0 %>
+        <%= render "table", :table_no=>table_no, :row_per_table=>@row_per_table, :boards=>@boards.order("no ASC") %>
+      <% end %>
+    </div>
+  </div>
+
+  <% table_no = table_no + 1 %>
+<% end %>
+
+
+
+<!-- grafik tiap line -->
   <% @big_data.each_with_index do |big_dat, index| %>
 
     <div class="item" data-interval="<%= Line.find_by_no(big_dat.first).slide_duration %>000">
@@ -45,6 +68,8 @@
     </div>
   <% end %>
 
+
+<!-- banner / images -->
   <% Image.where("status=?",true).order("id").each_with_index do |image,index| %>
 
     <div class="item" data-interval="<%= image.slide_duration %>000">
@@ -76,13 +101,13 @@ $(function(){
 
     line_no = $(this).data('bs.carousel').$element.find('.active .hidden').val();
 
-    <% if @refresh == true %>
-      refresh = "table2"
-    <% else %>
-      refresh = "table1"
-    <% end %>
+    // <%# if @refresh == true %>
+    //   refresh = "table2"
+    // <%# else %>
+    //   refresh = "table1"
+    // <%# end %>
 
-    if(line_no == refresh)
+    if(line_no == "table_0")
     {
       location.reload();
     }

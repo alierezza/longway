@@ -1,15 +1,15 @@
 <% if params[:refresh] == "true" %>
-	
-	<% if params[:line_no] == "table1" %>
 
-		$("#board1").html("<%= escape_javascript(render 'table') %>");
+	<% if params[:line_no].include? "table_" %>
+		<% table_no = params[:line_no].split("_")[1] %>
 
-	<% elsif params[:line_no] == "table2" %>
+		$("#board<%= table_no %>").html("<%= escape_javascript(render 'table', :table_no=>table_no.to_i, :row_per_table=>@row_per_table, :boards=>@boards.order('no ASC') ) %>");
 
-		$("#board2").html("<%= escape_javascript(render 'table2') %>");
+	<%# elsif params[:line_no] == "table2" %>
+
+		//$("#board2").html("<%#= escape_javascript(render 'table2') %>");
 
 	<% elsif params[:line_no].to_i != 0 %>
-<%# binding.pry %>
 		<%# key = @big_data.keys[params[:line_no].to_i-1] %>
 		<%# value = @big_data.values[params[:line_no].to_i-1] %>
 		<%# new_value = {key => value} %>

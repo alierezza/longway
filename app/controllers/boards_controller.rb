@@ -4,6 +4,9 @@ class BoardsController < ApplicationController
 	# require 'rdoc/rdoc'
 
 	def index
+
+		@row_per_table = 9
+
 		# GC::Profiler.enable
 		# # GC.start()
 		# GC::Profiler.clear

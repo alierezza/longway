@@ -52,10 +52,10 @@ class Detailreport < ActiveRecord::Base
 			begin
 				data = self.detailreportarticles.find_or_create_by(:article=>self.article)
 
-				if self.act == self.act_was && data.output != 0
+				if self.act == self.act_was && data.output != 0 #jika defect yg ditekan dan act bukan 0
 					#output = self.act_was
 					output = data.output
-				else
+				else #jika act adalah 0
 					if self.detailreportarticles.count > 1
 						output = self.act - self.detailreportarticles.where("id != ?",data.id).sum(:output)
 					else
