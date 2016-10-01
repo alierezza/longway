@@ -24,8 +24,17 @@ class BoardsController < ApplicationController
 			#binding.pry
 			@data = Line.where("no = ?",params[:line_no].to_i)
 
-		else
+		elsif params[:line_no] == nil or params[:line_no].to_s.include? "image_"
+			
 			@data = Line.all
+		
+		elsif params[:line_no].to_s.include? "table_"
+
+			table_no = params[:line_no].split("_")[1].to_i
+			start = table_no == 0 ? 1 : (table_no * @row_per_table) + 1
+			ended = start - 1 + @row_per_table
+			@data = Line.where(:no=>start..ended)
+
 		end
 
 		@boards = @data.where("visible=?",true)
