@@ -8,8 +8,8 @@ class Line < ActiveRecord::Base
 	validate :defect_count_within_limit, on: :create
 
 	def defect_count_within_limit
-	    if Line.all.count >= 45
-	      	errors.add(:base, 'Exceeded line limit (max 45 lines)')
+	    if Line.all.count >= CONFIG["max_machine_number"].to_i
+	      	errors.add(:base, "Exceeded line limit (max #{CONFIG["max_machine_number"].to_s} lines)")
 	    end
 	end
 end

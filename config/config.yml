@@ -1,2 +1,5 @@
 # email_dari: "hendranatadnet@gmail.com"
 # kirim_email_ke: "hendranatas@yahoo.com" #email owner
+
+max_machine_number: 45
+row_per_table_visualboard: 9

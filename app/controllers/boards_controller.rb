@@ -5,18 +5,22 @@ class BoardsController < ApplicationController
 
 	def index
 
-		@row_per_table = 9
+		@row_per_table = CONFIG["row_per_table_visualboard"]
 
 		# GC::Profiler.enable
 		# # GC.start()
 		# GC::Profiler.clear
 		@working_hour = WorkingDay.find_by(:name=>Time.now.strftime("%A")).working_hours
 
-		if params[:line_no] == "table1"
-			@data = Line.where("no >= 1 and no <= 9")
-		elsif params[:line_no] == "table2"
-			@data = Line.where("no >= 10 and no <= 18")
-		elsif params[:line_no].to_i != 0
+		# if params[:line_no].to_s.include? "table_"
+
+		# 	table_no = params[:line_no].split("_")[1]
+		# 	start = table_no == 0 ? 1 : (table_no*@row_per_table) + 1
+		# 	ended = start - 1 + @row_per_table
+
+		# 	@data = Line.where(:no=>start..ended)
+
+		if params[:line_no].to_i != 0
 			#binding.pry
 			@data = Line.where("no = ?",params[:line_no].to_i)
 
