@@ -41,7 +41,7 @@
 <!-- tablet semua line -->
 
 <% table_no = 0 %>
-<% (@boards.order("no DESC").first.no.to_i / @row_per_table .to_f ).ceil.times do  %>
+<% (Line.where(:visible=>true).order("no DESC").first.no.to_i / @row_per_table .to_f ).ceil.times do  %>
 
   <div class="item <%= table_no == 0 ? 'active' : '' %>" data-interval="15000">
     <input type="hidden" value="table_<%= table_no %>" class="hidden" />
@@ -58,11 +58,10 @@
 
 
 <!-- grafik tiap line -->
-  <% @big_data.each_with_index do |big_dat, index| %>
-
-    <div class="item" data-interval="<%= Line.find_by_no(big_dat.first).slide_duration %>000">
-      <input type="hidden" value="<%= big_dat.first.to_s %>" class="hidden" />
-      <div id="detail_graph_<%= big_dat.first %>">
+  <% Line.where(:visible=>true).order("no ASC").each_with_index do |big_dat, index| %>
+    <div class="item" data-interval="<%= Line.find_by_no(big_dat.no).slide_duration %>000">
+      <input type="hidden" value="<%= big_dat.no.to_s %>" class="hidden" />
+      <div id="detail_graph_<%= big_dat.no.to_s %>">
         <%#= render "detail_graph", :big => big_dat %>
       </div>
     </div>

@@ -20,15 +20,15 @@ class BoardsController < ApplicationController
 
 		# 	@data = Line.where(:no=>start..ended)
 
-		if params[:line_no].to_i != 0
-			#binding.pry
+		if params[:line_no].to_i != 0 #grafik
+
 			@data = Line.where("no = ?",params[:line_no].to_i)
 
-		elsif params[:line_no] == nil or params[:line_no].to_s.include? "image_"
+		elsif params[:line_no] == nil or params[:line_no].to_s.include? "image_" #initial awal & image
 			
-			@data = Line.all
+			@data = Line.where(:no=>1..@row_per_table)
 		
-		elsif params[:line_no].to_s.include? "table_"
+		elsif params[:line_no].to_s.include? "table_" #table ke 2 , dst
 
 			table_no = params[:line_no].split("_")[1].to_i
 			start = table_no == 0 ? 1 : (table_no * @row_per_table) + 1
