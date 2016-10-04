@@ -13,6 +13,11 @@ class Masteremail < ActiveRecord::Base
 	    sheet1.row(0).push(ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Company Title").foreign_language)+" - Production result on #{tanggal.to_date.strftime('%d %B %Y')} taken at #{Time.now.strftime('%H:%M')}")
 	    baris = 0
 	    total_length = 0
+
+	    format = Spreadsheet::Format.new(:color => :black,:weight => :bold,:size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true)
+	    format_normal = Spreadsheet::Format.new(:color => :black,:size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true)
+        format_red = Spreadsheet::Format.new(:color => :red,:size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true)
+
 	    Line.all.where("visible=?",true).order("no").each_with_index do |board,index|
 
 	    	sheet1.row(baris = baris +2).push "Line : #{board.nama}"
@@ -52,9 +57,7 @@ class Masteremail < ActiveRecord::Base
 	    			# sheet1.row(baris = baris+1).replace ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT","","","","","","","","","","","","","", "RFT", "REMARK", "P/O", "MFG No","CATEGORY","COUNTRY"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
-	    			format = Spreadsheet::Format.new :color => :black,
-                                 :weight => :bold,
-                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
+	    			
                     (18+total_length-visible).times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
 					sheet1.column(0).width = 25
@@ -142,6 +145,8 @@ class Masteremail < ActiveRecord::Base
 						sheet1.merge_cells(baris, col5, baris+1, col5)
 					end
 
+
+
 	    			sheet1.row(baris = baris+1).replace Masteremail.generate_header(defect_int, defect_ext, "defect_header", total_length, init_col+1, report.detailreports)
 
 					# sheet1.column(10).width = 10
@@ -218,10 +223,7 @@ class Masteremail < ActiveRecord::Base
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
-						format_normal = Spreadsheet::Format.new :color => :black,
-                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-                    	format_red = Spreadsheet::Format.new :color => :red,
-                                 :size => 11, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
+						
 
 	    				(18+total_length-visible).times do |x|
 	    					if x == 4 and detailreport.act < detailreport.target
@@ -241,17 +243,17 @@ class Masteremail < ActiveRecord::Base
 		sheet2 = book.create_worksheet
     sheet2.name = "Defect Description"
     sheet2.row(0).push("Defect Description")
-		format = Spreadsheet::Format.new :color => :black,
+		format2 = Spreadsheet::Format.new :color => :black,
     		                             :weight => :bold,
         		                         :size => 12, :align=>:center, :border =>:thin, :vertical_align =>:middle,:text_wrap => true
-		format_normal = Spreadsheet::Format.new :color => :black,
+		format_normal2 = Spreadsheet::Format.new :color => :black,
                                  						:size => 11, :align=>:left, :border =>:thin, :vertical_align =>:justify,:text_wrap => true
 
     baris = 0
     sheet2.row(baris = baris + 2).replace ["Internal", "", ""]
     sheet2.row(baris).height = 16
     row = sheet2.row(baris)
-    3.times do |x| row.set_format(x,format) end
+    3.times do |x| row.set_format(x,format2) end
     sheet2.merge_cells(baris, 0, baris, 2)
     sheet2.column(0).width = 15
     sheet2.column(1).width = 2
@@ -260,19 +262,19 @@ class Masteremail < ActiveRecord::Base
     	sheet2.row(baris = baris + 1).replace [defect.name, ":", defect.description]
     	sheet2.row(baris).height = 16
     	row = sheet2.row(baris)
-    	3.times do |x| row.set_format(x,format_normal) end
+    	3.times do |x| row.set_format(x,format_normal2) end
     end
 
     sheet2.row(baris = baris + 2).replace ["External", "", ""]
     sheet2.row(baris).height = 16
     row = sheet2.row(baris)
-    3.times do |x| row.set_format(x,format) end
+    3.times do |x| row.set_format(x,format2) end
     sheet2.merge_cells(baris, 0, baris, 2)
     Defect.where(defect_type: "External").each do |defect|
     	sheet2.row(baris = baris + 1).replace [defect.name, ":", defect.description]
     	sheet2.row(baris).height = 16
     	row = sheet2.row(baris)
-    	3.times do |x| row.set_format(x,format_normal) end
+    	3.times do |x| row.set_format(x,format_normal2) end
     end
     # End defect description
 
