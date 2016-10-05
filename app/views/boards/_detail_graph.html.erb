@@ -91,7 +91,7 @@
 
 <div class="col-md-12 board_bottom" >
   <div class="col-md-4"><b><font color='darkblue'>P/O: </font><font color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.po rescue "" end %></font></b></div>
-  <div class="col-md-4"><b><font  color='darkblue'>MFG No: </font><font  color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
+  <div class="col-md-4"><b><font  color='darkblue'><%= CONFIG["mfg_no"] %>: </font><font  color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.mfg rescue "" end %></font></b></div>
   <div class="col-md-4"><b><font  color='darkblue'>Article: </font><font color='black'><%= begin Line.find_by(:no=>big.first).reports.find_by("tanggal = ?",Date.today).detailreports.last.article rescue "" end %></font></b></div>
 </div>
 

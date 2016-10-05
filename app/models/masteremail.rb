@@ -312,7 +312,7 @@ class Masteremail < ActiveRecord::Base
 			header = ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT"]
 			header += (total_length + 1).times.map{ |a| "" }
 			# header += (int_length + ext_length + 1).times.map{ |a| "" }
-			header += ["RFT", "REMARK", "P/O", "MFG No"] + visible
+			header += ["RFT", "REMARK", "P/O", CONFIG["mfg_no"] ] + visible
 		else
 			if defect_int.present?
 				int_header = defect_int.map{ |key, val| key }
