@@ -3,7 +3,7 @@ class ImagesController < ApplicationController
 	add_breadcrumb "Banners", :images_path
 
 	def index
-		if params[:id] && (Image.where(:status=>true).count < 5 && params[:status] == "true") || Image.where(:status=>true).count <= 5 && params[:status] == "false"
+		if params[:id] && (Image.where(:status=>true).count < CONFIG["max_image_banner"] && params[:status] == "true") || Image.where(:status=>true).count <= CONFIG["max_image_banner"] && params[:status] == "false"
 			@image = Image.find(params[:id])
 			@image.status = params[:status]
 			@image.save
