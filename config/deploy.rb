@@ -12,7 +12,7 @@ set :stage, :production
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, 'dev'
+
 # Default deploy_to directory is /var/www/my_app_name
  
 

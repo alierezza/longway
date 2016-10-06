@@ -10,7 +10,7 @@ server 'localhost', user: 'ccmfactory', roles: %w{app db web}, my_property: :my_
 
 set :deploy_to, '/var/www/longway'
 
-
+set :branch, 'dev'
 # role-based syntax
 # ==================
 

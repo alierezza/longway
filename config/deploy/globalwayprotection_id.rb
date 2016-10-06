@@ -10,7 +10,7 @@ server 'localhost', user: 'globalway', roles: %w{app db web}, my_property: :my_v
 
 set :deploy_to, '/var/www/longway'
 
-
+set :branch, 'dev'
 # role-based syntax
 # ==================
 
