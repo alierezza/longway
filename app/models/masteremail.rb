@@ -196,7 +196,7 @@ class Masteremail < ActiveRecord::Base
 
 	    			report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index|
 	    				sum_target += detailreport.target.to_i
-						sum_act += detailreport.act.to_i
+						sum_act += detailreport.detailreportarticles.sum(:output).to_i
 
 						size = detailreport.remark == nil ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
@@ -226,7 +226,7 @@ class Masteremail < ActiveRecord::Base
 						
 
 	    				(18+total_length-visible).times do |x|
-	    					if x == 4 and detailreport.act < detailreport.target
+	    					if x == 4 and detailreport.detailreportarticles.sum(:output) < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else
 	    						row.set_format(x,format_normal)
@@ -370,7 +370,7 @@ class Masteremail < ActiveRecord::Base
 			visible = [detailreport.country]
 		end
 
-		value = [WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe]
+		value = [WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.detailreportarticles.sum(:output),sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe]
 		value += int_value + ext_value + (total_length-(int_value.length+ext_value.length-2)).times.map{ |o| "-" }
 		value += [rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg] + visible
 	end

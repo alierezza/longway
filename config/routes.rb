@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   end
 
   get "data/" => "reports#data", :as => :data
+  put "data_update/" => "reports#data_update", :as => :data_update
 
 end

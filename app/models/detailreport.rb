@@ -2,7 +2,11 @@ class Detailreport < ActiveRecord::Base
 
 	belongs_to :report
 
+
+
 	has_many :detailreportarticles, :dependent=>:destroy
+
+	accepts_nested_attributes_for :detailreportarticles, allow_destroy: true
 
 	validates_uniqueness_of :report_id, :scope => :jam
 
@@ -50,20 +54,20 @@ class Detailreport < ActiveRecord::Base
 			self.errors.add(:created_on, "is invalid")
 		else
 			begin
-				data = self.detailreportarticles.find_or_create_by(:article=>self.article)
+				data = self.detailreportarticles.find_or_create_by(:article=>self.article,:operator=>self.opr,:output=>data.output)
 
-				if self.act == self.act_was && data.output != 0 #jika defect yg ditekan dan act bukan 0
-					#output = self.act_was
-					output = data.output
-				else #jika act adalah 0
-					if self.detailreportarticles.count > 1
-						output = self.act - self.detailreportarticles.where("id != ?",data.id).sum(:output)
-					else
-						output = self.act
-					end
-				end
+				# if data.output == data.output_was && data.output != 0 #jika defect yg ditekan dan act bukan 0
+				# 	#output = self.act_was
+				# 	output = data.output
+				# else #jika act adalah 0
+				# 	if self.detailreportarticles.count > 1
+				# 		output = self.act - self.detailreportarticles.where("id != ?",data.id).sum(:output)
+				# 	else
+				# 		output = data.output
+				# 	end
+				# end
 
-				data.update(:operator=>self.opr,:output=>output)
+				#data.update(:operator=>self.opr,:output=>data.output)
 			rescue
 			end
 
