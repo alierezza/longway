@@ -81,6 +81,9 @@
 
 							<%= f.fields_for :detailreports, f.object.detailreports.order("jam ASC") do |detailreport,index| %>
 
+								<%= detailreport.hidden_field :skip, :value=>"true" %>
+
+
 							<%# f.object.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
 
 								<% sum_target += detailreport.object.target.to_i  %>

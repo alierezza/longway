@@ -2,7 +2,7 @@ class Detailreport < ActiveRecord::Base
 
 	belongs_to :report
 
-
+	attr_accessor :skip
 
 	has_many :detailreportarticles, :dependent=>:destroy
 
@@ -46,7 +46,7 @@ class Detailreport < ActiveRecord::Base
 	end
 
 
-	after_save :create_new_detailreportarticle
+	after_save :create_new_detailreportarticle, :if => proc { |detailreport| detailreport.skip != "true" }
 
 	def create_new_detailreportarticle
 
@@ -54,20 +54,20 @@ class Detailreport < ActiveRecord::Base
 			self.errors.add(:created_on, "is invalid")
 		else
 			begin
-				data = self.detailreportarticles.find_or_create_by(:article=>self.article,:operator=>self.opr,:output=>data.output)
+				data = self.detailreportarticles.find_or_create_by(:article=>self.article)
 
-				# if data.output == data.output_was && data.output != 0 #jika defect yg ditekan dan act bukan 0
-				# 	#output = self.act_was
-				# 	output = data.output
-				# else #jika act adalah 0
-				# 	if self.detailreportarticles.count > 1
-				# 		output = self.act - self.detailreportarticles.where("id != ?",data.id).sum(:output)
-				# 	else
-				# 		output = data.output
-				# 	end
-				# end
+				if self.act == self.act_was && data.output != 0 #jika defect yg ditekan dan act bukan 0
+					#output = self.act_was
+					output = data.output
+				else #jika act adalah 0
+					if self.detailreportarticles.count > 1
+						output = self.act - self.detailreportarticles.where("id != ?",data.id).sum(:output)
+					else
+						output = self.act
+					end
+				end
 
-				#data.update(:operator=>self.opr,:output=>data.output)
+				data.update(:operator=>self.opr,:output=>output)
 			rescue
 			end
 

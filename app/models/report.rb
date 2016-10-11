@@ -89,7 +89,7 @@ class Report < ActiveRecord::Base
 
 			if article_x_duration_dibagi_total_working_time[1] != nil && article_x_duration_dibagi_total_working_time[0] != nil && Report.if_not_breaking_time(report,hour)[0] #hour.to_i != 12
 				
-				return "#{ ((article_x_duration_dibagi_total_working_time[0].sum / ( article_x_duration_dibagi_total_working_time[1].sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe
+				return "#{ ((article_x_duration_dibagi_total_working_time[0].sum / ( article_x_duration_dibagi_total_working_time[1].sum * report.detailreports.accumulation_on_that_hour(report,hour).last.opr ) ) * 100) .round(2) }%".html_safe
 			else
 				return '-'
 			end

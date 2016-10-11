@@ -41,6 +41,7 @@ class ReportsController < ApplicationController
 	def data_update
 
 		@update = Report.find(params[:report_id])
+		
 
 	    respond_to do |format|
 	      if @update.update(my_sanitizer)
@@ -99,7 +100,7 @@ class ReportsController < ApplicationController
 
 			if params[:status] == "actual"
 
-				#params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.find(detailreport_id).act.to_i + 1
+				params[:report][:detailreports_attributes]["0"][:act] = @report.detailreports.find(detailreport_id).act.to_i + 1
 
 			elsif params[:status] == "int_defect"
 				begin

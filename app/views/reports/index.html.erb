@@ -25,7 +25,7 @@
             <%= f.button "", class: "actual", :id=>"btn_act", 'data-disable-with'=>"<i class='actual fa fa-4x fa-spinner fa-spin' style='position:fixed' ></i>"  %>
           </div>
           <br>
-          <div><b>TOTAL : <%= @target_and_opr.detailreports.sum("act") == nil ? 0 : @target_and_opr.detailreports.sum("act") %></b></div>
+          <div><b>TOTAL : <%= @target_and_opr.detailreports.joins(:detailreportarticles).sum(:output) == nil ? 0 : @target_and_opr.detailreports.joins(:detailreportarticles).sum(:output) %></b></div>
           <% end %>
         <% end %>
       </div> <!-- end id="actual" -->
