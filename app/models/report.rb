@@ -163,8 +163,25 @@ class Report < ActiveRecord::Base
 		@category = data.detailreports.last.category
 		@country = data.detailreports.last.country
 
-		if if_not_breaking_time(data,Time.now)[0] == true #jika bukan break time
-				@target = data.detailreports.where("target != ?",0).last.target
+		checking = if_not_breaking_time(data,Time.now)
+
+		if checking[0] == true #jika bukan break time
+				#@target = data.detailreports.where("target != ?",0).last.target
+		
+
+				detailreport_last = data.detailreports.where("target != ?",0).last
+				duration_last = 60 / ((detailreport_last.jam_end.to_time - detailreport_last.jam.to_time) / 60).to_i #asumsi 1 jam
+				target_satu_jam = detailreport_last.target * duration_last
+
+
+				duration_now = ((checking[2].to_time - checking[1].to_time) / 60).to_i
+				if duration_now == 30
+					@target = (target_satu_jam / 2).ceil
+				elsif duration_now == 60
+					@target = target_satu_jam
+				end
+
+
 		else #jika break time
 			@target = 0
 		end
