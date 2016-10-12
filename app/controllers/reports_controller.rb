@@ -42,6 +42,19 @@ class ReportsController < ApplicationController
 
 		@update = Report.find(params[:report_id])
 		
+		params[:report][:detailreports_attributes].each do |detailreport|
+
+			act = 0
+
+			detailreport[1][:detailreportarticles_attributes].each do |detailreportarticle|
+
+				act = act + detailreportarticle[1][:output].to_i
+
+			end
+
+			detailreport[1][:act] = act
+
+		end
 
 	    respond_to do |format|
 	      if @update.update(my_sanitizer)

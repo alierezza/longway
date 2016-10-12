@@ -82,7 +82,7 @@
 							<%= f.fields_for :detailreports, f.object.detailreports.order("jam ASC") do |detailreport,index| %>
 
 								<%= detailreport.hidden_field :skip, :value=>"true" %>
-
+								<%= detailreport.hidden_field :act, :value=>detailreport.object.act %>
 
 							<%# f.object.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
 
