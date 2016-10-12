@@ -23,7 +23,7 @@
 	<b>Tanggal :</b> <%= @data.first.tanggal.strftime("%d %B %Y") %><br><br>
 	<div class="table-responsive">
 		<%= form_for(@data.first, :url=>data_update_path,:method=>"PUT") do |f| %>
-			<%= f.submit "Update", :class=>"btn btn-md btn-success" %>
+			<%= f.button "Update", :class=>"btn btn-md btn-success",'data-disable-with'=>"<i class='fa fa-spinner fa-spin'></i> Please Wait.." %>
 			<%= hidden_field_tag :tanggal, @data.first.tanggal.strftime("%d/%m/%Y") %>
 			<%= hidden_field_tag :no, @data.first.line.no %>
 			<%= hidden_field_tag :report_id, @data.first.id %>
