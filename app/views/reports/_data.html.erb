@@ -139,7 +139,7 @@
 									<td><%#= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td> -->
 									<td><%= Report.rft(detailreport.object.report, detailreport.object.jam) %></td>
 									<td><%= detailreport.object.remark %></td>
-									<td><%= detailreport.object.po %></td>
+									<td><%= detailreport.text_field :po %><%#= detailreport.object.po %></td>
 									<td><%= detailreport.object.mfg %></td>
 									<% if visible[0] %>
 										<td><%= detailreport.object.category %></td>

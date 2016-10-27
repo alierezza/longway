@@ -20,7 +20,8 @@ class Masteremail < ActiveRecord::Base
 
 	    Line.all.where("visible=?",true).order("no").each_with_index do |board,index|
 
-	    	sheet1.row(baris = baris +2).push "Line : #{board.nama}"
+	    	#sheet1.row(baris = baris +2).push "Line : #{board.nama}"
+	    	sheet1.row(baris = baris +2).push ""
 
 	    	if board.reports.where("tanggal=?",tanggal).count == 0
 	    		sheet1.row(baris = baris + 1).push "Empty"
@@ -58,21 +59,22 @@ class Masteremail < ActiveRecord::Base
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
 	    			
-                    (18+total_length-visible).times do |x| row.set_format(x,format) end
+                    (19+total_length-visible).times do |x| row.set_format(x,format) end
 					#sheet1.row(baris).default_format = format
-					sheet1.column(0).width = 25
-					sheet1.column(1).width = 10
+					sheet1.column(0).width = 15
+					sheet1.column(1).width = 25
 					sheet1.column(2).width = 10
-					sheet1.column(3).width = 20
-					sheet1.column(4).width = 10
-					sheet1.column(5).width = 20
-					sheet1.column(6).width = 10
-					sheet1.column(7).width = 10 #pph
-					sheet1.column(8).width = 70 #article
-					sheet1.column(9).width = 30 #effisiensi (akumulasi)
+					sheet1.column(3).width = 10
+					sheet1.column(4).width = 20
+					sheet1.column(5).width = 10
+					sheet1.column(6).width = 20
+					sheet1.column(7).width = 10
+					sheet1.column(8).width = 10 #pph
+					sheet1.column(9).width = 70 #article
+					sheet1.column(10).width = 30 #effisiensi (akumulasi)
 
-					init_col = 9
-					col = 9
+					init_col = 10
+					col = 10
 					if defect_int.present?
 						defect_int.each_with_index do |(key, val), index|
 							sheet1.column(col += 1).width = 10
@@ -184,7 +186,7 @@ class Masteremail < ActiveRecord::Base
 	    			# sheet1.row(baris = baris+1).replace ["","","","","","","","","","","11A","11B","11C","11J","11L","13D","INT (SUM)","BS2","BS3","BS7","BS13","BS15","BS17","EXT (SUM)"]
 	    			sheet1.row(baris).height = 16
 	    			row = sheet1.row(baris)
-	    			(18+total_length-visible).times do |x|
+	    			(19+total_length-visible).times do |x|
 	    				row.set_format(x,format)
 	    			end
 
@@ -225,7 +227,7 @@ class Masteremail < ActiveRecord::Base
 
 						
 
-	    				(18+total_length-visible).times do |x|
+	    				(19+total_length-visible).times do |x|
 	    					if x == 4 and detailreport.detailreportarticles.sum(:output) < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else
@@ -309,7 +311,7 @@ class Masteremail < ActiveRecord::Base
 				visible = ["COUNTRY"]
 			end
 
-			header = ["HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT"]
+			header = ["LINE","HOUR","OPR","TARGET","TARGET (SUM)", "ACT", "ACT (SUM)", "%", "PPH", "ARTICLE","EFFICIENCY (Accumulation)", "DEFECT"]
 			header += (total_length + 1).times.map{ |a| "" }
 			# header += (int_length + ext_length + 1).times.map{ |a| "" }
 			header += ["RFT", "REMARK", "P/O", "MFG No"] + visible
@@ -370,7 +372,7 @@ class Masteremail < ActiveRecord::Base
 			visible = [detailreport.country]
 		end
 
-		value = [WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.detailreportarticles.sum(:output),sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe]
+		value = [detailreport.report.line.nama,WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.detailreportarticles.sum(:output),sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe]
 		value += int_value + ext_value + (total_length-(int_value.length+ext_value.length-2)).times.map{ |o| "-" }
 		value += [rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg] + visible
 	end
