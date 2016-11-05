@@ -7,7 +7,7 @@
       <div class="counter_number">
         <%= detailreport.hidden_field :act %>
         <div id="act">
-          <%= detailreport.object.act %>
+          <%= detailreport.object.detailreportarticles.sum(:output) %>
         </div>
         <%= hidden_field_tag :status, "actual" %>
       </div>
@@ -19,7 +19,7 @@
     <div class="counter_button">
       <%= f.button "", class: "actual", 'data-disable-with'=>"<i class='actual fa fa-4x fa-spinner fa-spin' style='position:fixed' ></i>"  %>
     </div><br>
-    <div><b>TOTAL : <%= @target_and_opr.detailreports.sum("act") == nil ? 0 : @target_and_opr.detailreports.sum("act") %></b></div>
+    <div><b>TOTAL : <%= @target_and_opr.detailreports.joins(:detailreportarticles).sum(:output) == nil ? 0 : @target_and_opr.detailreports.joins(:detailreportarticles).sum(:output) %></b></div>
     <% end %>
   <% end %>
 </div> <!-- end id="actual" -->

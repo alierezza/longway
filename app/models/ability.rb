@@ -41,7 +41,7 @@ class Ability
             can :manage, Board
             can :manage, Problem
             can :manage, Masteremail
-            can :data, Report do |report|
+            can [:data,:data_update], Report do |report|
                 report.line.user.role == "Admin"
             end
             can :manage, Ad

@@ -2,7 +2,11 @@ class Detailreport < ActiveRecord::Base
 
 	belongs_to :report
 
+	attr_accessor :skip
+
 	has_many :detailreportarticles, :dependent=>:destroy
+
+	accepts_nested_attributes_for :detailreportarticles, allow_destroy: true
 
 	validates_uniqueness_of :report_id, :scope => :jam
 
@@ -42,7 +46,7 @@ class Detailreport < ActiveRecord::Base
 	end
 
 
-	after_save :create_new_detailreportarticle
+	after_save :create_new_detailreportarticle, :if => proc { |detailreport| detailreport.skip != "true" }
 
 	def create_new_detailreportarticle
 

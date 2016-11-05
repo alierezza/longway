@@ -88,7 +88,8 @@ class Report < ActiveRecord::Base
 			article_x_duration_dibagi_total_working_time = Report.article_x_duration_dibagi_total_working_time(report,hour)
 
 			if article_x_duration_dibagi_total_working_time[1] != nil && article_x_duration_dibagi_total_working_time[0] != nil && Report.if_not_breaking_time(report,hour)[0] #hour.to_i != 12
-				return "#{ ((article_x_duration_dibagi_total_working_time[0].sum / ( article_x_duration_dibagi_total_working_time[1].sum * report.detailreports.last.opr ) ) * 100) .round(2) }%".html_safe
+				
+				return "#{ ((article_x_duration_dibagi_total_working_time[0].sum / ( article_x_duration_dibagi_total_working_time[1].sum * report.detailreports.accumulation_on_that_hour(report,hour).last.opr ) ) * 100) .round(2) }%".html_safe
 			else
 				return '-'
 			end
@@ -101,7 +102,7 @@ class Report < ActiveRecord::Base
 		begin
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
-				return ((report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / report.detailreports.accumulation_on_that_hour(report,hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
+				return ((report.detailreports.accumulation_on_that_hour(report,hour).joins(:detailreportarticles).sum(:output) / report.detailreports.accumulation_on_that_hour(report,hour).sum(:target) .to_f * 100 ).to_i ).to_s + "%"
 			else
 				return '-'
 			end
@@ -115,7 +116,7 @@ class Report < ActiveRecord::Base
 			total_working_time = Report.article_x_duration_dibagi_total_working_time(report,hour)[1]
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
-				return (report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / (report.detailreports.accumulation_on_that_hour(report,hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
+				return (report.detailreports.accumulation_on_that_hour(report,hour).joins(:detailreportarticles).sum(:output) / (report.detailreports.accumulation_on_that_hour(report,hour).last.opr * ( (total_working_time.sum/60 .to_f ).round(2) ) ) .to_f ).round(2)
 			else
 				return '-'
 			end
@@ -128,7 +129,7 @@ class Report < ActiveRecord::Base
 		begin
 			#if hour.to_i != 12
 			if Report.if_not_breaking_time(report,hour)[0]
-				return ((report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) / ( report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
+				return ((report.detailreports.accumulation_on_that_hour(report,hour).joins(:detailreportarticles).sum(:output) / ( report.detailreports.accumulation_on_that_hour(report,hour).sum(:act) + Report.total_defect(report,hour) ) .to_f * 100 ).to_i ).to_s + "%"
 			else
 				return '-'
 			end
@@ -140,7 +141,7 @@ class Report < ActiveRecord::Base
 	def self.article(detailreport)
 		begin
 			if detailreport.detailreportarticles != [] && Report.if_not_breaking_time(detailreport.report,detailreport.jam)[0] #detailreport.jam != 12
-				return detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")" + " (opt:" + i.operator.to_s + ")</font>" }.join(", <br>").html_safe
+				return detailreport.detailreportarticles.map{|i| i.article.to_s + "<font color=red> (act:" + i.output.to_s + ")</font>" }.join(", <br>").html_safe
 			else
 				return '-'
 			end

@@ -12,13 +12,13 @@ module ApplicationHelper
 		when "TRGT SUM"
 			return (template % ["", "#{report.detailreports.sum('target')}"]).html_safe
 		when "ACT"
-			if report.detailreports.last.act < report.detailreports.last.target
-				return (template % ["", "#{report.detailreports.last.act}"]).html_safe
+			if report.detailreports.last.detailreportarticles.sum(:output) < report.detailreports.last.target
+				return (template % ["", "#{report.detailreports.last.detailreportarticles.sum(:output)}"]).html_safe
 			else
-				return (template % ["", "#{report.detailreports.last.act}"]).html_safe
+				return (template % ["", "#{report.detailreports.last.detailreportarticles.sum(:output)}"]).html_safe
 			end
 		when "ACT SUM"
-			return (template % ["", "#{report.detailreports.sum('act')}"]).html_safe
+			return (template % ["", "#{report.detailreports.joins(:detailreportarticles).sum(:output)}"]).html_safe
 		when "%"
 			return (template % ["", "#{Report.percent(report, report.detailreports.last.jam)}"]).html_safe
 		when "PPH"

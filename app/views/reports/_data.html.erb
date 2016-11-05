@@ -22,140 +22,171 @@
 	<b>Line :</b> <%= @data.first.line.nama %><br>
 	<b>Tanggal :</b> <%= @data.first.tanggal.strftime("%d %B %Y") %><br><br>
 	<div class="table-responsive">
-		<table class="table table-bordered table-stripped" id="data">
-			<thead>
-				<tr>
-					<th rowspan=2>HOUR</th>
-					<th rowspan=2>OPR</th>
-					<th rowspan=2>TARGET</th>
-					<th rowspan=2>TARGET (SUM)</th>
-					<th rowspan=2>ACT</th>
-					<th rowspan=2>ACT (SUM)</th>
-					<th rowspan=2  width="7%">%</th>
-					<th rowspan=2>PPH</th>
-					<th rowspan=2 >ARTICLE</th>
-					<th rowspan=2>EFISIENSI (Akumulasi)</th>
-					<th colspan=<%= length_int + length_ext + 2 %>>DEFECT</th>
-					<!-- <th colspan=14>DEFECT</th> -->
-					<th rowspan=2>RFT</th>
-					<th rowspan=2  width="25%">REMARK</th>
-					<th rowspan=2>P/O</th>
-					<th rowspan=2><%= CONFIG["mfg_no"] %></th>
-					<% if visible[0] %>
-						<th rowspan=2>Category</th>
-					<% end %>
-					<% if visible[1] %>
-						<th rowspan=2>Country</th>
-					<% end %>
-				</tr>
-				<tr>
-					<%= show_defect_header(defect_int, "Internal") %>
-					<%= show_defect_header(defect_ext, "External") %>
-	<!-- 				<th>INT 11A</th>
-					<th>INT 11B</th>
-					<th>INT 11C</th>
-					<th>INT 11J</th>
-					<th>INT 11L</th>
-					<th>INT 13D</th>
-					<th>INT (SUM)</th>
-					<th>EXT BS2</th>
-					<th>EXT BS3</th>
-					<th>EXT BS7</th>
-					<th>EXT BS13</th>
-					<th>EXT BS15</th>
-					<th>EXT BS17</th>
-					<th>EXT (SUM)</th> -->
-				</tr>
-			</thead>
-			<% @article_x_duration = Array.new{} %>
-			<% @total_working_time = Array.new{} %>
-			<tbody>
-				<% sum_target = 0 %>
-				<% sum_act = 0 %>
 
-					<% @data.first.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
+		<%= form_for(@data.first, :url=>data_update_path,:method=>"PUT") do |f| %>
+			<%= f.button "Update", :class=>"btn btn-md btn-success",'data-disable-with'=>"<i class='fa fa-spinner fa-spin'></i> Please Wait.." %>
+			<%= hidden_field_tag :tanggal, @data.first.tanggal.strftime("%d/%m/%Y") %>
+			<%= hidden_field_tag :no, @data.first.line.no %>
+			<%= hidden_field_tag :report_id, @data.first.id %>
 
-						<% sum_target += detailreport.target.to_i  %>
-						<% sum_act += detailreport.act.to_i  %>
-						<tr>
-							<td><%= WorkingDay.working_duration(detailreport) %></td>
-							<td><%= detailreport.opr %></td>
-							<td><%= detailreport.target %></td>
-							<td><%= sum_target %></td>
-							<td><%= detailreport.act %></td>
-							<td><%= sum_act %></td>
-							<td><%= Report.percent(detailreport.report, detailreport.jam) %></td>
-							<td><%= Report.pph(detailreport.report,detailreport.jam) %></td>
-							<td>
-								<%= Report.article(detailreport) %>
-							</td>
-							<td>
-								<font color=blue>
-									(<%= Report.efficiency(detailreport.report,detailreport.jam) %>)
-								</font>
-							</td>
-							<%= show_defect_body(detailreport, "Internal", defect_int) %>
-							<%= show_defect_body(detailreport, "External", defect_ext) %>
-	<!-- 						<td><%#= detailreport.defect_int %></td>
-							<td><%#= detailreport.defect_int_11b %></td>
-							<td><%#= detailreport.defect_int_11c %></td>
-							<td><%#= detailreport.defect_int_11j %></td>
-							<td><%#= detailreport.defect_int_11l %></td>
-							<td><%#= detailreport.defect_int_13d %></td>
-							<td><%#= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
-							<td><%#= detailreport.defect_ext %></td>
-							<td><%#= detailreport.defect_ext_bs3 %></td>
-							<td><%#= detailreport.defect_ext_bs7 %></td>
-							<td><%#= detailreport.defect_ext_bs13 %></td>
-							<td><%#= detailreport.defect_ext_bs15 %></td>
-							<td><%#= detailreport.defect_ext_bs17 %></td>
-							<td><%#= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td> -->
-							<td><%= Report.rft(detailreport.report, detailreport.jam) %></td>
-							<td><%= detailreport.remark %></td>
-							<td><%= detailreport.po %></td>
-							<td><%= detailreport.mfg %></td>
-							<% if visible[0] %>
-								<td><%= detailreport.category %></td>
-							<% end %>
-							<% if visible[1] %>
-								<td><%= detailreport.country %></td>
-							<% end %>
-						</tr>
-					<% end %>
-						<tr>
-							<td colspan=<%= length_int + length_ext + 18 %>>Total <%= @data.first.detailreports.count %> Jam</td>
-						</tr>
-						<tr>
-							<td colspan=<%= length_int + length_ext + 18 %>>
-								<table class="table table-bordered">
-									<tbody>
-										<tr>
-											<td colspan=2>Defect Description</td>
-										</tr>
-										<tr>
-											<% Defect.type.each do |type| %>
-												<td>
-													<table class="table table-bordered">
-														<tbody>
-															<tr><td colspan=3><%= type %></td></tr>
-															<% Defect.where(defect_type: type).each do |defect| %>
-																<tr style="text-align: left">
-																	<td style="width:4%"><%= defect.name %></td>
-																	<td style="width:1%">:</td>
-																	<td style="width:95%"><%= defect.description %></td>
-																</tr>
-															<% end %>
-														</tbody>
-													</table>
-												</td>
+			<table class="table table-bordered table-stripped" id="data">
+				<thead>
+					<tr>
+						<th rowspan=2>HOUR</th>
+						<th rowspan=2>OPR</th>
+						<th rowspan=2>TARGET</th>
+						<th rowspan=2>TARGET (SUM)</th>
+						<th rowspan=2>ACT</th>
+						<th rowspan=2>ACT (SUM)</th>
+						<th rowspan=2  width="7%">%</th>
+						<th rowspan=2>PPH</th>
+						<th rowspan=2 >ARTICLE</th>
+						<th rowspan=2>EFISIENSI (Akumulasi)</th>
+						<th colspan=<%= length_int + length_ext + 2 %>>DEFECT</th>
+						<!-- <th colspan=14>DEFECT</th> -->
+						<th rowspan=2>RFT</th>
+						<th rowspan=2  width="25%">REMARK</th>
+						<th rowspan=2>P/O</th>
+						<th rowspan=2>MFG No</th>
+						<% if visible[0] %>
+							<th rowspan=2>Category</th>
+						<% end %>
+						<% if visible[1] %>
+							<th rowspan=2>Country</th>
+						<% end %>
+					</tr>
+					<tr>
+						<%= show_defect_header(defect_int, "Internal") %>
+						<%= show_defect_header(defect_ext, "External") %>
+		<!-- 				<th>INT 11A</th>
+						<th>INT 11B</th>
+						<th>INT 11C</th>
+						<th>INT 11J</th>
+						<th>INT 11L</th>
+						<th>INT 13D</th>
+						<th>INT (SUM)</th>
+						<th>EXT BS2</th>
+						<th>EXT BS3</th>
+						<th>EXT BS7</th>
+						<th>EXT BS13</th>
+						<th>EXT BS15</th>
+						<th>EXT BS17</th>
+						<th>EXT (SUM)</th> -->
+					</tr>
+				</thead>
+				<% @article_x_duration = Array.new{} %>
+				<% @total_working_time = Array.new{} %>
+				<tbody>
+					<% sum_target = 0 %>
+					<% sum_act = 0 %>
+
+							<%= f.fields_for :detailreports, f.object.detailreports.order("jam ASC") do |detailreport,index| %>
+
+								<%= detailreport.hidden_field :skip, :value=>"true" %>
+								<%= detailreport.hidden_field :act, :value=>detailreport.object.act %>
+
+							<%# f.object.detailreports.all.order("jam ASC").each_with_index do |detailreport,index| %>
+
+								<% sum_target += detailreport.object.target.to_i  %>
+								<% sum_act += detailreport.object.detailreportarticles.sum(:output).to_i  %>
+								<tr>
+									<td><%= WorkingDay.working_duration(detailreport.object) %></td>
+									<td><%= detailreport.number_field :opr,:min=>1, :style=>"width:60px" %></td>
+									<td><%= detailreport.number_field :target, :min=>1, :style=>"width:60px" %></td>
+									<td><%= sum_target %></td>
+									<td><%= detailreport.object.detailreportarticles.sum(:output).to_i %></td>
+									<td><%= sum_act %></td>
+									<td><%= Report.percent(detailreport.object.report, detailreport.object.jam) %></td>
+									<td><%= Report.pph(detailreport.object.report,detailreport.object.jam) %></td>
+									<td>
+										<% begin %> 
+											
+												<% if detailreport.object.detailreportarticles != [] && Report.if_not_breaking_time(detailreport.object.report,detailreport.object.jam)[0] #detailreport.jam != 12 %>
+												
+												<%=	detailreport.fields_for :detailreportarticles, detailreport.object.detailreportarticles.order("detailreportarticles.id ASC") do |detailreportarticle,index| %>
+
+													 	<%= (detailreportarticle.object.article.to_s + "<font color=red><br> act:" + (detailreportarticle.number_field :output, :style=>"width:60px") + "<br>" + "</font><br>").html_safe %>
+	
+													<% end %>
+												<% else %>
+													 '-'
+												<% end %>
+											<% rescue %>
+												 0
 											<% end %>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-			</tbody>
-		</table>
+										 
+										<%#= Report.article(detailreport.object) %>
+									</td>
+									<td>
+										<font color=blue>
+											(<%= Report.efficiency(detailreport.object.report,detailreport.object.jam) %>)
+										</font>
+									</td>
+									<%= show_defect_body(detailreport.object, "Internal", defect_int) %>
+									<%= show_defect_body(detailreport.object, "External", defect_ext) %>
+			<!-- 						<td><%#= detailreport.defect_int %></td>
+									<td><%#= detailreport.defect_int_11b %></td>
+									<td><%#= detailreport.defect_int_11c %></td>
+									<td><%#= detailreport.defect_int_11j %></td>
+									<td><%#= detailreport.defect_int_11l %></td>
+									<td><%#= detailreport.defect_int_13d %></td>
+									<td><%#= Report.total_defect_int(detailreport.report, detailreport.jam) %></td>
+									<td><%#= detailreport.defect_ext %></td>
+									<td><%#= detailreport.defect_ext_bs3 %></td>
+									<td><%#= detailreport.defect_ext_bs7 %></td>
+									<td><%#= detailreport.defect_ext_bs13 %></td>
+									<td><%#= detailreport.defect_ext_bs15 %></td>
+									<td><%#= detailreport.defect_ext_bs17 %></td>
+									<td><%#= Report.total_defect_ext(detailreport.report, detailreport.jam) %></td> -->
+									<td><%= Report.rft(detailreport.object.report, detailreport.object.jam) %></td>
+									<td><%= detailreport.object.remark %></td>
+									<td><%= detailreport.text_field :po %><%#= detailreport.object.po %></td>
+									<td><%= detailreport.object.mfg %></td>
+									<% if visible[0] %>
+										<td><%= detailreport.object.category %></td>
+									<% end %>
+									<% if visible[1] %>
+										<td><%= detailreport.object.country %></td>
+									<% end %>
+								</tr>
+							<% end %>
+
+
+							<tr>
+								<td colspan=<%= length_int + length_ext + 18 %>>Total <%= @data.first.detailreports.count %> Hour(s)</td>
+							</tr>
+							<tr>
+								<td colspan=<%= length_int + length_ext + 18 %>>
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td colspan=2>Defect Description</td>
+											</tr>
+											<tr>
+												<% Defect.type.each do |type| %>
+													<td>
+														<table class="table table-bordered">
+															<tbody>
+																<tr><td colspan=3><%= type %></td></tr>
+																<% Defect.where(defect_type: type).each do |defect| %>
+																	<tr style="text-align: left">
+																		<td style="width:4%"><%= defect.name %></td>
+																		<td style="width:1%">:</td>
+																		<td style="width:95%"><%= defect.description %></td>
+																	</tr>
+																<% end %>
+															</tbody>
+														</table>
+													</td>
+												<% end %>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+				</tbody>
+			</table>
+		<% end %>
 	</div>
 <% else %>
 <h5>

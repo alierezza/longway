@@ -25,6 +25,7 @@ class ReportsController < ApplicationController
 	end
 
 	def data
+	
 		if params[:search]
 			begin
 				@data = Line.where("no=?",params[:no].to_i).first.reports.where("tanggal = ?",params[:tanggal].to_date)
@@ -35,6 +36,39 @@ class ReportsController < ApplicationController
 
   		add_breadcrumb "History Data"
 		authorize! :data, current_user
+	end
+
+	def data_update
+
+		@update = Report.find(params[:report_id])
+		
+		params[:report][:detailreports_attributes].each do |detailreport|
+
+			act = 0
+
+			detailreport[1][:detailreportarticles_attributes].each do |detailreportarticle|
+
+				act = act + detailreportarticle[1][:output].to_i
+
+			end
+
+			detailreport[1][:act] = act
+
+		end
+
+	    respond_to do |format|
+	      if @update.update(my_sanitizer)
+	        format.html { redirect_to data_path(:search => true, :tanggal => params[:tanggal], :no=>params[:no]), notice: 'Report has been updated'}
+	        format.json { render action: 'data', status: :created, location: @update }
+	      else
+	        flash.now.alert = @update.errors.full_messages.to_sentence
+	        format.html { render action: "data" }
+	        format.json { render json: @update.errors, status: :unprocessable_entity }
+	      end
+	    end
+
+		
+
 	end
 
 	def show

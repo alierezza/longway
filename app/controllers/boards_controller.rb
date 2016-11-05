@@ -79,7 +79,7 @@ class BoardsController < ApplicationController
 								if report.jam == @jam # <--------------------- uncomment
 
 									sum_target = report.target.to_i
-									sum_act = report.act.to_i
+									sum_act = report.detailreportarticles.sum(:output).to_i
 									sum_def_int = report.defect_int.to_i
 									sum_def_ext = report.defect_ext.to_i
 									# arr_target << report.id.to_s+"-"+sum_target.to_s
