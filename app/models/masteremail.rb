@@ -24,7 +24,7 @@ class Masteremail < ActiveRecord::Base
 	    	sheet1.row(baris = baris +2).push ""
 
 	    	if board.reports.where("tanggal=?",tanggal).count == 0
-	    		sheet1.row(baris = baris + 1).push "Empty"
+	    		sheet1.row(baris = baris + 1).push ""
 	    		#baris += index + 2
 	    	else
 	    		total_length = get_all_json_length(board.reports.where("tanggal=?",tanggal), total_length)
@@ -200,7 +200,7 @@ class Masteremail < ActiveRecord::Base
 	    				sum_target += detailreport.target.to_i
 						sum_act += detailreport.detailreportarticles.sum(:output).to_i
 
-						size = detailreport.remark == nil ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
+						size = detailreport.remark == nil || detailreport.remark == "" ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
 
 
