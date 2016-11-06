@@ -24,7 +24,7 @@ class Masteremail < ActiveRecord::Base
 	    	sheet1.row(baris = baris +2).push ""
 
 	    	if board.reports.where("tanggal=?",tanggal).count == 0
-	    		sheet1.row(baris = baris + 1).push "Empty"
+	    		sheet1.row(baris = baris + 1).push ""
 	    		#baris += index + 2
 	    	else
 	    		total_length = get_all_json_length(board.reports.where("tanggal=?",tanggal), total_length)
@@ -197,10 +197,11 @@ class Masteremail < ActiveRecord::Base
 					@total_working_time = Array.new{}
 
 	    			report.detailreports.all.order("created_at ASC").each_with_index do |detailreport,index|
+	    	
 	    				sum_target += detailreport.target.to_i
 						sum_act += detailreport.detailreportarticles.sum(:output).to_i
 
-						size = detailreport.remark == nil ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
+						size = detailreport.remark == nil || detailreport.remark == "" ? 1 : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' ').size
 						height = (size / 60 .to_f ).ceil
 
 
@@ -221,7 +222,10 @@ class Masteremail < ActiveRecord::Base
 
 
 						sheet1.row(baris = baris+1).replace Masteremail.generate_value(report.detailreports, detailreport, defect_int, defect_ext, sum_target, sum_act, percent, pph, article_detail, efisiensi_akumulasi, rft, total_length)
+
+
 						# sheet1.row(baris = baris+1).replace [WorkingDay.working_duration(detailreport),detailreport.opr,detailreport.target,sum_target,detailreport.act,sum_act,percent.to_i, pph, ActionView::Base.full_sanitizer.sanitize(article_detail) , efisiensi_akumulasi.html_safe ,detailreport.defect_int,detailreport.defect_int_11b,detailreport.defect_int_11c,detailreport.defect_int_11j,detailreport.defect_int_11l,detailreport.defect_int_13d,Report.total_defect_int(detailreport.report, detailreport.jam),detailreport.defect_ext,detailreport.defect_ext_bs3,detailreport.defect_ext_bs7,detailreport.defect_ext_bs13,detailreport.defect_ext_bs15,detailreport.defect_ext_bs17,Report.total_defect_ext(detailreport.report, detailreport.jam), rft, detailreport.remark == nil ? nil : detailreport.remark.gsub(/\n/, ' ').gsub(/\r/,' '), detailreport.po, detailreport.mfg, detailreport.category, detailreport.country]
+				
 						sheet1.row(baris).height = height * 16
 						row = sheet1.row(baris)
 
@@ -234,6 +238,9 @@ class Masteremail < ActiveRecord::Base
 	    						row.set_format(x,format_normal)
 	    					end
 	    				end
+
+
+
 	    			end
 
 			#sheet1.row(4).push 'Charles Lowe', 'Author of the ruby-ole Library',"sssss"
