@@ -228,7 +228,7 @@ class Masteremail < ActiveRecord::Base
 						
 
 	    				(19+total_length-visible).times do |x|
-	    					if x == 4 and detailreport.detailreportarticles.sum(:output) < detailreport.target
+	    					if x == 5 and detailreport.detailreportarticles.sum(:output) < detailreport.target
 	    						row.set_format(x,format_red)
 	    					else
 	    						row.set_format(x,format_normal)
