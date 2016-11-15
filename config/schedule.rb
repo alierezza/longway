@@ -2,7 +2,7 @@ set :environment, 'development'
 #set :output, "log/cron_log.log"
 
 every 1.day, :at => "5:00 pm" do
-  runner "Board.delay.send_email", :output=>"log/send_email_log.log"
+  runner "Board.send_email", :output=>"log/send_email_log.log"
 end
 
 every '* 7,8,9,10,11,12,13,14,15,16,17,18,19 * * 1-6' do

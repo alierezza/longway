@@ -7,7 +7,7 @@ class Board < ActiveRecord::Base
 		elsif Masteremail.all.count <= 0 #jika email list kosong 
 			#nothing
 		else
-			UserMailer.report(Time.now.to_date).deliver
+			UserMailer.delay.report(Time.now.to_date)
 		end
 			
 	end
