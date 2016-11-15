@@ -58,7 +58,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
   gem 'bootstrap-wysihtml5-rails'
   gem 'breadcrumbs_on_rails'
- gem "font-awesome-rails"
+  gem "font-awesome-rails"
+  gem 'delayed_job_active_record'
+  gem 'daemons'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

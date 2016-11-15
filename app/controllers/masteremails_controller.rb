@@ -16,7 +16,7 @@ class MasteremailsController < ApplicationController
 					redirect_to masteremails_path
 					flash[:alert] = "Email List empty"
 				else
-					UserMailer.report(params[:tanggal].to_date).deliver
+					UserMailer.delay.report(params[:tanggal].to_date)
 					redirect_to masteremails_path
 					flash[:notice] = "Email has been sent"
 				end

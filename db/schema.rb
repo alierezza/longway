@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705221002) do
+ActiveRecord::Schema.define(version: 20161115034129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,22 @@ ActiveRecord::Schema.define(version: 20160705221002) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "detailreportarticles", force: :cascade do |t|
     t.integer  "detailreport_id"
@@ -120,7 +136,7 @@ ActiveRecord::Schema.define(version: 20160705221002) do
     t.string   "banner_content_type"
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
-    t.integer  "slide_duration",      default: 15
+    t.integer  "slide_duration",      default: 5
   end
 
   create_table "languages", force: :cascade do |t|
@@ -139,7 +155,7 @@ ActiveRecord::Schema.define(version: 20160705221002) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.boolean  "visible",        default: true
-    t.integer  "slide_duration", default: 15
+    t.integer  "slide_duration", default: 5
   end
 
   create_table "masteremails", force: :cascade do |t|
@@ -161,7 +177,6 @@ ActiveRecord::Schema.define(version: 20160705221002) do
   end
 
   add_index "reports", ["line_id", "tanggal"], name: "index_reports_on_line_id_and_tanggal", unique: true, using: :btree
-  add_index "reports", ["line_id", "tanggal"], name: "reports_line_id_tanggal_key", unique: true, using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "name"
