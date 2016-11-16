@@ -64,14 +64,22 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
+    capistrano-delayed-job (1.1.0)
+      capistrano (>= 3.1)
+      daemons (>= 1.1)
+      sshkit (>= 1.2.0)
     capistrano-passenger (0.2.0)
       capistrano (~> 3.0)
     capistrano-rails (1.1.7)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-rails-console (1.0.2)
+      capistrano (>= 3.1.0, < 4.0.0)
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano3-delayed-job (1.7.2)
+      capistrano (~> 3.0, >= 3.0.0)
     chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -272,9 +280,12 @@ DEPENDENCIES
   cancancan
   capistrano (= 3.4.0)
   capistrano-bundler
+  capistrano-delayed-job (~> 1.0)
   capistrano-passenger
   capistrano-rails
+  capistrano-rails-console
   capistrano-rvm
+  capistrano3-delayed-job (~> 1.0)
   coffee-rails (~> 4.1.0)
   daemons
   delayed_job_active_record (= 4.0.3)

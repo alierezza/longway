@@ -73,9 +73,12 @@ group :development, :test do
   gem 'spring'
 
   gem 'capistrano', '3.4.0'
+  gem 'capistrano-delayed-job', '~> 1.0'
+  gem 'capistrano3-delayed-job', '~> 1.0'
   gem 'capistrano-passenger'
   gem 'capistrano-rvm'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  gem 'capistrano-rails-console'
 end
 
