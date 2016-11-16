@@ -59,7 +59,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
   gem 'bootstrap-wysihtml5-rails'
   gem 'breadcrumbs_on_rails'
   gem "font-awesome-rails"
-  gem 'delayed_job_active_record'
+  gem 'delayed_job_active_record', '4.0.3'
   gem 'daemons'
 
 group :development, :test do
