@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115034129) do
+ActiveRecord::Schema.define(version: 20161117012900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,12 @@ ActiveRecord::Schema.define(version: 20161115034129) do
   end
 
   add_index "detailreports", ["report_id", "jam"], name: "index_detailreports_on_report_id_and_jam", unique: true, using: :btree
+
+  create_table "emailsettings", force: :cascade do |t|
+    t.string   "email_time", default: "9:00 pm"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "header_boards", force: :cascade do |t|
     t.string   "name"

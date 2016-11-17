@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   root "homes#index"
 
-  resources :homes ,:reports ,:detailreports ,:lines ,:users ,:boards ,:problems, :masteremails, :ads, :images, :articles, :categories, :countries, :defects, :languages
+  resources :homes ,:reports ,:detailreports ,:lines ,:users ,:boards ,:problems, :masteremails, :ads, :images, :articles, :categories, :countries, :defects, :languages, :emailsettings
   resources :working_hours, only: [:index, :show]
 
   resources :working_days  do

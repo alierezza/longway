@@ -1,7 +1,10 @@
+require File.expand_path('../environment', __FILE__)
+
+
 set :environment, 'development'
 #set :output, "log/cron_log.log"
 
-every 1.day, :at => "5:00 pm" do
+every 1.day, :at => Emailsetting.first.email_time do
   runner "Board.send_email", :output=>"log/send_email_log.log"
 end
 
