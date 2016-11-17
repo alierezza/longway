@@ -20,8 +20,7 @@ rescue
 end
 
 
-email_time = Emailsetting.new
-email_time.save
+
 
 # ActiveRecord::Base.transaction do
 #   # spreadsheet = Roo::Excelx.new("public/SMV.xlsx")

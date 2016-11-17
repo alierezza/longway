@@ -57,4 +57,8 @@ namespace :deploy do
     end
   end
 
+  after :deploy do
+  	execute :rake, 'rake db:seed:after_deploy_seeds'
+  end
+
 end
