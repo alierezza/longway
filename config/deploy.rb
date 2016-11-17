@@ -52,7 +52,7 @@ namespace :deploy do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
       within release_path do
-        execute :rake, 'rake db:seed:after_deploy_seeds'
+        execute :rake, 'db:seed:after_deploy_seeds RAILS_ENV=production'
       end
     end
   end
