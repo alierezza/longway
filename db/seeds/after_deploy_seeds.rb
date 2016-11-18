@@ -4,6 +4,3 @@ else
 	email_time = Emailsetting.new
 	email_time.save
 end
-
-
-%x[ whenever --update-crontab longway ]
