@@ -44,7 +44,7 @@ set :passenger_restart_with_touch, true
 
 
  #set :whenever_environment, defer { stage }
- #set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+ set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
 
