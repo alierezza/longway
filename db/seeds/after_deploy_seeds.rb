@@ -6,4 +6,4 @@ else
 end
 
 
-%x[ whenever --set 'environment=production&path=/var/www/longway/current/config/schedule.rb' ]
+%x[ whenever --set 'environment=production&path=/var/www/longway/current/config/schedule.rb' --update-crontab ]
