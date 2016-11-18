@@ -44,7 +44,7 @@ set :passenger_restart_with_touch, true
 
 
  #set :whenever_environment, defer { stage }
- set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+ #set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
 
@@ -53,6 +53,7 @@ namespace :deploy do
       # Here we can do anything such as:
       within release_path do
         execute :rake, 'db:seed:after_deploy_seeds RAILS_ENV=production'
+        execute 'whenever --update-crontab'
       end
     end
   end
