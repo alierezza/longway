@@ -5,4 +5,5 @@ else
 	email_time.save
 end
 
+%x[ whenever --clear-crontab ]
 %x[ whenever --update-crontab ]
