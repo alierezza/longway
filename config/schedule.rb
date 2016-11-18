@@ -1,7 +1,7 @@
 require File.expand_path('../environment', __FILE__)
 
 
-set :environment, 'development'
+set :environment, 'production'
 #set :output, "log/cron_log.log"
 
 every 1.day, :at => Emailsetting.first.try(:email_time) || "21:00" do
