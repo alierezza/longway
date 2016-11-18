@@ -14,7 +14,7 @@ class EmailsettingsController < ApplicationController
 
 		@emailsetting = Emailsetting.find(Emailsetting.first.id)
 		if @emailsetting.update(:email_time=>params[:emailsetting][:email_time])
-			 %x[ whenever --update-crontab longway ]
+			 %x[ whenever --update-crontab visual_production ]
 			flash[:notice] = "Update success"
 			redirect_to edit_emailsetting_path(Emailsetting.first)
 		else
