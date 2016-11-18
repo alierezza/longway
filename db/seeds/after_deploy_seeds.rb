@@ -5,5 +5,5 @@ else
 	email_time.save
 end
 
-%x[ whenever --clear-crontab ]
-%x[ whenever --update-crontab ]
+
+%x[ whenever --set 'environment=production&path=/var/www/longway/current/config/schedule.rb' ]
