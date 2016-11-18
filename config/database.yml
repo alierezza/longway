@@ -13,8 +13,8 @@ development:
   <<: *default
   host: localhost
   database: longway_production
-  username: sowo_user
-  password: 123456
+  username: longway
+  password: q1w2e3r4
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
