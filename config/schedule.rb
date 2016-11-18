@@ -1,7 +1,7 @@
 require File.expand_path('../environment', __FILE__)
 
 
-set :environment, 'production'
+set :environment, Rails.env
 #set :output, "log/cron_log.log"
 
 every 1.day, :at => Emailsetting.first.try(:email_time) || "21:00" do
@@ -18,5 +18,5 @@ end
 
 every :reboot do # Many shortcuts available: :hour, :day, :month, :year, :reboot
   command "sleep 5 && ruby /var/www/longway/current/server.rb", :output=>"/var/www/longway/current/log/server.log"
-  command 'sleep 10 && cd /var/www/longway/current/ && RAILS_ENV=production bin/delayed_job restart'
+  command "sleep 10 && cd /var/www/longway/current/ && RAILS_ENV=#{Rails.env} bin/delayed_job restart"
 end
