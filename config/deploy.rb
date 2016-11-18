@@ -53,7 +53,6 @@ namespace :deploy do
       # Here we can do anything such as:
       within release_path do
         execute :rake, 'db:seed:after_deploy_seeds RAILS_ENV=production'
-        execute 'cd /var/www/longway/current/ && whenever --update-crontab'
       end
     end
   end
