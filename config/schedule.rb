@@ -22,5 +22,5 @@ every :reboot do # Many shortcuts available: :hour, :day, :month, :year, :reboot
 end
 
 every 1.minute do
-	command "/var/www/longway/cek.sh", :output=>"log/cek_soket_running.log"
+	command "/var/www/longway/cek.sh", :output=>"log/cek_soket_and_delayedjob_running.log"
 end
