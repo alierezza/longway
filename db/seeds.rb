@@ -77,3 +77,7 @@ end
 
 
 
+Emailsetting.where(:id => 1).first_or_initialize do |setting|
+  setting.email_time = "21:00"
+  setting.save
+end
