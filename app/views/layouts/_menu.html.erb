@@ -95,6 +95,10 @@
 			<% if can? :manage, Setting %>
 				<li> <%= link_to "Setting", settings_path %></li>
 			<% end %>
+
+			<% if can? :manage, Emailsetting %>
+				<li> <%= link_to "Email Setting", emailsettings_path %></li>
+			<% end %>
 		</ul>
 	</nav>
 </header>

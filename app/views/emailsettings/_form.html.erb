@@ -1,13 +1,13 @@
 <%= form_for(@emailsetting) do |f| %>
     <div class="form-group">
 		<%= label_tag :email_time, "Daily Email Time", class: "control-label" %>
-		<div class='input-group date' id='datetimepicker1'>
-	        <%= f.text_field :email_time, :Class=>"form-control", onkeydown: "return false", required: true %>
-	        <span class="input-group-addon">
-	            <span class="glyphicon glyphicon-calendar"></span>
-	        </span>
-	    </div>
-	</div>
+  		<div class='input-group date' id='datetimepicker1'>
+  	        <%= f.text_field :email_time, :Class=>"form-control", onkeydown: "return false", required: true %>
+  	        <span class="input-group-addon">
+  	            <span class="glyphicon glyphicon-calendar"></span>
+  	        </span>
+  	  </div>
+	  </div>
 
 
     <hr>

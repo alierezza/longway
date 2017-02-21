@@ -1,9 +1,21 @@
 class EmailsettingsController < ApplicationController
 	load_and_authorize_resource param_method: :my_sanitizer
-	add_breadcrumb "Email Setting", :edit_emailsetting_path
+	add_breadcrumb "Email Setting", :emailsettings_path
+
+	def index
+
+	end
+
+	def new
+
+	end
+
+	def create
+
+	end
 
 	def edit
-		@emailsetting = Emailsetting.find(Emailsetting.first.id)
+		@emailsetting = Emailsetting.find(params[:id])
 	end
 
 	def update
