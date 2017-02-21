@@ -5,7 +5,7 @@ set :environment, Rails.env
 #set :output, "log/cron_log.log"
 
 Emailsetting.all.each_with_index do |email,index|
-	every 1.day, :at => email.email_time || "21:00" do
+	every email.day, :at => email.email_time || "21:00" do
 	  runner "Board.send_email", :output=>"log/send_email_log.log"
 	end
 end

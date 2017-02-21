@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117012900) do
+ActiveRecord::Schema.define(version: 20170221031449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20161117012900) do
     t.string   "email_time", default: "9:00 pm"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.string   "day",        default: "Monday"
   end
 
   create_table "header_boards", force: :cascade do |t|
