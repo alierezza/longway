@@ -26,6 +26,7 @@
       }
 
       function status(msg){
+
         var ok = ""
         if (msg == 'Run'){
           ok = "<div class='status_signal connect'></div>"
@@ -39,16 +40,17 @@
       function proses(msg) {
          msg = msg.split("_")[0];
         if(msg == "on"){
-          $("#on").show();
+          $("#on").hide();
           $("#off").show();
+          $("#machine_problem_status").html("ON");
         }else if(msg == "off"){
           $("#on").show();
-          $("#off").show();
+          $("#off").hide();
+          $("#machine_problem_status").html("OFF");
         }
       }
 
       function send(status) {
-
         try {
           socket.send(status);
           proses(status);

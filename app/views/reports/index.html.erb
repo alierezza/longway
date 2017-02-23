@@ -144,9 +144,14 @@
 
  <div class='col-xs-5'>
     <div id="machine_problem" class="form-group">
-      <div class="machine_title"><%= ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Machine Problem").foreign_language) %></div>
-        <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
-        <a class="btn btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
+      <div class="machine_title"><%= ActionView::Base.full_sanitizer.sanitize(Language.find_by(:message=>"Machine Problem").foreign_language) %><b><div id="machine_problem_status"><%= current_user.line.status == false ? "ON" : "OFF" %></div></b></div>
+        <% if current_user.line.status == true %>
+          <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')">ON</a>
+          <a class="btn btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')" style="display:none">OFF</a>
+        <% else %>
+          <a class="btn btn-success" id="on" onclick="send('on_<%= current_user.line.no %>')" style="display:none">ON</a>
+          <a class="btn btn-danger" id="off" onclick="send('off_<%= current_user.line.no %>')">OFF</a>
+        <% end %>
     </div>
 
 
