@@ -246,141 +246,70 @@
 
 </div>
 
+<%= render "reports/socket_color" %>
+
 <script>
+  function rjust( string, width, padding ) {
+    padding = padding || " ";
+    padding = padding.substr( 0, 1 );
+    if ( string.length < width )
+      return padding.repeat( width - string.length ) + string;
+    else
+      return string;
+  }
 
-      // where our WebSockets logic will go later
-      // var socket, host;
-      // host = "ws://<%#= Socket.ip_address_list[1].ip_address.to_s %>:3005";
-
-      // function connect() {
-      //   try {
-      //     socket = new WebSocket(host);
-
-      //     //addMessage("Socket State: " + socket.readyState);
-
-      //     socket.onopen = function() {
-      //       status("Run");
-      //     }
-
-      //     socket.onclose = function() {
-      //       status("Disconnected");
-      //     }
-
-      //     socket.onmessage = function(msg) {
-      //       //status( msg.data);
-      //     }
-      //   } catch(exception) {
-      //     status(exception);
-      //   }
-      // }
-
-      // function status(msg){
-      //   var ok = ""
-      //   if (msg == 'Run'){
-      //     ok = "<div class='status_signal connect'></div>"
-      //   }else {
-      //     ok = "<div class='status_signal disconnect'></div>"
-      //   }
-
-      // 	$("#status").html("<span>status: </span>"+ok);
-      // }
-
-      // function proses(msg) {
-	     //   msg = msg.split("_")[0];
-      //   if(msg == "on"){
-      //   	$("#on").show();
-      //   	$("#off").show();
-      //   }else if(msg == "off"){
-      //   	$("#on").show();
-      //   	$("#off").show();
-      //   }
-      // }
-
-      // function send(status) {
-
-      //   try {
-      //     socket.send(status);
-      //     proses(status);
-      //     $.get("/reports", {message: status}, null, "script");
-      //   } catch(exception) {
-      //     status("Failed To Send")
-      //   }
-
-      // }
-
-      // $(function() {
-      //   connect();
-      // });
+  function tick()
+  {
+      //get the mins of the current time
+      var hours = rjust( d.getHours().toString(), 2, "0" )
+      var mins = rjust( d.getMinutes().toString(), 2, "0" )
+      var secs = rjust( d.getSeconds().toString(), 2, "0" )
 
 
-      // $("#disconnect").click(function() {
-      //   socket.close()
-      // });
+      var schedule = <%=raw WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.pluck(:start) %>
+      server_time = hours+":"+mins;
 
-      function rjust( string, width, padding ) {
-        padding = padding || " ";
-        padding = padding.substr( 0, 1 );
-        if ( string.length < width )
-          return padding.repeat( width - string.length ) + string;
-        else
-          return string;
+      if(schedule.indexOf(server_time) != -1 && secs == "00" ){
+        //alert("masuk");
+
+          $("#act").html(0);
+          $("#defect_int").html(0);
+          $("#defect_ext").html(0);
+
+        $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
       }
 
-      function tick()
-      {
-          //get the mins of the current time
-          var hours = rjust( d.getHours().toString(), 2, "0" )
-          var mins = rjust( d.getMinutes().toString(), 2, "0" )
-          var secs = rjust( d.getSeconds().toString(), 2, "0" )
+      // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18" || hours == "19" || hours == "20")){
+      // //if(secs == "0"){
+      //     //$("#report_detailreports_attributes_0_act").val(0);
+      //     // if(hours == "12" || hours == "16" || hours == "17" || hours == "18")
+      //     // {
+      //     //   $("#report_detailreports_attributes_0_target").val(0);
+      //     // }
+      //     //$("#act").html(0);
+      //     //$("#defect_int").html(0);
+      //     //$("#defect_ext").html(0);
 
 
-          var schedule = <%=raw WorkingDay.find_by(:name=>Date.today.strftime("%A")).working_hours.pluck(:start) %>
-          server_time = hours+":"+mins;
-
-          if(schedule.indexOf(server_time) != -1 && secs == "00" ){
-            //alert("masuk");
-
-              $("#act").html(0);
-              $("#defect_int").html(0);
-              $("#defect_ext").html(0);
-
-            $.get("/reports/new", {record: hours, user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
-          }
-
-          // if(mins == "0" && secs == "0" && ( hours == "7" || hours == "8" || hours == "9" || hours == "10" || hours == "11" || hours == "12" || hours == "13" || hours == "14" || hours == "15" || hours == "16" || hours == "17" || hours == "18" || hours == "19" || hours == "20")){
-          // //if(secs == "0"){
-          //     //$("#report_detailreports_attributes_0_act").val(0);
-          //     // if(hours == "12" || hours == "16" || hours == "17" || hours == "18")
-          //     // {
-          //     //   $("#report_detailreports_attributes_0_target").val(0);
-          //     // }
-          //     //$("#act").html(0);
-          //     //$("#defect_int").html(0);
-          //     //$("#defect_ext").html(0);
-
-
-          //  }
+      //  }
 
 
 
 
 
-          // //  if(hours == "12")
-          // // {
-          //       $("[type='submit']").attr("disabled",true);
-          // // }else{
-          //       $("[type='submit']").attr("disabled",false);
-          // // }
+      // //  if(hours == "12")
+      // // {
+      //       $("[type='submit']").attr("disabled",true);
+      // // }else{
+      //       $("[type='submit']").attr("disabled",false);
+      // // }
 
 
-      }
-      setInterval(tick, 1000);
+  }
+  setInterval(tick, 1000);
 
-      // $( "#connect" ).click(function() {
-      //          location.reload(true);
-      // });
 
-      //var hours = d.getHours();
-      $.get("/reports/new", { user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
+  //var hours = d.getHours();
+  $.get("/reports/new", { user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
 
-    </script>
+</script>

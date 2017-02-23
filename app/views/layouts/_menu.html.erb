@@ -14,12 +14,12 @@
 	<nav class="right_menu">
 		<ul>
 			<li>
-				<%# if params[:controller] == "reports" and params[:action] != "data" %>
-				<div class="engine_status">
-				  <div id="status"></div>
-				  <button id="connect">Connect</button>
-				</div>
-				<%# end %>
+				<% if (params[:controller] == "reports" or params[:controller] == "homes" )  and params[:action] != "data" %>
+					<div class="engine_status">
+					  <div id="status"></div>
+					  <button id="connect">Connect</button>
+					</div>
+				<% end %>
 			</li>
 			<li>name: <%= current_user.nama %></li>
 			<li>role: <%= current_user.role %></li>
@@ -132,77 +132,7 @@ $('body').on('click', function(){
   $('nav.main_menu').removeClass('open_right')
 })
 
- // where our WebSockets logic will go later
-      var socket, host;
-      host = "ws://<%= Socket.ip_address_list[1].ip_address.to_s %>:3005";
-
-      function connect() {
-        try {
-          socket = new WebSocket(host);
-
-          //addMessage("Socket State: " + socket.readyState);
-
-          socket.onopen = function() {
-            status("Run");
-          }
-
-          socket.onclose = function() {
-            status("Disconnected");
-          }
-
-          socket.onmessage = function(msg) {
-            //status( msg.data);
-          }
-        } catch(exception) {
-          status(exception);
-        }
-      }
-
-      function status(msg){
-        var ok = ""
-        if (msg == 'Run'){
-          ok = "<div class='status_signal connect'></div>"
-        }else {
-          ok = "<div class='status_signal disconnect'></div>"
-        }
-
-      	$("#status").html("<span>status: </span>"+ok);
-      }
-
-      function proses(msg) {
-	       msg = msg.split("_")[0];
-        if(msg == "on"){
-        	$("#on").show();
-        	$("#off").show();
-        }else if(msg == "off"){
-        	$("#on").show();
-        	$("#off").show();
-        }
-      }
-
-      function send(status) {
-
-        try {
-          socket.send(status);
-          proses(status);
-          $.get("/reports", {message: status}, null, "script");
-        } catch(exception) {
-          status("Failed To Send")
-        }
-
-      }
-
-      $(function() {
-        connect();
-      });
-
-
-      $("#disconnect").click(function() {
-        socket.close()
-      });
-
-      $( "#connect" ).click(function() {
-               location.reload(true);
-      });
+ 
 
 </script>
+
