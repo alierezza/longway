@@ -249,73 +249,73 @@
 <script>
 
       // where our WebSockets logic will go later
-      var socket, host;
-      host = "ws://<%= Socket.ip_address_list[1].ip_address.to_s %>:3005";
+      // var socket, host;
+      // host = "ws://<%#= Socket.ip_address_list[1].ip_address.to_s %>:3005";
 
-      function connect() {
-        try {
-          socket = new WebSocket(host);
+      // function connect() {
+      //   try {
+      //     socket = new WebSocket(host);
 
-          //addMessage("Socket State: " + socket.readyState);
+      //     //addMessage("Socket State: " + socket.readyState);
 
-          socket.onopen = function() {
-            status("Run");
-          }
+      //     socket.onopen = function() {
+      //       status("Run");
+      //     }
 
-          socket.onclose = function() {
-            status("Disconnected");
-          }
+      //     socket.onclose = function() {
+      //       status("Disconnected");
+      //     }
 
-          socket.onmessage = function(msg) {
-            //status( msg.data);
-          }
-        } catch(exception) {
-          status(exception);
-        }
-      }
+      //     socket.onmessage = function(msg) {
+      //       //status( msg.data);
+      //     }
+      //   } catch(exception) {
+      //     status(exception);
+      //   }
+      // }
 
-      function status(msg){
-        var ok = ""
-        if (msg == 'Run'){
-          ok = "<div class='status_signal connect'></div>"
-        }else {
-          ok = "<div class='status_signal disconnect'></div>"
-        }
+      // function status(msg){
+      //   var ok = ""
+      //   if (msg == 'Run'){
+      //     ok = "<div class='status_signal connect'></div>"
+      //   }else {
+      //     ok = "<div class='status_signal disconnect'></div>"
+      //   }
 
-      	$("#status").html("<span>status: </span>"+ok);
-      }
+      // 	$("#status").html("<span>status: </span>"+ok);
+      // }
 
-      function proses(msg) {
-	       msg = msg.split("_")[0];
-        if(msg == "on"){
-        	$("#on").show();
-        	$("#off").show();
-        }else if(msg == "off"){
-        	$("#on").show();
-        	$("#off").show();
-        }
-      }
+      // function proses(msg) {
+	     //   msg = msg.split("_")[0];
+      //   if(msg == "on"){
+      //   	$("#on").show();
+      //   	$("#off").show();
+      //   }else if(msg == "off"){
+      //   	$("#on").show();
+      //   	$("#off").show();
+      //   }
+      // }
 
-      function send(status) {
+      // function send(status) {
 
-        try {
-          socket.send(status);
-          proses(status);
-          $.get("/reports", {message: status}, null, "script");
-        } catch(exception) {
-          status("Failed To Send")
-        }
+      //   try {
+      //     socket.send(status);
+      //     proses(status);
+      //     $.get("/reports", {message: status}, null, "script");
+      //   } catch(exception) {
+      //     status("Failed To Send")
+      //   }
 
-      }
+      // }
 
-      $(function() {
-        connect();
-      });
+      // $(function() {
+      //   connect();
+      // });
 
 
-      $("#disconnect").click(function() {
-        socket.close()
-      });
+      // $("#disconnect").click(function() {
+      //   socket.close()
+      // });
 
       function rjust( string, width, padding ) {
         padding = padding || " ";
@@ -376,9 +376,9 @@
       }
       setInterval(tick, 1000);
 
-      $( "#connect" ).click(function() {
-               location.reload(true);
-      });
+      // $( "#connect" ).click(function() {
+      //          location.reload(true);
+      // });
 
       //var hours = d.getHours();
       $.get("/reports/new", { user_id: "<%= current_user.id %>", from_tablet: true}, null, "script");
