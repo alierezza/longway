@@ -2,6 +2,6 @@
 <% if @cek == true %>
 
 <% else %>
-	<% flash[:alert] = "Only allow 5 images to be enabled" %>
+	<% flash[:alert] = "Only allow #{CONFIG["max_image_banner"]} images to be enabled" %>
 	location.reload();
 <% end %>
